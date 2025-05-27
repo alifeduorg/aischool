@@ -3,665 +3,588 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alif Edu - A Premium Experience (Push-Down Menu)</title>
+    <title>Animated Responsive Navigation Bar</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Basic Reset & Body Styles */
-        body {
-            margin: 0;
-            font-family: 'Poppins', sans-serif; /* Modern, clean font */
-            line-height: 1.6;
-            color: #333;
-            overflow-x: hidden;
-            background-color: #f0f2f5; /* Soft background */
-            transition: none; /* Removed transition on body for simpler push-down */
+        /* General Styling & Variables */
+        :root {
+            --nav-bg-start: #3498db; /* Blue */
+            --nav-bg-end: #2980b9;   /* Darker Blue */
+            --nav-text-color: #ffffff;
+            --hover-color: #f1c40f; /* Yellow for highlights */
+            --dropdown-bg: rgba(255, 255, 255, 0.95);
+            --dropdown-text: #333; /* Dark color for dropdown text */
+            --button-bg-login: #e74c3c; /* Red for login */
+            --button-hover-login: #c0392b;
+            --button-bg-contact: #27ae60; /* Green for contact */
+            --button-hover-contact: #229954;
+            --mobile-nav-bg-start: #2c3e50; /* Darker blue for mobile */
+            --mobile-nav-bg-end: #34495e;
         }
 
-        .header-container, .footer-container {
-            max-width: 1280px; /* Slightly wider container */
-            margin: 0 auto;
-            padding: 15px 25px; /* More padding */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            background-color: #f4f4f4;
+            color: #333;
+            overflow-x: hidden; /* Prevent horizontal scroll from animations */
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* Main Header */
+        .main-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(90deg, var(--nav-bg-start), var(--nav-bg-end));
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            transition: background 0.4s ease, box-shadow 0.3s ease;
+            perspective: 1000px; /* For 3D effects */
+        }
+
+        /* Header Hover Animation (Gradient Shift) */
+        .main-header:hover {
+            background: linear-gradient(90deg, var(--nav-bg-end), var(--nav-bg-start));
+        }
+
+        .header-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
-        }
-
-        /* --- Header Styles (Laptop) --- */
-        header {
-            background-color: rgba(255, 255, 255, 0.95); /* Slightly transparent white */
-            backdrop-filter: blur(8px); /* Frosted glass effect */
-            -webkit-backdrop-filter: blur(8px); /* Safari support */
-            padding: 10px 0;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08); /* Softer, wider shadow */
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1000;
-        }
-
-        .logo {
-            flex-shrink: 0;
-            margin-right: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 10px 20px;
         }
 
         .logo img {
-            max-height: 55px; /* Slightly refined logo size */
-            display: block;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+            height: 50px; /* Adjust as needed */
+            width: auto;
             transition: transform 0.3s ease;
         }
 
         .logo img:hover {
-            transform: scale(1.03);
+            transform: scale(1.05) rotateZ(2deg);
         }
 
-        .main-nav {
-            flex-grow: 1;
+        /* Main Navigation */
+        .main-nav .nav-list {
             display: flex;
-            justify-content: flex-end;
             align-items: center;
         }
 
-        .nav-menu {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: flex-end;
-            align-items: center;
-        }
-
-        .nav-menu li {
+        .main-nav .nav-item {
             position: relative;
-            margin: 0 10px; /* More spacing between main menu items */
+            margin-left: 30px;
         }
 
-        /* Nav Link Styles - Subtle Underline Effect */
-        .nav-menu a {
+        .main-nav .nav-item a:not(.btn-login, .btn-contact) {
+            color: var(--nav-text-color);
+            padding: 15px 0;
             display: block;
-            padding: 10px 15px;
-            text-decoration: none;
-            color: #333;
             font-weight: 500;
             position: relative;
+            overflow: hidden;
             transition: color 0.3s ease;
-            white-space: nowrap;
         }
 
-        .nav-menu a::after {
+        /* Stylish Underline Effect */
+        .main-nav .nav-item a:not(.btn-login, .btn-contact)::before {
             content: '';
             position: absolute;
-            left: 50%; /* Start from center */
-            bottom: 5px; /* Position below text */
-            width: 0; /* Start hidden */
+            bottom: 5px;
+            left: 50%;
+            width: 0;
             height: 2px;
-            background-color: #007bff; /* Primary brand color */
-            transition: width 0.3s ease, left 0.3s ease; /* Smooth animation */
+            background-color: var(--hover-color);
+            transition: width 0.3s ease-out, left 0.3s ease-out;
+            transform: translateX(-50%);
         }
 
-        .nav-menu a:hover {
-            color: #007bff; /* Highlight text on hover */
-        }
-
-        .nav-menu a:hover::after {
-            width: calc(100% - 20px); /* Expand to almost full width */
-            left: 10px; /* Shift to left */
-        }
-
-        /* Add a slightly different style for the active/current page link */
-        .nav-menu a.current-page::after {
-            width: calc(100% - 20px);
-            left: 10px;
-            background-color: #0056b3; /* Darker shade for active */
-        }
-
-        /* Special style for 'Login to our App' button */
-        .nav-menu li:last-child a {
-            background-color: #007bff;
-            color: #fff;
-            border-radius: 25px; /* Pill shape */
-            padding: 8px 20px;
-            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3); /* Soft shadow */
-            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .nav-menu li:last-child a:hover {
-            background-color: #0056b3;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(0, 123, 255, 0.4);
-            color: #fff; /* Ensure text remains white */
-        }
-
-        .nav-menu li:last-child a::after {
-            content: none; /* Remove underline for this button */
-        }
-
-        /* Dropdown Styles - Elegant & Smooth */
-        .dropdown-menu {
-            list-style: none;
-            margin: 0;
-            padding: 10px; /* Padding inside the dropdown box */
-            position: absolute;
-            top: calc(100% + 15px); /* Further from parent */
-            left: 0;
-            background: #fff;
-            border: 1px solid #e0e0e0; /* Subtle border */
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1); /* Lighter, broader shadow */
-            min-width: 220px;
-            border-radius: 8px; /* Gently rounded corners */
-            overflow: hidden;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(10px); /* Slight initial shift down */
-            transition: opacity 0.3s ease-out, transform 0.3s ease-out, visibility 0.3s;
-            z-index: 999;
-        }
-
-        .has-dropdown:hover > .dropdown-menu {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-
-        .dropdown-menu li {
-            margin: 0; /* Remove margin from dropdown list items */
-        }
-
-        .dropdown-menu li a {
-            padding: 10px 15px; /* Padding for dropdown item links */
-            color: #555; /* Text color for dropdown items */
-            background-color: transparent;
-            border-radius: 6px; /* Match parent dropdown border radius */
-            transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
-            position: relative;
-            overflow: hidden;
-            z-index: 1;
-        }
-
-        .dropdown-menu li a::after {
-            content: none; /* Remove underline for dropdown items */
-        }
-
-        .dropdown-menu li a:hover {
-            background-color: #f2f7ff; /* Very light blue on hover */
-            color: #007bff; /* Primary color on hover */
-            transform: translateX(5px); /* Subtle slide right */
-        }
-
-        /* --- Mobile Menu Toggle (Hamburger) --- */
-        .menu-toggle {
-            display: none; /* Hidden on desktop */
-            width: 30px;
-            height: 22px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            position: relative;
-            z-index: 1501; /* Ensure it's above the header's fixed state */
-            padding: 0;
-        }
-
-        .menu-toggle span {
-            display: block;
+        .main-nav .nav-item a:not(.btn-login, .btn-contact):hover::before,
+        .main-nav .nav-item.active a:not(.btn-login, .btn-contact)::before {
             width: 100%;
-            height: 2px;
-            background-color: #333; /* Dark color for bars */
-            border-radius: 2px;
-            position: absolute;
             left: 0;
-            transition: all 0.3s ease-in-out;
+            transform: translateX(0);
         }
 
-        .menu-toggle span:nth-child(1) { top: 0; }
-        .menu-toggle span:nth-child(2) { top: 10px; }
-        .menu-toggle span:nth-child(3) { top: 20px; }
-
-        /* Animation for X */
-        .menu-toggle.active span:nth-child(1) {
-            transform: translateY(10px) rotate(45deg);
+        .main-nav .nav-item a:not(.btn-login, .btn-contact):hover {
+            color: var(--hover-color);
         }
-        .menu-toggle.active span:nth-child(2) {
+
+        .main-nav .nav-item.active a:not(.btn-login, .btn-contact) {
+            color: var(--hover-color);
+        }
+
+        /* Dropdown Menu Styling & Animation */
+        .main-nav .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: var(--dropdown-bg);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+            min-width: 220px;
+            border-radius: 8px;
+            overflow: hidden;
+            transform: translateY(15px) rotateX(-15deg); /* Initial 3D transform */
             opacity: 0;
-        }
-        .menu-toggle.active span:nth-child(3) {
-            transform: translateY(-10px) rotate(-45deg);
+            transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+            transform-origin: top center; /* For rotation effect */
+            z-index: 999;
+            pointer-events: none; /* Allows hover on parent but prevents clicking until visible */
         }
 
-        /* --- Main Content Area --- */
-        main {
-            min-height: 500px;
-            padding: 40px 25px;
+        .main-nav .has-dropdown:hover > .dropdown-menu {
+            display: block;
+            transform: translateY(0) rotateX(0deg);
+            opacity: 1;
+            pointer-events: auto; /* Enable clicks when visible */
+        }
+
+        .main-nav .dropdown-menu li a {
+            color: var(--dropdown-text); /* Dark color for dropdown text */
+            padding: 12px 20px;
+            display: block;
+            white-space: nowrap;
+            transition: background-color 0.2s ease, color 0.2s ease, padding-left 0.2s ease;
+            font-weight: 400;
+        }
+
+        .main-nav .dropdown-menu li a:hover {
+            background-color: #e0e0e0;
+            color: var(--nav-bg-start);
+            padding-left: 25px; /* Slight indent on hover */
+        }
+
+        /* Distinct Buttons (Login & Contact Us) */
+        .btn-login, .btn-contact {
+            padding: 10px 20px;
+            border-radius: 25px; /* Pill shape */
+            font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            display: inline-block; /* Ensures padding works */
             text-align: center;
-            background-color: #ffffff;
-            box-shadow: 0 0 25px rgba(0,0,0,0.05); /* Softer shadow */
-            margin: 25px auto; /* More margin */
-            max-width: 1280px;
-            border-radius: 12px; /* More rounded */
-            padding-top: 120px; /* Clear fixed header, adjust as needed */
-            position: relative; /* Needed for z-index context if header uses z-index */
-            z-index: 1; /* Ensure content is below header but above footer */
         }
 
-        main h1 {
-            font-size: 2.8em;
-            color: #1a1a1a;
-            margin-bottom: 20px;
-            font-weight: 700;
+        .btn-login {
+            background-color: var(--button-bg-login);
+            color: var(--nav-text-color) !important; /* Override default link color */
+            margin-left: 20px;
         }
 
-        main p {
-            font-size: 1.1em;
-            color: #555;
-            max-width: 800px;
-            margin: 0 auto 40px;
+        .btn-login:hover {
+            background-color: var(--button-hover-login);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
         }
 
-        .content-placeholder {
-            height: 350px;
-            background: linear-gradient(135deg, #e6f2ff, #cce0ff); /* Soft gradient */
-            margin-top: 50px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #0056b3;
-            font-size: 1.2em;
-            font-weight: 600;
-            box-shadow: inset 0 2px 8px rgba(0,0,0,0.05);
+        .btn-contact {
+            background-color: var(--button-bg-contact);
+            color: var(--nav-text-color) !important;
+            margin-left: 10px; /* Space between login and contact */
         }
 
-        /* --- Footer Styles --- */
-        footer {
-            background-color: #2c3e50; /* Darker, modern navy */
-            color: #ecf0f1;
-            padding: 50px 0 30px;
-            font-size: 0.95em;
-            position: relative; /* Ensure it's part of document flow */
-            z-index: 1; /* Ensure it's above any elements that might overlap */
+        .btn-contact:hover {
+            background-color: var(--button-hover-contact);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
         }
 
-        .footer-container {
-            align-items: flex-start;
-            flex-wrap: wrap;
-        }
-
-        .footer-column {
-            flex: 1;
-            min-width: 250px; /* Wider columns */
-            margin-bottom: 30px;
-            padding: 0 20px;
-            box-sizing: border-box;
-        }
-
-        .footer-column h3 {
-            color: #007bff; /* Primary brand color for headings */
-            margin-bottom: 20px;
-            font-size: 1.2em;
+        /* Hamburger Menu (Hidden by default on desktop) */
+        .hamburger-menu {
+            display: none;
+            cursor: pointer;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 20px;
             position: relative;
-            padding-bottom: 8px;
-            font-weight: 600;
+            z-index: 1001; /* Ensure it's above everything */
         }
 
-        .footer-column h3::after {
+        .hamburger-menu .bar {
+            width: 100%;
+            height: 3px;
+            background-color: var(--nav-text-color);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        /* Main Content Styling */
+        .main-content {
+            padding: 100px 20px 50px; /* Adjust padding-top for fixed header */
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .main-content h1 {
+            margin-bottom: 20px;
+            color: var(--nav-bg-start);
+        }
+
+        /* Footer Styling */
+        .main-footer {
+            background-color: #222;
+            color: #eee;
+            padding: 40px 20px;
+            margin-top: 50px;
+            font-size: 0.9em;
+        }
+
+        .footer-columns {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            gap: 30px;
+        }
+
+        .footer-col {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 20px;
+        }
+
+        .footer-col h3 {
+            margin-bottom: 15px;
+            font-size: 1.2em;
+            color: var(--hover-color);
+            position: relative;
+            padding-bottom: 5px;
+        }
+
+        .footer-col h3::after {
             content: '';
             position: absolute;
             left: 0;
             bottom: 0;
-            width: 50px; /* Longer underline */
-            height: 3px; /* Thicker underline */
-            background-color: #007bff;
-            border-radius: 2px;
+            width: 40px;
+            height: 2px;
+            background-color: var(--hover-color);
         }
 
-        .footer-column ul {
-            list-style: none;
+        .footer-col ul {
             padding: 0;
-            margin: 0;
         }
 
-        .footer-column ul li {
+        .footer-col ul li {
             margin-bottom: 8px;
         }
 
-        .footer-column ul li a {
-            color: #bdc3c7; /* Lighter text for links */
-            text-decoration: none;
-            padding: 3px 0;
-            display: inline-block; /* For proper padding and hover */
-            transition: color 0.3s ease, transform 0.2s ease;
+        .footer-col ul li a {
+            color: #ccc;
+            transition: color 0.2s ease;
         }
 
-        .footer-column ul li a:hover {
-            color: #007bff;
-            transform: translateX(5px); /* Subtle slide right on hover */
+        .footer-col ul li a:hover {
+            color: var(--hover-color);
         }
 
-        .footer-column p {
-            margin: 8px 0;
-            color: #bdc3c7;
-        }
-
-        .copyright {
+        .footer-bottom {
             text-align: center;
-            border-top: 1px solid #3d566e; /* Softer border */
-            padding-top: 25px;
-            margin-top: 30px;
+            padding-top: 20px;
+            margin-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
             font-size: 0.85em;
-            color: #95a5a6;
+            color: #aaa;
         }
 
-        /* --- Admission Pop-up Styles --- */
-        .popup-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
+        /* Modal Styling */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1001; /* Sit on top */
             left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.75); /* Darker overlay */
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0,0,0,0.6); /* Black w/ opacity */
             justify-content: center;
             align-items: center;
-            z-index: 2000;
-            opacity: 0;
-            transition: opacity 0.3s ease-in-out;
+            animation: fadeIn 0.3s ease-out;
         }
 
-        .popup-overlay.show {
-            display: flex;
-            opacity: 1;
-        }
-
-        .popup-content {
-            background: #fff;
-            padding: 40px; /* More padding */
-            border-radius: 15px; /* More rounded */
-            position: relative;
-            max-width: 550px; /* Slightly wider */
+        .modal-content {
+            background-color: #fefefe;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             width: 90%;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.5); /* Stronger, deeper shadow */
-            transform: translateY(-80px) scale(0.85); /* More pronounced initial animation */
-            transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55); /* Springy animation */
-            animation: fadeInScale 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards; /* Initial animation */
-        }
-
-        @keyframes fadeInScale {
-            from {
-                opacity: 0;
-                transform: translateY(-80px) scale(0.85);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
-        }
-
-
-        .popup-overlay.show .popup-content {
-            transform: translateY(0) scale(1);
-            animation: none; /* Disable initial animation once shown via JS */
-        }
-
-        .popup-content h2 {
-            margin-top: 0;
-            color: #007bff;
-            text-align: center;
-            margin-bottom: 30px;
-            font-size: 2.2em;
-            font-weight: 700;
-        }
-
-        .popup-content form label {
-            display: block;
-            margin-bottom: 10px;
-            font-weight: 600;
-            color: #444;
-            text-align: left;
-        }
-
-        .popup-content form input[type="text"],
-        .popup-content form input[type="email"],
-        .popup-content form input[type="tel"] {
-            width: calc(100% - 24px); /* Account for padding */
-            padding: 14px;
-            margin-bottom: 20px;
-            border: 1px solid #ddd;
-            border-radius: 8px; /* Nicely rounded input fields */
-            font-size: 16px;
-            box-shadow: inset 0 1px 4px rgba(0,0,0,0.08); /* Subtle inner shadow */
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .popup-content form input[type="text"]:focus,
-        .popup-content form input[type="email"]:focus,
-        .popup-content form input[type="tel"]:focus {
-            border-color: #007bff;
-            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.2); /* Focus ring */
-            outline: none;
-        }
-
-        .popup-content form button {
-            background-color: #007bff;
-            color: white;
-            padding: 15px 30px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 18px;
-            font-weight: 600;
-            display: block;
-            width: 100%;
-            margin-top: 25px;
-            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-            box-shadow: 0 6px 15px rgba(0, 123, 255, 0.4);
-        }
-
-        .popup-content form button:hover {
-            background-color: #0056b3;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0, 123, 255, 0.5);
+            max-width: 500px;
+            position: relative;
+            animation: slideIn 0.3s ease-out;
+            transform-origin: center;
         }
 
         .close-button {
+            color: #aaa;
             position: absolute;
             top: 15px;
             right: 20px;
-            font-size: 35px; /* Larger close button */
+            font-size: 30px;
+            font-weight: bold;
             cursor: pointer;
-            color: #aaa; /* Softer color */
-            line-height: 1;
-            transition: color 0.3s ease, transform 0.3s ease;
+            transition: color 0.2s ease, transform 0.2s ease;
         }
 
-        .close-button:hover {
+        .close-button:hover,
+        .close-button:focus {
+            color: #333;
+            transform: rotate(90deg);
+        }
+
+        .modal-content h2 {
+            margin-bottom: 25px;
+            color: var(--nav-bg-start);
+            text-align: center;
+            font-size: 1.8em;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
             color: #555;
-            transform: rotate(90deg) scale(1.1); /* More pronounced rotate */
         }
 
-        /* --- Responsive Design (Mobile - PUSH-DOWN Menu) --- */
-        @media (max-width: 768px) {
-            .header-container {
-                padding: 10px 20px;
-                position: relative; /* Needed to position the menu relative to the header */
-            }
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="tel"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
 
-            .logo img {
-                max-height: 45px;
+        .form-group input[type="text"]:focus,
+        .form-group input[type="email"]:focus,
+        .form-group input[type="tel"]:focus {
+            border-color: var(--nav-bg-start);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.3);
+            outline: none;
+        }
+
+        .modal-content button[type="submit"] {
+            background-color: var(--button-bg-contact); /* Green submit button */
+            color: white;
+            padding: 14px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            width: 100%;
+            margin-top: 15px;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+        }
+
+        .modal-content button[type="submit"]:hover {
+            background-color: var(--button-hover-contact);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Animations for Modal */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-50px) scale(0.9); opacity: 0; }
+            to { transform: translateY(0) scale(1); opacity: 1; }
+        }
+
+
+        /* Responsive Styling (Mobile View) */
+        @media (max-width: 768px) {
+            .header-content {
+                padding: 10px 15px;
             }
 
             .main-nav {
-                flex-direction: row;
-                justify-content: flex-end;
-            }
-
-            .menu-toggle {
-                display: block; /* Show hamburger */
-            }
-
-            /* The overlay is NOT needed for a push-down menu as it doesn't cover content */
-            .overlay {
-                display: none;
-            }
-
-            /* Main mobile navigation menu styles */
-            .nav-menu {
+                display: none; /* Hide desktop nav */
                 flex-direction: column;
-                position: absolute; /* No longer fixed */
-                top: 100%; /* Position right below the header */
+                position: absolute;
+                top: 70px; /* Below header, adjusted for logo size */
                 left: 0;
                 width: 100%;
-                height: 0; /* Start hidden */
-                background-color: #fff;
-                box-shadow: 0 5px 15px rgba(0,0,0,0.1); /* Shadow below the menu */
-                padding: 0; /* Start with no padding */
-                overflow: hidden; /* Hide overflow until expanded */
-                transition: height 0.4s ease-out, padding-top 0.4s ease-out, padding-bottom 0.4s ease-out; /* Smooth slide down */
-                z-index: 990; /* Below header, above main content */
-                align-items: center;
+                background: linear-gradient(135deg, var(--mobile-nav-bg-start), var(--mobile-nav-bg-end)); /* Different gradient for mobile */
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+                padding: 10px 0;
+                overflow: hidden;
+                max-height: 0; /* For accordion effect */
+                transition: max-height 0.4s ease-out, transform 0.3s ease-out;
+                z-index: 998;
+                transform-origin: top;
+                transform: scaleY(0); /* Start scaled down */
             }
 
-            .nav-menu.active {
-                height: auto; /* Allow height to expand based on content */
-                max-height: 500px; /* Set a max-height to avoid excessive height if there are many items. Adjust as needed. */
-                padding: 10px 0 20px; /* Padding for the active state */
-                border-top: 1px solid #f0f0f0; /* Subtle line to separate from header */
+            .main-nav.active {
+                display: flex;
+                max-height: 600px; /* Adjust based on content height */
+                transform: scaleY(1); /* Scale up when active */
             }
 
-            .nav-menu li {
-                width: 90%;
-                max-width: 350px;
-                margin: 8px 0;
-                text-align: center;
-                border-bottom: 1px solid #f0f0f0;
-                padding-bottom: 5px;
+            .main-nav .nav-list {
+                flex-direction: column;
+                width: 100%;
+                padding: 10px 0;
             }
 
-            .nav-menu li:last-child {
+            .main-nav .nav-item {
+                margin: 0;
+                width: 100%;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+            .main-nav .nav-item:last-child {
                 border-bottom: none;
             }
 
-            .nav-menu a {
-                padding: 15px 0;
-                color: #333;
-                background-color: transparent;
-                box-shadow: none;
-                border-radius: 0;
-                font-size: 1.15em;
-                font-weight: 500;
-                width: 100%;
+            .main-nav .nav-item a {
+                padding: 15px 20px;
+                color: var(--nav-text-color);
                 text-align: left;
-                padding-left: 20px;
-            }
-            .nav-menu a::after {
-                content: none; /* Remove underline for mobile menu items */
+                position: relative;
+                font-weight: 400;
+                transition: background-color 0.2s ease;
             }
 
-            .nav-menu a:hover {
-                background-color: #f8f8f8;
-                transform: translateX(5px);
-                color: #007bff;
-                box-shadow: none;
+            /* Remove desktop underline effect on mobile */
+            .main-nav .nav-item a::before {
+                display: none;
             }
-            
-            /* Dropdown indicator for mobile */
-            .has-dropdown > a {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                padding-right: 20px; /* Space for the indicator */
+
+            .main-nav .nav-item a:hover {
+                background-color: rgba(255, 255, 255, 0.15);
             }
-            .has-dropdown > a::before {
+
+            /* Dropdown Indicator for mobile (Plus/Minus) */
+            .main-nav .has-dropdown > a::after {
                 content: '+';
+                position: absolute;
+                right: 20px;
+                color: var(--nav-text-color);
                 font-size: 1.2em;
-                margin-left: auto; /* Push to the right */
                 transition: transform 0.3s ease;
-                color: #666;
             }
-            .has-dropdown.active > a::before {
+
+            .main-nav .has-dropdown.open > a::after {
                 content: '-';
-                /* No rotation needed if content is '-' */
+                transform: rotate(180deg);
             }
 
-            /* Adjust dropdowns for mobile (expandable sections) */
-            .dropdown-menu {
-                position: static; /* Allows it to push content down */
+            .main-nav .dropdown-menu {
+                position: static; /* Stack dropdowns vertically */
                 box-shadow: none;
-                background-color: #f9fcff;
-                min-width: unset;
-                display: none; /* Hidden by default, shown via JS toggle */
-                padding: 5px 0;
+                background-color: rgba(0, 0, 0, 0.2); /* Slightly darker background */
+                transform: none; /* No 3D transform on mobile dropdowns */
+                opacity: 1;
+                max-height: 0; /* For accordion */
+                overflow: hidden;
+                transition: max-height 0.3s ease-out;
+                pointer-events: auto; /* Always allow clicks */
                 border-radius: 0;
-                transform: none; /* No transforms for static positioning */
-                opacity: 1; /* Always visible when displayed */
-                visibility: visible; /* Always visible when displayed */
-                transition: height 0.3s ease-out, padding 0.3s ease-out; /* Smooth height transition */
-                width: 100%;
-                margin-top: 0px;
-                border-top: 1px solid #f0f0f0;
             }
 
-            /* This class is added by JS to expand the dropdown */
-            .has-dropdown.active > .dropdown-menu {
-                display: block; /* Make it visible */
+            .main-nav .has-dropdown.open .dropdown-menu {
+                max-height: 300px; /* Max height for open dropdown, adjust as needed */
+                padding-bottom: 10px;
             }
 
-            .dropdown-menu li {
-                margin-bottom: 0;
-                border-bottom: none; /* Remove border for sub-items */
-            }
-            
-            .dropdown-menu li a {
-                color: #666;
-                padding: 10px 30px; /* Indent sub-items */
-                background-color: transparent;
-                font-size: 1em;
-                text-align: left;
+            .main-nav .dropdown-menu li a {
+                padding: 10px 30px; /* Indent dropdown items */
+                color: var(--nav-text-color); /* Maintain light color for mobile dropdown items */
+                font-size: 0.95em;
             }
 
-            .dropdown-menu li a:hover {
-                background-color: #e6f2ff;
-                color: #007bff;
-                transform: translateX(8px);
+            .main-nav .dropdown-menu li a:hover {
+                background-color: rgba(0, 0, 0, 0.3);
+                padding-left: 35px; /* Deeper indent on hover */
             }
-            
-            /* Footer responsiveness */
-            .footer-container {
-                flex-direction: column;
+
+            .hamburger-menu {
+                display: flex; /* Show hamburger */
+            }
+
+            /* Hamburger X animation */
+            .hamburger-menu.active .bar:nth-child(1) {
+                transform: translateY(8px) rotate(45deg);
+            }
+
+            .hamburger-menu.active .bar:nth-child(2) {
+                opacity: 0;
+            }
+
+            .hamburger-menu.active .bar:nth-child(3) {
+                transform: translateY(-8px) rotate(-45deg);
+            }
+
+            .btn-login, .btn-contact {
+                display: block; /* Make them full width */
+                margin: 10px 20px;
+                width: calc(100% - 40px); /* Full width minus padding */
                 text-align: center;
-                padding: 20px 20px;
             }
 
-            .footer-column {
-                min-width: unset;
-                width: 100%;
-                margin-bottom: 40px;
+            .main-content {
+                padding-top: 80px; /* Adjust for mobile header height */
             }
 
-            .footer-column h3::after {
+            .footer-columns {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .footer-col {
+                text-align: center;
+            }
+
+            .footer-col h3::after {
                 left: 50%;
-                transform: translateX(-50%);
+                transform: translateX(-50%); /* Center underline */
             }
         }
     </style>
 </head>
 <body>
-
-    <header>
-        <div class="header-container">
+    <header class="main-header">
+        <div class="header-content">
             <div class="logo">
-                <a href="#">
-                    <img src="https://alifedu.org/assets/images/logo/alif-logo.png" alt="Alif Edu Logo">
-                </a>
+                <a href="#"><img src="https://via.placeholder.com/150x50?text=Your+Logo" alt="Company Logo"></a>
             </div>
             <nav class="main-nav">
-                <button class="menu-toggle" aria-label="Toggle Navigation">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-                <ul class="nav-menu">
-                    <li><a href="#" class="current-page">Home</a></li>
-                    <li class="has-dropdown">
+                <ul class="nav-list">
+                    <li class="nav-item active"><a href="#">Home</a></li>
+                    <li class="nav-item has-dropdown">
                         <a href="#">About Us</a>
                         <ul class="dropdown-menu">
                             <li><a href="#">Principals Desk</a></li>
@@ -670,7 +593,7 @@
                             <li><a href="#">Alif Vision & Mission</a></li>
                         </ul>
                     </li>
-                    <li class="has-dropdown">
+                    <li class="nav-item has-dropdown">
                         <a href="#">Academics</a>
                         <ul class="dropdown-menu">
                             <li><a href="#">Levels</a></li>
@@ -678,211 +601,189 @@
                             <li><a href="#">Teaching Faculty</a></li>
                         </ul>
                     </li>
-                    <li class="has-dropdown">
+                    <li class="nav-item has-dropdown">
                         <a href="#">Admission</a>
                         <ul class="dropdown-menu">
-                            <li><a href="#" id="bookAdmission">Book Your Admission</a></li>
+                            <li><a href="#" class="open-admission-form">Book Your Admission</a></li>
                             <li><a href="#">Admission Procedure</a></li>
                             <li><a href="#">Fee Structure</a></li>
                             <li><a href="#">Rules & Regulations</a></li>
                             <li><a href="#">Transfer Certificate</a></li>
                         </ul>
                     </li>
-                    <li class="has-dropdown">
+                    <li class="nav-item has-dropdown">
                         <a href="#">Resource</a>
                         <ul class="dropdown-menu">
                             <li><a href="#">Circular Curriculum</a></li>
                             <li><a href="#">Career</a></li>
                         </ul>
                     </li>
-                    <li><a href="#">News & Events</a></li>
-                    <li><a href="#">Contact Us</a></li>
-                    <li><a href="https://alifedu.org/login?next=%2Fwl_admin%3Faction%3Dinitial_call" target="_blank">Login to our App</a></li>
+                    <li class="nav-item"><a href="#">News & Events</a></li>
+                    <li class="nav-item"><a href="#" class="btn-login">Login</a></li>
+                    <li class="nav-item"><a href="#" class="btn-contact">Contact Us</a></li>
                 </ul>
             </nav>
+            <div class="hamburger-menu">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
         </div>
     </header>
 
-    <main>
-        <h1>Welcome to Alif Edu</h1>
-        <p>Providing a world-class education with a focus on holistic development and innovation.</p>
-        <div class="content-placeholder">
-            [ Premium Hero Section / Key Visual Here ]
-        </div>
-        <div class="content-placeholder" style="height: 400px; margin-top: 30px; background: linear-gradient(135deg, #dcefff, #c3e0ff);">
-            [ Feature Section 1: e.g., Our Philosophy ]
-        </div>
-        <div class="content-placeholder" style="height: 400px; margin-top: 30px; background: linear-gradient(135deg, #cce0ff, #b3d2ff);">
-            [ Feature Section 2: e.g., Academic Excellence ]
-        </div>
-        <div class="content-placeholder" style="height: 400px; margin-top: 30px; background: linear-gradient(135deg, #b3d2ff, #99c2ff);">
-            [ Call to Action / Testimonials ]
-        </div>
+    <main class="main-content">
+        <h1>Experience Our Modern Website</h1>
+        <p>This is a placeholder for your main content. Enjoy the animated navigation and features!</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <p>Suspendisse potenti. In hac habitasse platea dictumst. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec eu est a quam consequat efficitur a ac justo. Nullam eleifend, libero at efficitur pharetra, nulla justo tincidunt est, et pharetra quam nunc vel justo.</p>
     </main>
 
-    <footer>
-        <div class="footer-container">
-            <div class="footer-column">
+    <footer class="main-footer">
+        <div class="footer-columns">
+            <div class="footer-col">
+                <h3>About Us</h3>
+                <p>Brief description of your company or organization, focusing on quality and innovation.</p>
+            </div>
+            <div class="footer-col">
                 <h3>Quick Links</h3>
                 <ul>
                     <li><a href="#">Home</a></li>
-                    <li><a href="#">About Us</a></li>
                     <li><a href="#">Academics</a></li>
                     <li><a href="#">Admission</a></li>
-                    <li><a href="#">Resource</a></li>
-                    <li><a href="#">News & Events</a></li>
-                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
                 </ul>
             </div>
-            <div class="footer-column">
-                <h3>Contact</h3>
-                <p>Address: 123 Alif Road, Knowledge City, State, Pin 123456</p>
-                <p>Phone: +91 123 456 7890</p>
-                <p>Email: info@alifedu.org</p>
-            </div>
-            <div class="footer-column">
-                <h3>Our Other Branches</h3>
-                <ul>
-                    <li><a href="#">Alif Edu - North Campus</a></li>
-                    <li><a href="#">Alif Edu - South Wing</a></li>
-                    <li><a href="#">Alif Edu - Online Academy</a></li>
-                </ul>
+            <div class="footer-col">
+                <h3>Contact Info</h3>
+                <p>123 Modern Street, Tech City, Country</p>
+                <p>Email: info@yourdomain.com</p>
+                <p>Phone: +123 456 7890</p>
             </div>
         </div>
-        <div class="copyright">
-            <p>&copy; <span id="currentYear"></span> Alif Edu. All rights reserved.</p>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Your Company. All rights reserved. Designed with ❤️</p>
         </div>
     </footer>
 
-    <div id="admissionPopup" class="popup-overlay">
-        <div class="popup-content">
+    <div id="admissionModal" class="modal">
+        <div class="modal-content">
             <span class="close-button">&times;</span>
             <h2>Book Your Admission</h2>
-            <form action="YOUR_GOOGLE_SHEET_FORM_URL" method="POST" target="_blank">
-                <label for="popup-name">Your Full Name:</label>
-                <input type="text" id="popup-name" name="entry.123456789" required>
-
-                <label for="popup-email">Your Email:</label>
-                <input type="email" id="popup-email" name="entry.987654321" required>
-
-                <label for="popup-phone">Your Phone Number:</label>
-                <input type="tel" id="popup-phone" name="entry.543219876" placeholder="(e.g., +91-XXXXXXXXXX)" required>
-
-                <label for="popup-grade">Desired Grade/Level:</label>
-                <input type="text" id="popup-grade" name="entry.678901234" placeholder="e.g., Grade 5, Kindergarten">
-
-                <button type="submit">Submit Request</button>
+            <form id="admissionForm" action="YOUR_GOOGLE_SHEET_FORM_URL" method="POST" target="_blank">
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="Name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="Email" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone:</label>
+                    <input type="tel" id="phone" name="Phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="grade">Desired Grade:</label>
+                    <input type="text" id="grade" name="Desired Grade" required>
+                </div>
+                <button type="submit">Submit Admission</button>
             </form>
         </div>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const currentYearSpan = document.getElementById('currentYear');
-            if (currentYearSpan) {
-                currentYearSpan.textContent = new Date().getFullYear();
-            }
+            const hamburgerMenu = document.querySelector('.hamburger-menu');
+            const mainNav = document.querySelector('.main-nav');
+            const navItemsWithDropdown = document.querySelectorAll('.main-nav .has-dropdown');
+            const openAdmissionFormBtn = document.querySelector('.open-admission-form');
+            const admissionModal = document.getElementById('admissionModal');
+            const closeModalBtn = document.querySelector('.close-button');
+            const admissionForm = document.getElementById('admissionForm');
 
-            const menuToggle = document.querySelector('.menu-toggle');
-            const navMenu = document.querySelector('.nav-menu');
+            // Hamburger menu toggle for mobile
+            hamburgerMenu.addEventListener('click', () => {
+                mainNav.classList.toggle('active');
+                hamburgerMenu.classList.toggle('active');
+                // Close any open dropdowns when closing the main nav
+                if (!mainNav.classList.contains('active')) {
+                    navItemsWithDropdown.forEach(item => {
+                        item.classList.remove('open');
+                    });
+                }
+            });
 
-            function closeMobileMenu() {
-                navMenu.classList.remove('active');
-                menuToggle.classList.remove('active');
-                // Ensure all dropdowns are closed when main menu closes
-                document.querySelectorAll('.has-dropdown.active').forEach(dropdown => {
-                    dropdown.classList.remove('active');
-                });
-            }
+            // Mobile dropdown accordion behavior
+            navItemsWithDropdown.forEach(item => {
+                const parentLink = item.querySelector('a');
+                parentLink.addEventListener('click', (e) => {
+                    if (window.innerWidth <= 768) { // Only for mobile view
+                        e.preventDefault(); // Prevent default link behavior
 
-            if (menuToggle && navMenu) {
-                menuToggle.addEventListener('click', () => {
-                    if (navMenu.classList.contains('active')) {
-                        closeMobileMenu();
-                    } else {
-                        navMenu.classList.add('active');
-                        menuToggle.classList.add('active');
-                    }
-                });
+                        // Close other open dropdowns (accordion behavior)
+                        navItemsWithDropdown.forEach(otherItem => {
+                            if (otherItem !== item && otherItem.classList.contains('open')) {
+                                otherItem.classList.remove('open');
+                            }
+                        });
 
-                document.addEventListener('keydown', (e) => {
-                    if (e.key === 'Escape' && navMenu.classList.contains('active')) {
-                        closeMobileMenu();
-                    }
-                });
-            }
-
-            // Dropdown functionality for mobile (click to toggle and close others)
-            document.querySelectorAll('.has-dropdown > a').forEach(item => {
-                item.addEventListener('click', function(e) {
-                    const isMobileBreakpoint = window.innerWidth <= 768;
-                    
-                    // Only prevent default for dropdowns on mobile or if href is '#'
-                    if (isMobileBreakpoint || this.getAttribute('href') === '#') {
-                        e.preventDefault(); 
-                        const parentLi = this.closest('.has-dropdown');
-
-                        // Close all other open dropdowns in the mobile menu
-                        // but only if a new one is being opened
-                        if (!parentLi.classList.contains('active')) {
-                            document.querySelectorAll('.nav-menu .has-dropdown.active').forEach(otherDropdown => {
-                                if (otherDropdown !== parentLi) {
-                                    otherDropdown.classList.remove('active');
-                                }
-                            });
-                        }
-                        
-                        // Toggle active class for the clicked dropdown
-                        parentLi.classList.toggle('active');
+                        // Toggle current dropdown
+                        item.classList.toggle('open');
                     }
                 });
             });
 
-            // Close mobile menu when any non-dropdown-toggle link is clicked
-            document.querySelectorAll('.nav-menu a:not(.has-dropdown > a)').forEach(link => {
-                link.addEventListener('click', () => {
-                    if (window.innerWidth <= 768 && navMenu.classList.contains('active')) {
-                        // If it's a "Login to our App" link (target="_blank"), let it open in new tab
-                        // without immediately closing the menu first, for better UX.
-                        // Otherwise, close the menu.
-                        if (link.getAttribute('target') !== '_blank') {
-                            closeMobileMenu();
-                        }
-                    }
-                });
+            // Open Admission Form Modal
+            openAdmissionFormBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                admissionModal.style.display = 'flex';
+                // Close mobile menu if it's open
+                mainNav.classList.remove('active');
+                hamburgerMenu.classList.remove('active');
             });
 
-            // Admission Pop-up Logic
-            const bookAdmissionLink = document.getElementById('bookAdmission');
-            const admissionPopup = document.getElementById('admissionPopup');
-            const closeButton = document.querySelector('#admissionPopup .close-button');
+            // Close Modal when clicking on the close button
+            closeModalBtn.addEventListener('click', () => {
+                admissionModal.style.display = 'none';
+            });
 
-            if (bookAdmissionLink && admissionPopup && closeButton) {
-                bookAdmissionLink.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    admissionPopup.classList.add('show');
-                    if (navMenu.classList.contains('active')) {
-                        closeMobileMenu(); // Ensure mobile menu is closed when popup opens
-                    }
-                });
+            // Close Modal when clicking outside the modal content
+            window.addEventListener('click', (event) => {
+                if (event.target === admissionModal) {
+                    admissionModal.style.display = 'none';
+                }
+            });
 
-                closeButton.addEventListener('click', () => {
-                    admissionPopup.classList.remove('show');
-                });
+            // Handle form submission (placeholder for Google Sheet)
+            admissionForm.addEventListener('submit', (e) => {
+                // e.preventDefault(); // Uncomment to prevent default form submission for testing or AJAX
+                alert('Form submitted! (This is a placeholder. Data will be sent to Google Sheet if URL is correct)');
 
-                admissionPopup.addEventListener('click', (e) => {
-                    // Close popup if clicked on overlay, not the content itself
-                    if (e.target === admissionPopup) {
-                        admissionPopup.classList.remove('show');
-                    }
-                });
+                // After submission, you might want to close the modal and reset the form
+                setTimeout(() => { // Small delay for the alert to show
+                    admissionModal.style.display = 'none';
+                    admissionForm.reset();
+                }, 100);
+            });
 
-                document.addEventListener('keydown', (e) => {
-                    if (e.key === 'Escape' && admissionPopup.classList.contains('show')) {
-                        admissionPopup.classList.remove('show');
-                    }
-                });
-            }
+            // Active link highlighting (optional, can be done with server-side logic too)
+            // This example highlights 'Home' by default in HTML.
+            // If you want dynamic highlighting based on current URL, uncomment and adjust this:
+            /*
+            const currentPath = window.location.pathname.split('/').pop();
+            const navLinks = document.querySelectorAll('.main-nav .nav-list .nav-item a');
+
+            navLinks.forEach(link => {
+                // Remove active from all others first
+                document.querySelector('.nav-item.active')?.classList.remove('active');
+
+                // Check if the link's href matches the current path
+                // Handle empty path for home or "#"
+                if (link.getAttribute('href') === currentPath || (currentPath === '' && link.getAttribute('href') === '#')) {
+                    link.closest('.nav-item').classList.add('active');
+                }
+            });
+            */
         });
     </script>
 </body>
