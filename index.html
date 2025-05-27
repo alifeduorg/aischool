@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Animated Responsive Navigation Bar</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>Animated Responsive Navigation Bar with App Slider</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
         /* General Styling & Variables */
         :root {
@@ -24,8 +25,16 @@
             --button-hover-contact: #229954;
             --mobile-nav-bg-start: #2c3e50; /* Darker blue for mobile */
             --mobile-nav-bg-end: #34495e;
+
+            /* Slider specific colors */
+            --slider-arrow-bg: rgba(0, 0, 0, 0.5);
+            --slider-arrow-hover-bg: rgba(0, 0, 0, 0.8);
+            --slider-dot-color: #bbb;
+            --slider-dot-active-color: #717171;
+            --slider-caption-bg: rgba(0, 0, 0, 0.6);
         }
 
+        /* Base styles from your original code, adjusted for Tailwind compatibility where needed */
         * {
             margin: 0;
             padding: 0;
@@ -33,7 +42,7 @@
         }
 
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Inter', sans-serif; /* Using Inter for a modern feel */
             line-height: 1.6;
             background-color: #f4f4f4;
             color: #333;
@@ -141,57 +150,57 @@
             position: absolute;
             top: 100%;
             left: 0;
-            background-color: var(--dropdown-bg); /* Uses the updated variable (white) */
+            background-color: var(--dropdown-bg);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
-            min-width: 180px; /* Decreased width for laptops/desktops */
-            max-width: 250px; /* Max width to prevent it from getting too wide */
+            min-width: 180px;
+            max-width: 250px;
             border-radius: 8px;
             overflow: hidden;
-            transform: translateY(15px) rotateX(-15deg); /* Initial 3D transform */
+            transform: translateY(15px) rotateX(-15deg);
             opacity: 0;
             transition: transform 0.3s ease-out, opacity 0.3s ease-out;
-            transform-origin: top center; /* For rotation effect */
+            transform-origin: top center;
             z-index: 999;
-            pointer-events: none; /* Allows hover on parent but prevents clicking until visible */
+            pointer-events: none;
         }
 
         .main-nav .has-dropdown:hover > .dropdown-menu {
             display: block;
             transform: translateY(0) rotateX(0deg);
             opacity: 1;
-            pointer-events: auto; /* Enable clicks when visible */
+            pointer-events: auto;
         }
 
         .main-nav .dropdown-menu li a {
-            color: var(--dropdown-text); /* Uses the updated variable (black) */
-            padding: 10px 20px; /* Slightly decreased padding for smaller text */
+            color: var(--dropdown-text);
+            padding: 10px 20px;
             display: block;
             white-space: nowrap;
             transition: background-color 0.2s ease, color 0.2s ease, padding-left 0.2s ease;
             font-weight: 400;
-            font-size: 0.9em; /* Decreased text size */
+            font-size: 0.9em;
         }
 
         .main-nav .dropdown-menu li a:hover {
-            background-color: #f0f0f0; /* Light gray for hover on white background */
-            color: var(--nav-bg-start); /* Change text color to blue on hover */
-            padding-left: 25px; /* Slight indent on hover */
+            background-color: #f0f0f0;
+            color: var(--nav-bg-start);
+            padding-left: 25px;
         }
 
         /* Distinct Buttons (Login & Contact Us) */
         .btn-login, .btn-contact {
             padding: 10px 20px;
-            border-radius: 25px; /* Pill shape */
+            border-radius: 25px;
             font-weight: 600;
             transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            display: inline-block; /* Ensures padding works */
+            display: inline-block;
             text-align: center;
         }
 
         .btn-login {
             background-color: var(--button-bg-login);
-            color: var(--nav-text-color) !important; /* Override default link color */
+            color: var(--nav-text-color) !important;
             margin-left: 20px;
         }
 
@@ -204,7 +213,7 @@
         .btn-contact {
             background-color: var(--button-bg-contact);
             color: var(--nav-text-color) !important;
-            margin-left: 10px; /* Space between login and contact */
+            margin-left: 10px;
         }
 
         .btn-contact:hover {
@@ -222,7 +231,7 @@
             width: 30px;
             height: 20px;
             position: relative;
-            z-index: 1001; /* Ensure it's above everything */
+            z-index: 1001;
         }
 
         .hamburger-menu .bar {
@@ -236,7 +245,7 @@
         /* Main Content Styling */
         .main-content {
             padding: 100px 20px 50px; /* Adjust padding-top for fixed header */
-            max-width: 1200px;
+            max-width: 1200px; /* Constrain main content width */
             margin: 0 auto;
             text-align: center;
         }
@@ -244,6 +253,125 @@
         .main-content h1 {
             margin-bottom: 20px;
             color: var(--nav-bg-start);
+        }
+
+        /* Full-Width Image Slider Styles */
+        .app-slider-container {
+            position: relative;
+            width: 100%; /* Full width */
+            max-width: 100vw; /* Ensure it spans viewport width */
+            overflow: hidden;
+            margin-top: 20px; /* Space below header */
+            margin-bottom: 40px; /* Space above content */
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .app-slider-track {
+            display: flex;
+            transition: transform 0.8s ease-in-out; /* Smooth slide transition */
+            height: 450px; /* Fixed height for the slider */
+        }
+
+        .app-slide {
+            min-width: 100%; /* Each slide takes full width of the track */
+            flex-shrink: 0; /* Prevents slides from shrinking */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            background-color: #f0f0f0; /* Fallback background */
+        }
+
+        .app-slide img {
+            width: 100%;
+            height: 100%; /* Fill the height of the slide */
+            object-fit: cover; /* Cover the area, cropping if necessary */
+            display: block;
+        }
+
+        .app-slide-caption {
+            position: absolute;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--slider-caption-bg);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 1.3em;
+            font-weight: 500;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            white-space: nowrap; /* Prevent caption from wrapping */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .app-slide.active .app-slide-caption {
+            opacity: 1;
+        }
+
+        /* Slider Navigation Arrows */
+        .app-slider-nav-btn {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+            font-size: 28px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            user-select: none;
+            background-color: var(--slider-arrow-bg);
+            z-index: 10;
+            border-radius: 50%; /* Circular buttons */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .app-slider-nav-btn:hover {
+            background-color: var(--slider-arrow-hover-bg);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .app-slider-prev {
+            left: 15px;
+        }
+
+        .app-slider-next {
+            right: 15px;
+        }
+
+        /* Slider Dots */
+        .app-slider-dots {
+            text-align: center;
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+        }
+
+        .app-dot {
+            cursor: pointer;
+            height: 14px;
+            width: 14px;
+            margin: 0 6px;
+            background-color: var(--slider-dot-color);
+            border-radius: 50%;
+            display: inline-block;
+            transition: background-color 0.4s ease, transform 0.2s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .app-dot.active, .app-dot:hover {
+            background-color: var(--slider-dot-active-color);
+            transform: scale(1.2);
         }
 
         /* Footer Styling */
@@ -384,7 +512,7 @@
             padding: 12px;
             border: 1px solid #ddd;
             border-radius: 6px;
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Inter', sans-serif; /* Using Inter for form inputs */
             font-size: 1rem;
             transition: border-color 0.2s ease, box-shadow 0.2s ease;
         }
@@ -398,7 +526,7 @@
         }
 
         .modal-content button[type="submit"] {
-            background-color: var(--button-bg-contact); /* Green submit button */
+            background-color: var(--button-bg-contact);
             color: white;
             padding: 14px 25px;
             border: none;
@@ -436,28 +564,27 @@
             }
 
             .main-nav {
-                display: none; /* Hide desktop nav */
+                display: none;
                 flex-direction: column;
                 position: absolute;
-                top: 70px; /* Below header, adjusted for logo size */
+                top: 70px;
                 left: 0;
                 width: 100%;
-                /* Mobile nav background could be different from dropdown */
                 background: linear-gradient(135deg, var(--mobile-nav-bg-start), var(--mobile-nav-bg-end));
                 box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
                 padding: 10px 0;
                 overflow: hidden;
-                max-height: 0; /* For accordion effect */
+                max-height: 0;
                 transition: max-height 0.4s ease-out, transform 0.3s ease-out;
                 z-index: 998;
                 transform-origin: top;
-                transform: scaleY(0); /* Start scaled down */
+                transform: scaleY(0);
             }
 
             .main-nav.active {
                 display: flex;
-                max-height: 600px; /* Adjust based on content height */
-                transform: scaleY(1); /* Scale up when active */
+                max-height: 600px;
+                transform: scaleY(1);
             }
 
             .main-nav .nav-list {
@@ -485,7 +612,6 @@
                 transition: background-color 0.2s ease;
             }
 
-            /* Remove desktop underline effect on mobile */
             .main-nav .nav-item a::before {
                 display: none;
             }
@@ -494,7 +620,6 @@
                 background-color: rgba(255, 255, 255, 0.15);
             }
 
-            /* Dropdown Indicator for mobile (Plus/Minus) */
             .main-nav .has-dropdown > a::after {
                 content: '+';
                 position: absolute;
@@ -510,42 +635,40 @@
             }
 
             .main-nav .dropdown-menu {
-                position: static; /* Stack dropdowns vertically */
+                position: static;
                 box-shadow: none;
-                /* Mobile dropdown will use a semi-transparent dark background for contrast with main nav */
                 background-color: rgba(0, 0, 0, 0.2);
-                transform: none; /* No 3D transform on mobile dropdowns */
+                transform: none;
                 opacity: 1;
-                max-height: 0; /* For accordion */
+                max-height: 0;
                 overflow: hidden;
                 transition: max-height 0.3s ease-out;
-                pointer-events: auto; /* Always allow clicks */
+                pointer-events: auto;
                 border-radius: 0;
-                min-width: unset; /* Reset min-width for mobile */
-                max-width: unset; /* Reset max-width for mobile */
+                min-width: unset;
+                max-width: unset;
             }
 
             .main-nav .has-dropdown.open .dropdown-menu {
-                max-height: 300px; /* Max height for open dropdown, adjust as needed */
+                max-height: 300px;
                 padding-bottom: 10px;
             }
 
             .main-nav .dropdown-menu li a {
-                padding: 10px 30px; /* Indent dropdown items */
-                color: var(--nav-text-color); /* Maintain light color for mobile dropdown items */
-                font-size: 0.95em; /* Use the mobile text size */
+                padding: 10px 30px;
+                color: var(--nav-text-color);
+                font-size: 0.95em;
             }
 
             .main-nav .dropdown-menu li a:hover {
-                background-color: rgba(0, 0, 0, 0.3); /* Slightly darker transparent black on hover */
-                padding-left: 35px; /* Deeper indent on hover */
+                background-color: rgba(0, 0, 0, 0.3);
+                padding-left: 35px;
             }
 
             .hamburger-menu {
-                display: flex; /* Show hamburger */
+                display: flex;
             }
 
-            /* Hamburger X animation */
             .hamburger-menu.active .bar:nth-child(1) {
                 transform: translateY(8px) rotate(45deg);
             }
@@ -559,14 +682,14 @@
             }
 
             .btn-login, .btn-contact {
-                display: block; /* Make them full width */
+                display: block;
                 margin: 10px 20px;
-                width: calc(100% - 40px); /* Full width minus padding */
+                width: calc(100% - 40px);
                 text-align: center;
             }
 
             .main-content {
-                padding-top: 80px; /* Adjust for mobile header height */
+                padding-top: 80px;
             }
 
             .footer-columns {
@@ -580,7 +703,33 @@
 
             .footer-col h3::after {
                 left: 50%;
-                transform: translateX(-50%); /* Center underline */
+                transform: translateX(-50%);
+            }
+
+            /* Slider specific responsive adjustments */
+            .app-slider-track {
+                height: 250px; /* Smaller height on mobile */
+            }
+            .app-slide-caption {
+                font-size: 1em;
+                bottom: 15px;
+                padding: 10px 20px;
+            }
+            .app-slider-nav-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 22px;
+            }
+            .app-slider-prev {
+                left: 10px;
+            }
+            .app-slider-next {
+                right: 10px;
+            }
+            .app-dot {
+                height: 10px;
+                width: 10px;
+                margin: 0 4px;
             }
         }
     </style>
@@ -589,7 +738,7 @@
     <header class="main-header">
         <div class="header-content">
             <div class="logo">
-                <a href="#"><img src="aliflogo.png" alt="Company Logo"></a>
+                <a href="#"><img src="https://placehold.co/150x50/3498db/ffffff?text=ALIF+LOGO" alt="Company Logo"></a>
             </div>
             <nav class="main-nav">
                 <ul class="nav-list">
@@ -641,9 +790,40 @@
         </div>
     </header>
 
+    <div class="app-slider-container">
+        <div class="app-slider-track">
+            <div class="app-slide">
+                <img src="https://placehold.co/1920x600/3498db/ffffff?text=Your+App+Screenshot+1" alt="App Screenshot 1">
+                <div class="app-slide-caption">Intuitive Dashboard</div>
+            </div>
+            <div class="app-slide">
+                <img src="https://placehold.co/1920x600/2ecc71/ffffff?text=Your+App+Screenshot+2" alt="App Screenshot 2">
+                <div class="app-slide-caption">Seamless User Experience</div>
+            </div>
+            <div class="app-slide">
+                <img src="https://placehold.co/1920x600/e74c3c/ffffff?text=Your+App+Screenshot+3" alt="App Screenshot 3">
+                <div class="app-slide-caption">Powerful Analytics</div>
+            </div>
+            <div class="app-slide">
+                <img src="https://placehold.co/1920x600/f1c40f/ffffff?text=Your+App+Screenshot+4" alt="App Screenshot 4">
+                <div class="app-slide-caption">Cross-Platform Compatibility</div>
+            </div>
+        </div>
+
+        <a class="app-slider-nav-btn app-slider-prev" onclick="plusSlides(-1)">&#10094;</a>
+        <a class="app-slider-nav-btn app-slider-next" onclick="plusSlides(1)">&#10095;</a>
+
+        <div class="app-slider-dots">
+            <span class="app-dot" onclick="currentSlide(1)"></span>
+            <span class="app-dot" onclick="currentSlide(2)"></span>
+            <span class="app-dot" onclick="currentSlide(3)"></span>
+            <span class="app-dot" onclick="currentSlide(4)"></span>
+        </div>
+    </div>
+
     <main class="main-content">
-        <h1>Experience Our Modern Website</h1>
-        <p>This is a placeholder for your main content. Enjoy the animated navigation and features!</p>
+        <h1>Discover the Future with Our App</h1>
+        <p>Explore the innovative features and benefits of our application designed to simplify your life.</p>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
         <p>Suspendisse potenti. In hac habitasse platea dictumst. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec eu est a quam consequat efficitur a ac justo. Nullam eleifend, libero at efficitur pharetra, nulla justo tincidunt est, et pharetra quam nunc vel justo.</p>
     </main>
@@ -712,13 +892,13 @@
             const admissionForm = document.getElementById('admissionForm');
 
             // Automatically open the admission modal when the page loads
-            admissionModal.style.display = 'flex';
+            admissionModal.style.display = 'flex'; // UNCOMMENTED: This line now makes the modal auto-open
+            console.log('Admission modal set to display flex on DOMContentLoaded.'); // Added for debugging
 
             // Hamburger menu toggle for mobile
             hamburgerMenu.addEventListener('click', () => {
                 mainNav.classList.toggle('active');
                 hamburgerMenu.classList.toggle('active');
-                // Close any open dropdowns when closing the main nav
                 if (!mainNav.classList.contains('active')) {
                     navItemsWithDropdown.forEach(item => {
                         item.classList.remove('open');
@@ -730,74 +910,129 @@
             navItemsWithDropdown.forEach(item => {
                 const parentLink = item.querySelector('a');
                 parentLink.addEventListener('click', (e) => {
-                    if (window.innerWidth <= 768) { // Only for mobile view
-                        e.preventDefault(); // Prevent default link behavior
-
-                        // Close other open dropdowns (accordion behavior)
+                    if (window.innerWidth <= 768) {
+                        e.preventDefault();
                         navItemsWithDropdown.forEach(otherItem => {
                             if (otherItem !== item && otherItem.classList.contains('open')) {
                                 otherItem.classList.remove('open');
                             }
                         });
-
-                        // Toggle current dropdown
                         item.classList.toggle('open');
                     }
                 });
             });
 
-            // Open Admission Form Modal (this is now redundant for initial load but kept for direct clicks)
+            // Open Admission Form Modal
             openAdmissionFormBtn.addEventListener('click', (e) => {
                 e.preventDefault();
                 admissionModal.style.display = 'flex';
-                // Close mobile menu if it's open
                 mainNav.classList.remove('active');
                 hamburgerMenu.classList.remove('active');
+                console.log('Admission modal opened via button click.'); // Added for debugging
             });
 
             // Close Modal when clicking on the close button
             closeModalBtn.addEventListener('click', () => {
                 admissionModal.style.display = 'none';
+                console.log('Admission modal closed via close button.'); // Added for debugging
             });
 
             // Close Modal when clicking outside the modal content
             window.addEventListener('click', (event) => {
                 if (event.target === admissionModal) {
                     admissionModal.style.display = 'none';
+                    console.log('Admission modal closed via outside click.'); // Added for debugging
                 }
             });
 
             // Handle form submission (placeholder for Google Sheet)
             admissionForm.addEventListener('submit', (e) => {
                 // e.preventDefault(); // Uncomment to prevent default form submission for testing or AJAX
-                alert('Form submitted! (This is a placeholder. Data will be sent to Google Sheet if URL is correct)');
+                // In a real application, you'd send this data to a server or Google Sheet
+                // For now, we'll just simulate a submission and close the modal.
+                console.log('Form submitted!'); // Using console.log instead of alert
+                // alert('Form submitted! (This is a placeholder. Data will be sent to Google Sheet if URL is correct)');
 
-                // After submission, you might want to close the modal and reset the form
-                setTimeout(() => { // Small delay for the alert to show
+                setTimeout(() => {
                     admissionModal.style.display = 'none';
                     admissionForm.reset();
                 }, 100);
             });
 
-            // Active link highlighting (optional, can be done with server-side logic too)
-            // This example highlights 'Home' by default in HTML.
-            // If you want dynamic highlighting based on current URL, uncomment and adjust this:
-            /*
-            const currentPath = window.location.pathname.split('/').pop();
-            const navLinks = document.querySelectorAll('.main-nav .nav-list .nav-item a');
+            // APP SLIDER JAVASCRIPT
+            let slideIndex = 0; // Start with the first slide (0-indexed for array)
+            let slideInterval; // Variable to hold the interval for auto-sliding
 
-            navLinks.forEach(link => {
-                // Remove active from all others first
-                document.querySelector('.nav-item.active')?.classList.remove('active');
+            // Function to display slides
+            function showSlides(n) {
+                const slides = document.querySelectorAll(".app-slide");
+                const dots = document.querySelectorAll(".app-dot");
+                const sliderTrack = document.querySelector(".app-slider-track");
 
-                // Check if the link's href matches the current path
-                // Handle empty path for home or "#"
-                if (link.getAttribute('href') === currentPath || (currentPath === '' && link.getAttribute('href') === '#')) {
-                    link.closest('.nav-item').classList.add('active');
+                if (slides.length === 0) return; // Exit if no slides
+
+                // Handle wrapping around (go from last to first, or first to last)
+                if (n >= slides.length) {
+                    slideIndex = 0;
+                } else if (n < 0) {
+                    slideIndex = slides.length - 1;
+                } else {
+                    slideIndex = n;
                 }
-            });
-            */
-        });
+
+                // Move the slider track to show the current slide
+                sliderTrack.style.transform = `translateX(-${slideIndex * 100}%)`;
+
+                // Remove active class from all slides and dots
+                slides.forEach(slide => slide.classList.remove('active'));
+                dots.forEach(dot => dot.classList.remove('active'));
+
+                // Add active class to the current slide and dot
+                slides[slideIndex].classList.add('active');
+                dots[slideIndex].classList.add('active');
+            }
+
+            // Function to change slide with next/prev buttons
+            function plusSlides(n) {
+                showSlides(slideIndex + n);
+                resetAutoSlide(); // Reset auto-slide timer on manual navigation
+            }
+
+            // Function to jump to a specific slide using dots
+            function currentSlide(n) {
+                showSlides(n - 1); // Adjust for 0-indexed array vs 1-indexed dot numbers
+                resetAutoSlide(); // Reset auto-slide timer on manual navigation
+            }
+
+            // Function to start auto-sliding
+            function startAutoSlide() {
+                slideInterval = setInterval(() => {
+                    showSlides(slideIndex + 1);
+                }, 4000); // Change image every 4 seconds
+            }
+
+            // Function to reset auto-slide timer
+            function resetAutoSlide() {
+                clearInterval(slideInterval);
+                startAutoSlide();
+            }
+
+            // Initialize the slider and start auto-sliding when the page loads
+            showSlides(slideIndex); // Display the first slide
+            startAutoSlide(); // Start auto-sliding
+
+            // Pause auto-slide on hover
+            const appSliderContainer = document.querySelector('.app-slider-container');
+            if (appSliderContainer) {
+                appSliderContainer.addEventListener('mouseenter', () => {
+                    clearInterval(slideInterval);
+                });
+                appSliderContainer.addEventListener('mouseleave', () => {
+                    startAutoSlide();
+                });
+            }
+            // END APP SLIDER JAVASCRIPT
+        }); // End of DOMContentLoaded
     </script>
 </body>
 </html>
