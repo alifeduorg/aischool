@@ -9,11 +9,15 @@
         /* General Styling & Variables */
         :root {
             --nav-bg-start: #3498db; /* Blue */
-            --nav-bg-end: #2980b9;   /* Darker Blue */
+            --nav-bg-end: #2980b9;    /* Darker Blue */
             --nav-text-color: #ffffff;
             --hover-color: #f1c40f; /* Yellow for highlights */
-            --dropdown-bg: rgba(255, 255, 255, 0.95);
-            --dropdown-text: #333; /* Dark color for dropdown text */
+
+            /* --- DROPDOWN MENU COLOR CHANGES START HERE --- */
+            --dropdown-bg: #3498db; /* White background */
+            --dropdown-text: #333333; /* Dark gray/black text for readability on white */
+            /* --- DROPDOWN MENU COLOR CHANGES END HERE --- */
+
             --button-bg-login: #e74c3c; /* Red for login */
             --button-hover-login: #c0392b;
             --button-bg-contact: #27ae60; /* Green for contact */
@@ -137,9 +141,10 @@
             position: absolute;
             top: 100%;
             left: 0;
-            background-color: var(--dropdown-bg);
+            background-color: var(--dropdown-bg); /* Uses the updated variable (white) */
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
-            min-width: 220px;
+            min-width: 180px; /* Decreased width for laptops/desktops */
+            max-width: 250px; /* Max width to prevent it from getting too wide */
             border-radius: 8px;
             overflow: hidden;
             transform: translateY(15px) rotateX(-15deg); /* Initial 3D transform */
@@ -158,17 +163,18 @@
         }
 
         .main-nav .dropdown-menu li a {
-            color: var(--dropdown-text); /* Dark color for dropdown text */
-            padding: 12px 20px;
+            color: var(--dropdown-text); /* Uses the updated variable (black) */
+            padding: 10px 20px; /* Slightly decreased padding for smaller text */
             display: block;
             white-space: nowrap;
             transition: background-color 0.2s ease, color 0.2s ease, padding-left 0.2s ease;
             font-weight: 400;
+            font-size: 0.9em; /* Decreased text size */
         }
 
         .main-nav .dropdown-menu li a:hover {
-            background-color: #e0e0e0;
-            color: var(--nav-bg-start);
+            background-color: #f0f0f0; /* Light gray for hover on white background */
+            color: var(--nav-bg-start); /* Change text color to blue on hover */
             padding-left: 25px; /* Slight indent on hover */
         }
 
@@ -436,7 +442,8 @@
                 top: 70px; /* Below header, adjusted for logo size */
                 left: 0;
                 width: 100%;
-                background: linear-gradient(135deg, var(--mobile-nav-bg-start), var(--mobile-nav-bg-end)); /* Different gradient for mobile */
+                /* Mobile nav background could be different from dropdown */
+                background: linear-gradient(135deg, var(--mobile-nav-bg-start), var(--mobile-nav-bg-end));
                 box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
                 padding: 10px 0;
                 overflow: hidden;
@@ -505,7 +512,8 @@
             .main-nav .dropdown-menu {
                 position: static; /* Stack dropdowns vertically */
                 box-shadow: none;
-                background-color: rgba(0, 0, 0, 0.2); /* Slightly darker background */
+                /* Mobile dropdown will use a semi-transparent dark background for contrast with main nav */
+                background-color: rgba(0, 0, 0, 0.2);
                 transform: none; /* No 3D transform on mobile dropdowns */
                 opacity: 1;
                 max-height: 0; /* For accordion */
@@ -513,6 +521,8 @@
                 transition: max-height 0.3s ease-out;
                 pointer-events: auto; /* Always allow clicks */
                 border-radius: 0;
+                min-width: unset; /* Reset min-width for mobile */
+                max-width: unset; /* Reset max-width for mobile */
             }
 
             .main-nav .has-dropdown.open .dropdown-menu {
@@ -523,11 +533,11 @@
             .main-nav .dropdown-menu li a {
                 padding: 10px 30px; /* Indent dropdown items */
                 color: var(--nav-text-color); /* Maintain light color for mobile dropdown items */
-                font-size: 0.95em;
+                font-size: 0.95em; /* Use the mobile text size */
             }
 
             .main-nav .dropdown-menu li a:hover {
-                background-color: rgba(0, 0, 0, 0.3);
+                background-color: rgba(0, 0, 0, 0.3); /* Slightly darker transparent black on hover */
                 padding-left: 35px; /* Deeper indent on hover */
             }
 
