@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alif Edu - Admission & Fixed Menu</title>
+    <style>
+        /* Basic Reset & Body Styles */
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+            background-color: #f9f9f9;
+            transition: transform 0.4s ease; /* Smooth transition for body when side menu is open */
+        }
+
+        /* Class to push body when side menu is open */
+        body.menu-open {
+            overflow: hidden; /* Prevent scrolling when menu is open */
+        }
+
+        .header-container, .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* --- Header Styles (Laptop) --- */
+        header {
+            background: linear-gradient(to right, #007bff, #0056b3);
+            padding: 10px 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            position: fixed; /* Makes the header fixed at the top */
+            top: 0;          /* Positions it at the very top of the viewport */
+            width: 100%;     /* Ensures it spans the full width of the viewport */
+            z-index: 1000;   /* Ensures it stays above other content */
+        }
+
+        .logo {
+            flex-shrink: 0;
+            margin-right: 20px;
+        }
+
+        .logo img {
+            max-height: 60px;
+            display: block;
+            filter: drop-shadow(0 2px 3px rgba(0,0,0,0.3));
+            transition: transform 0.3s ease;
+        }
+
+        .logo img:hover {
+            transform: scale(1.05);
+        }
+
+        .main-nav {
+            position: relative;
+            flex-grow: 1;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        }
+
+        .nav-menu {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex; /* Display as a row on desktop */
+            flex-wrap: wrap;
+            justify-content: flex-end;
+            align-items: center; /* Vertically align items */
+        }
+
+        /* --- Reduced Menu Button Size --- */
+        .nav-menu li {
+            position: relative;
+            margin: 0 5px; /* Reduced spacing between buttons */
+        }
+
+        /* --- Rounded Button Styles for Nav Links (Reduced Size) --- */
+        .nav-menu a {
+            display: block;
+            padding: 8px 15px; /* Reduced padding for smaller buttons */
+            text-decoration: none;
+            color: #fff;
+            white-space: nowrap;
+            background-color: #007bff; /* Button background color */
+            border-radius: 20px; /* Adjusted rounded corners */
+            transition: all 0.3s ease, background-color 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2); /* Subtle shadow */
+            font-weight: 500;
+            position: relative; /* For pseudo-element */
+            overflow: hidden; /* Hide overflow from pseudo-element */
+            z-index: 1; /* Ensure text is above pseudo-element */
+        }
+
+        .nav-menu a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(255, 255, 255, 0.2); /* White overlay for hover */
+            border-radius: 20px; /* Match button radius */
+            transform: scaleX(0); /* Start hidden */
+            transform-origin: left;
+            transition: transform 0.3s ease;
+            z-index: -1; /* Place behind button content */
+        }
+
+        .nav-menu a:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+            transform: translateY(-2px); /* Lift effect */
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3); /* Stronger shadow */
+        }
+
+        .nav-menu a:hover::before {
+            transform: scaleX(1); /* Expand the overlay */
+        }
+
+        /* Dropdown Styles - Enhanced Look (Reduced Size) */
+        .dropdown-menu {
+            list-style: none;
+            margin: 0;
+            padding: 8px; /* Reduced padding around dropdown items */
+            position: absolute;
+            top: calc(100% + 10px); /* Adjusted distance from parent */
+            left: 0;
+            background: linear-gradient(to bottom, #ffffff, #f5f5f5);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            min-width: 200px; /* Slightly reduced width */
+            border-radius: 10px; /* Slightly less rounded dropdown box */
+            overflow: hidden;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(5px); /* Slight initial shift */
+            transition: opacity 0.4s ease-out, transform 0.4s ease-out, visibility 0.4s;
+            z-index: 999;
+        }
+
+        .has-dropdown:hover > .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-menu li {
+            margin-bottom: 3px; /* Reduced spacing between dropdown items */
+        }
+        .dropdown-menu li:last-child {
+            margin-bottom: 0;
+        }
+
+        .dropdown-menu li a {
+            padding: 8px 12px; /* Reduced padding for dropdown item buttons */
+            color: #333; /* Text color for dropdown items */
+            background-color: #f0f0f0; /* Light background for dropdown item buttons */
+            border-radius: 6px; /* Slightly less rounded than main buttons */
+            box-shadow: none; /* No extra shadow for dropdown items */
+            transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+            position: relative; /* For the potential :before effect */
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .dropdown-menu li a::before {
+             content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 123, 255, 0.1); /* Lighter blue overlay for dropdown hover */
+            border-radius: 6px; /* Match dropdown item radius */
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.2s ease;
+            z-index: -1;
+        }
+
+
+        .dropdown-menu li a:hover {
+            background-color: #e6f2ff; /* Lighter blue hover */
+            color: #004080; /* Darker blue on hover */
+            transform: translateX(3px); /* Subtle shift */
+        }
+        .dropdown-menu li a:hover::before {
+            transform: scaleX(1);
+        }
+
+
+        /* --- Mobile Menu Toggle --- */
+        .menu-toggle {
+            display: none; /* Hidden on desktop by default */
+            font-size: 30px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #fff;
+            padding: 5px 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .menu-toggle:hover {
+            transform: rotate(90deg);
+        }
+
+        /* --- Main Content Area --- */
+        main {
+            min-height: 500px;
+            padding: 40px 20px;
+            text-align: center;
+            background-color: #ffffff;
+            box-shadow: 0 0 20px rgba(0,0,0,0.05);
+            margin: 20px auto;
+            max-width: 1200px;
+            border-radius: 10px;
+            /* Important: Add padding to the main content to clear the fixed header */
+            padding-top: 110px; /* Adjust this value if your header's height changes */
+            margin-top: 0; /* Remove existing top margin if padding-top is used for clearance */
+        }
+
+        /* --- Footer Styles --- */
+        footer {
+            background-color: #222;
+            color: #eee;
+            padding: 40px 0 20px;
+        }
+
+        .footer-container {
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+
+        .footer-column {
+            flex: 1;
+            min-width: 220px;
+            margin-bottom: 20px;
+            padding: 0 15px;
+            box-sizing: border-box;
+        }
+
+        .footer-column h3 {
+            color: #007bff;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            position: relative;
+            padding-bottom: 5px;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 40px;
+            height: 2px;
+            background-color: #007bff;
+        }
+
+        .footer-column ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-column ul li a {
+            color: #eee;
+            text-decoration: none;
+            padding: 5px 0;
+            display: block;
+            transition: color 0.3s ease;
+        }
+
+        .footer-column ul li a:hover {
+            color: #007bff;
+            text-decoration: underline;
+        }
+
+        .footer-column p {
+            margin: 5px 0;
+            color: #ccc;
+        }
+
+        .copyright {
+            text-align: center;
+            border-top: 1px solid #444;
+            padding-top: 20px;
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #ccc;
+        }
+
+        /* --- Admission Pop-up Styles --- */
+        .popup-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+            z-index: 2000; /* High z-index to appear on top */
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .popup-overlay.show {
+            display: flex;
+            opacity: 1;
+        }
+
+        .popup-content {
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            position: relative;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            transform: translateY(-50px) scale(0.9);
+            transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+
+        .popup-overlay.show .popup-content {
+            transform: translateY(0) scale(1);
+        }
+
+        .popup-content h2 {
+            margin-top: 0;
+            color: #333;
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 1.8em;
+            color: #007bff;
+        }
+
+        .popup-content form label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .popup-content form input[type="text"],
+        .popup-content form input[type="email"],
+        .popup-content form input[type="tel"] {
+            width: calc(100% - 22px);
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .popup-content form button {
+            background-color: #007bff;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 17px;
+            display: block;
+            width: 100%;
+            margin-top: 20px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .popup-content form button:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+        }
+
+        .close-button {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 30px;
+            cursor: pointer;
+            color: #888;
+            line-height: 1;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .close-button:hover {
+            color: #333;
+            transform: rotate(90deg);
+        }
+
+        /* --- Responsive Design (Mobile - Side Menu) --- */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: row;
+                justify-content: space-between;
+                padding: 10px 15px;
+            }
+
+            .logo {
+                margin-right: 0;
+            }
+
+            .logo img {
+                max-height: 50px;
+            }
+
+            .main-nav {
+                flex-direction: row;
+                align-items: center;
+                justify-content: flex-end;
+                flex-grow: 0;
+            }
+
+            .menu-toggle {
+                display: block; /* Show hamburger on mobile */
+                z-index: 1001; /* Ensure it's above other content */
+            }
+
+            .menu-toggle:hover {
+                transform: rotate(90deg);
+            }
+
+            .nav-menu {
+                flex-direction: column;
+                position: fixed; /* Fixed position for side menu */
+                top: 0;
+                right: -300px; /* Start off-screen to the right */
+                width: 280px; /* Width of the side menu */
+                max-width: 80vw; /* Max 80% of viewport width */
+                height: 100%;
+                background-color: #fff; /* White background for side menu */
+                box-shadow: -5px 0 15px rgba(0,0,0,0.2); /* Shadow on the left edge */
+                padding: 20px 0;
+                overflow-y: auto;
+                transition: right 0.4s ease, transform 0.4s ease; /* Smooth slide-in */
+                z-index: 1500; /* Above overlay */
+                transform: translateX(0); /* Default state for 3D */
+            }
+
+            /* State when side menu is active */
+            .nav-menu.active {
+                right: 0; /* Slide into view */
+                /* Optional subtle 3D push effect for the menu */
+                transform: translateX(-10px) rotateY(-5deg);
+                transform-origin: right center;
+            }
+
+            /* Body push effect (when menu opens) */
+            body.menu-open {
+                transform: translateX(-280px); /* Push main content to the left */
+            }
+
+            /* Overlay for side menu */
+            .overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+                z-index: 1400; /* Below menu, above content */
+                opacity: 0;
+                transition: opacity 0.4s ease;
+            }
+
+            .overlay.active {
+                display: block;
+                opacity: 1;
+            }
+
+            .nav-menu li {
+                width: 100%;
+                border-bottom: 1px solid #f0f0f0;
+                margin: 0; /* Reset margin for mobile list items */
+            }
+
+            .nav-menu li:last-child {
+                border-bottom: none;
+            }
+
+            .nav-menu a {
+                padding: 15px 25px; /* Adjusted padding for mobile side menu */
+                color: #333; /* Darker color for mobile menu items */
+                background-color: transparent; /* No special background */
+                box-shadow: none;
+                border-radius: 0; /* No rounding for the main side menu items */
+                transform: none; /* No 3D transform on mobile menu items */
+                text-align: left; /* Align text to left in side menu */
+                position: static; /* Reset position for mobile */
+                overflow: visible;
+                z-index: auto;
+            }
+
+            .nav-menu a::before {
+                /* Remove the hover effect for mobile main menu items */
+                content: none;
+            }
+
+            .nav-menu a:hover {
+                background-color: #e6f2ff;
+                transform: none;
+                box-shadow: none;
+            }
+
+            /* Adjust dropdowns for mobile (they behave as expandable sections) */
+            .dropdown-menu {
+                position: static;
+                box-shadow: none;
+                background-color: #f8f8f8;
+                min-width: unset;
+                display: none;
+                padding-left: 30px;
+                animation: none;
+                border-radius: 0; /* No rounding for mobile dropdown wrapper */
+                transform: none;
+                opacity: 1;
+                visibility: visible;
+                transition: none;
+                padding: 10px 0 10px 30px; /* Adjust padding for nested mobile menu */
+            }
+
+            .has-dropdown.active > .dropdown-menu {
+                display: block;
+            }
+
+            .dropdown-menu li {
+                margin-bottom: 0; /* Remove extra margin for nested list items */
+            }
+
+            .dropdown-menu li a {
+                color: #666;
+                padding: 10px 25px; /* Adjust padding for nested items */
+                background-color: transparent; /* No background for nested items */
+                border-radius: 0; /* No border-radius for nested items */
+            }
+
+            .dropdown-menu li a:hover {
+                background-color: #dbeaff;
+            }
+             .dropdown-menu li a::before {
+                content: none; /* Remove pseudo-element for nested items */
+            }
+
+
+            /* Footer responsiveness */
+            .footer-container {
+                flex-direction: column;
+                text-align: center;
+                padding: 20px 15px;
+            }
+
+            .footer-column {
+                min-width: unset;
+                width: 100%;
+                margin-bottom: 30px;
+            }
+
+            .footer-column h3::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <a href="#">
+                    <img src="https://alifedu.org/assets/images/logo/alif-logo.png" alt="Alif Edu Logo">
+                </a>
+            </div>
+            <nav class="main-nav">
+                <button class="menu-toggle" aria-label="Toggle Navigation">
+                    &#9776; </button>
+                <ul class="nav-menu">
+                    <li><a href="#">Home</a></li>
+                    <li class="has-dropdown">
+                        <a href="#">About Us</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Principals Desk</a></li>
+                            <li><a href="#">Managing Director</a></li>
+                            <li><a href="#">Founder</a></li>
+                            <li><a href="#">Alif Vision & Mission</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-dropdown">
+                        <a href="#">Academics</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Levels</a></li>
+                            <li><a href="#">Academic Calendar</a></li>
+                            <li><a href="#">Teaching Faculty</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-dropdown">
+                        <a href="#">Admission</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#" id="bookAdmission">Book Your Admission</a></li>
+                            <li><a href="#">Admission Procedure</a></li>
+                            <li><a href="#">Fee Structure</a></li>
+                            <li><a href="#">Rules & Regulations</a></li>
+                            <li><a href="#">Transfer Certificate</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-dropdown">
+                        <a href="#">Resource</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Circular Curriculum</a></li>
+                            <li><a href="#">Career</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#">News & Events</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="https://alifedu.org/login?next=%2Fwl_admin%3Faction%3Dinitial_call" target="_blank">Login to our App</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="overlay"></div>
+
+    <main style="min-height: 500px; padding: 40px 20px; text-align: center; background-color: #ffffff; box-shadow: 0 0 20px rgba(0,0,0,0.05); margin: 20px auto; max-width: 1200px; border-radius: 10px;">
+        <h1>Welcome to Alif Edu</h1>
+        <p>Experience education with a modern touch.</p>
+        <p style="margin-top: 30px; font-size: 1.1em; color: #666;">This header and footer are designed to showcase enhanced UI/UX effects and animations, adapting for both laptop and mobile with a new side menu.</p>
+        <div style="height: 300px; background-color: #e0e0e0; margin-top: 50px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #888;">
+            [ Placeholder for your main content, e.g., hero section from Figma ]
+        </div>
+        <div style="height: 800px; background-color: #f0f0f0; margin-top: 50px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #888;">
+            Scroll down to see the fixed header in action.
+        </div>
+        <div style="height: 800px; background-color: #e0e0e0; margin-top: 50px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #888;">
+            More content here...
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Academics</a></li>
+                    <li><a href="#">Admission</a></li>
+                    <li><a href="#">Resource</a></li>
+                    <li><a href="#">News & Events</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact</h3>
+                <p>Address: [Your Address Here]</p>
+                <p>Phone: [Your Phone Number Here]</p>
+                <p>Email: [Your Email Here]</p>
+            </div>
+            <div class="footer-column">
+                <h3>Our Other Branches</h3>
+                <ul>
+                    <li><a href="#">[Branch 1 Name]</a></li>
+                    <li><a href="#">[Branch 2 Name]</a></li>
+                    <li><a href="#">[Branch 3 Name]</a></li>
+                    </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; <span id="currentYear"></span> Copyright reserved to Alif Edu.</p>
+        </div>
+    </footer>
+
+    <div id="admissionPopup" class="popup-overlay">
+        <div class="popup-content">
+            <span class="close-button">&times;</span>
+            <h2>Book Your Admission</h2>
+            <form action="YOUR_GOOGLE_SHEET_FORM_URL" method="POST" target="_blank">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="entry.123456789" required>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="entry.987654321" required>
+
+                <label for="phone">Phone Number:</label>
+                <input type="tel" id="phone" name="entry.543219876" required>
+
+                <label for="grade">Desired Grade/Level:</label>
+                <input type="text" id="grade" name="entry.678901234">
+
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Current year for copyright
+            const currentYearSpan = document.getElementById('currentYear');
+            if (currentYearSpan) {
+                currentYearSpan.textContent = new Date().getFullYear();
+            }
+
+            // Mobile menu elements
+            const menuToggle = document.querySelector('.menu-toggle');
+            const navMenu = document.querySelector('.nav-menu');
+            const overlay = document.querySelector('.overlay');
+            const body = document.body; // Reference to the body element
+
+            // Function to open the side menu
+            function openSideMenu() {
+                navMenu.classList.add('active');
+                overlay.classList.add('active');
+                body.classList.add('menu-open'); // Add class to body for push effect/no-scroll
+            }
+
+            // Function to close the side menu
+            function closeSideMenu() {
+                navMenu.classList.remove('active');
+                overlay.classList.remove('active');
+                body.classList.remove('menu-open'); // Remove class from body
+                // Close any open dropdowns when main menu closes
+                document.querySelectorAll('.has-dropdown.active').forEach(dropdown => {
+                    dropdown.classList.remove('active');
+                });
+            }
+
+            if (menuToggle && navMenu && overlay) {
+                menuToggle.addEventListener('click', () => {
+                    if (navMenu.classList.contains('active')) {
+                        closeSideMenu();
+                    } else {
+                        openSideMenu();
+                    }
+                });
+
+                overlay.addEventListener('click', closeSideMenu); // Close when overlay is clicked
+
+                // Close on Escape key press
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape' && navMenu.classList.contains('active')) {
+                        closeSideMenu();
+                    }
+                });
+            }
+
+            // Dropdown functionality for both desktop (CSS hover) and mobile (JS click)
+            document.querySelectorAll('.has-dropdown > a').forEach(item => {
+                item.addEventListener('click', function(e) {
+                    // This logic applies only when the menu is in mobile (side menu) state
+                    // or if the link is a placeholder ('#')
+                    if (window.innerWidth <= 768 || (this.closest('.has-dropdown') && this.getAttribute('href') === '#')) {
+                        e.preventDefault(); // Prevent default link behavior for parent links
+                        const parentLi = this.closest('.has-dropdown');
+
+                        // Toggle active class on the current dropdown
+                        parentLi.classList.toggle('active');
+
+                        // Close other open dropdowns in the mobile menu
+                        document.querySelectorAll('.nav-menu .has-dropdown.active').forEach(otherDropdown => {
+                            if (otherDropdown !== parentLi) {
+                                otherDropdown.classList.remove('active');
+                            }
+                        });
+                    }
+                });
+            });
+
+            // Close side menu when any link (including dropdown items) is clicked
+            document.querySelectorAll('.nav-menu a').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    // Only close if it's a regular link (not a dropdown parent with href="#")
+                    // and the side menu is open
+                    const isDropdownParentWithHash = link.closest('.has-dropdown') && link.getAttribute('href') === '#';
+                    if (navMenu.classList.contains('active') && !isDropdownParentWithHash) {
+                        closeSideMenu(); // Use the dedicated close function
+                    }
+                });
+            });
+
+
+            // Admission Pop-up Logic
+            const bookAdmissionLink = document.getElementById('bookAdmission');
+            const admissionPopup = document.getElementById('admissionPopup');
+            const closeButton = document.querySelector('#admissionPopup .close-button');
+
+            if (bookAdmissionLink && admissionPopup && closeButton) {
+                bookAdmissionLink.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    admissionPopup.classList.add('show');
+                    if (navMenu.classList.contains('active')) { // Close side menu if open
+                        closeSideMenu();
+                    }
+                });
+
+                closeButton.addEventListener('click', () => {
+                    admissionPopup.classList.remove('show');
+                });
+
+                admissionPopup.addEventListener('click', (e) => {
+                    if (e.target === admissionPopup) {
+                        admissionPopup.classList.remove('show');
+                    }
+                });
+            }
+
+            // --- Automatic Pop-up on Page Load ---
+            // Optional: Implement a cookie to prevent showing the popup every time
+            // function setCookie(name, value, days) {
+            //     let expires = "";
+            //     if (days) {
+            //         const date = new Date();
+            //         date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            //         expires = "; expires=" + date.toUTCString();
+            //     }
+            //     document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+            // }
+
+            // function getCookie(name) {
+            //     const nameEQ = name + "=";
+            //     const ca = document.cookie.split(';');
+            //     for(let i = 0; i < ca.length; i++) {
+            //         let c = ca[i];
+            //         while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+            //         if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+            //     }
+            //     return null;
+            // }
+
+            // const popupShownCookieName = "admissionPopupShown";
+
+            // if (!getCookie(popupShownCookieName)) { // Only show if cookie is not set
+                setTimeout(() => {
+                    admissionPopup.classList.add('show');
+                    // setCookie(popupShownCookieName, "true", 1); // Set cookie to expire in 1 day
+                }, 1000); // Show popup after 1 second (adjust delay as needed)
+            // }
+            // --- End Automatic Pop-up ---
+
+        });
+    </script>
+</body>
+</html>
