@@ -711,6 +711,9 @@
             const closeModalBtn = document.querySelector('.close-button');
             const admissionForm = document.getElementById('admissionForm');
 
+            // Automatically open the admission modal when the page loads
+            admissionModal.style.display = 'flex';
+
             // Hamburger menu toggle for mobile
             hamburgerMenu.addEventListener('click', () => {
                 mainNav.classList.toggle('active');
@@ -743,7 +746,7 @@
                 });
             });
 
-            // Open Admission Form Modal
+            // Open Admission Form Modal (this is now redundant for initial load but kept for direct clicks)
             openAdmissionFormBtn.addEventListener('click', (e) => {
                 e.preventDefault();
                 admissionModal.style.display = 'flex';
