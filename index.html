@@ -3,1036 +3,1141 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Animated Responsive Navigation Bar with App Slider</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>ALIF INTERNATIONAL SCHOOL - Home</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* General Styling & Variables */
-        :root {
-            --nav-bg-start: #3498db; /* Blue */
-            --nav-bg-end: #2980b9;    /* Darker Blue */
-            --nav-text-color: #ffffff;
-            --hover-color: #f1c40f; /* Yellow for highlights */
-
-            /* --- DROPDOWN MENU COLOR CHANGES START HERE --- */
-            --dropdown-bg: #3498db; /* White background */
-            --dropdown-text: #333333; /* Dark gray/black text for readability on white */
-            /* --- DROPDOWN MENU COLOR CHANGES END HERE --- */
-
-            --button-bg-login: #e74c3c; /* Red for login */
-            --button-hover-login: #c0392b;
-            --button-bg-contact: #27ae60; /* Green for contact */
-            --button-hover-contact: #229954;
-            --mobile-nav-bg-start: #2c3e50; /* Darker blue for mobile */
-            --mobile-nav-bg-end: #34495e;
-
-            /* Slider specific colors */
-            --slider-arrow-bg: rgba(0, 0, 0, 0.5);
-            --slider-arrow-hover-bg: rgba(0, 0, 0, 0.8);
-            --slider-dot-color: #bbb;
-            --slider-dot-active-color: #717171;
-            --slider-caption-bg: rgba(0, 0, 0, 0.6);
-        }
-
-        /* Base styles from your original code, adjusted for Tailwind compatibility where needed */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
-            font-family: 'Inter', sans-serif; /* Using Inter for a modern feel */
-            line-height: 1.6;
-            background-color: #f4f4f4;
-            color: #333;
-            overflow-x: hidden; /* Prevent horizontal scroll from animations */
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden; /* Prevent horizontal scroll due to animations/transforms */
+            background-color: #f0f4f8; /* Lighter, premium background */
+        }
+        /* Custom scrollbar for better aesthetics */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #e2e8f0;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #4f46e5; /* Indigo-600 */
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #4338ca; /* Indigo-700 */
         }
 
-        a {
+        /* Hero section background image with overlay */
+        .hero-background {
+            background-image: url('https://placehold.co/1920x1080/4338ca/ffffff?text=School+Campus'); /* Updated image color to indigo-700 */
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        .hero-background::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.55); /* Slightly darker overlay */
+        }
+
+        /* Keyframe for fade-in animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+
+        /* Keyframe for counter animation */
+        @keyframes counter {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .counter-item {
+            animation: counter 0.6s ease-out forwards;
+            opacity: 0; /* Hidden initially */
+        }
+
+        /* Card hover animation (bulge out) */
+        .card-hover-effect {
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+        .card-hover-effect:hover {
+            transform: scale(1.03); /* Slightly bulge out */
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2); /* More pronounced shadow */
+        }
+
+        /* Dropdown menu styling */
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            background-color: #ffffff;
+            min-width: 180px; /* Slightly wider */
+            box-shadow: 0px 8px 20px 0px rgba(0,0,0,0.15); /* Softer shadow */
+            z-index: 100;
+            border-radius: 0.75rem; /* More rounded */
+            overflow: hidden;
+            transform: translateY(10px); /* Initial state for animation */
+            opacity: 0;
+            transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+            pointer-events: none; /* Prevent interaction when hidden */
+            border: 1px solid #e2e8f0; /* Subtle border */
+        }
+        .dropdown:hover .dropdown-menu,
+        .dropdown.active .dropdown-menu {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+        .dropdown-menu a {
+            color: #334155;
+            padding: 12px 18px; /* More padding */
             text-decoration: none;
-            color: inherit;
+            display: block;
+            transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+        }
+        .dropdown-menu a:hover {
+            background-color: #eef2ff; /* Lighter indigo hover */
+            color: #4338ca; /* Primary indigo on hover */
         }
 
-        ul {
-            list-style: none;
+        /* Menu item hover animation with subtle 3D feel */
+        .nav-link-hover {
+            transition: transform 0.2s ease-in-out, color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            position: relative; /* Needed for transform-style */
+            transform-style: preserve-3d; /* Enable 3D transformations */
+        }
+        .nav-link-hover:hover {
+            transform: translateY(-4px) scale(1.05) translateZ(10px); /* Lift, slight scale, and pop-out */
+            color: #4338ca; /* Primary indigo on hover */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+        }
+        /* Ensure buttons also have the clicky feel */
+        button,
+        .slider-dot {
+            transition: transform 0.1s ease-out; /* Ensure smooth transition for active state */
         }
 
-        /* Main Header */
-        .main-header {
+        button:active,
+        .slider-dot:active {
+            transform: scale(0.95); /* Slightly shrink on click */
+        }
+
+        /* Modal styling */
+        .modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            background: linear-gradient(90deg, var(--nav-bg-start), var(--nav-bg-end));
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7); /* Slightly darker overlay */
+            display: flex;
+            justify-content: center;
+            align-items: center;
             z-index: 1000;
-            transition: background 0.4s ease, box-shadow 0.3s ease;
-            perspective: 1000px; /* For 3D effects */
-        }
-
-        /* Header Hover Animation (Gradient Shift) */
-        .main-header:hover {
-            background: linear-gradient(90deg, var(--nav-bg-end), var(--nav-bg-start));
-        }
-
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 10px 20px;
-        }
-
-        .logo img {
-            height: 50px; /* Adjust as needed */
-            width: auto;
-            transition: transform 0.3s ease;
-        }
-
-        .logo img:hover {
-            transform: scale(1.05) rotateZ(2deg);
-        }
-
-        /* Main Navigation */
-        .main-nav .nav-list {
-            display: flex;
-            align-items: center;
-        }
-
-        .main-nav .nav-item {
-            position: relative;
-            margin-left: 30px;
-        }
-
-        .main-nav .nav-item a:not(.btn-login, .btn-contact) {
-            color: var(--nav-text-color);
-            padding: 15px 0;
-            display: block;
-            font-weight: 500;
-            position: relative;
-            overflow: hidden;
-            transition: color 0.3s ease;
-        }
-
-        /* Stylish Underline Effect */
-        .main-nav .nav-item a:not(.btn-login, .btn-contact)::before {
-            content: '';
-            position: absolute;
-            bottom: 5px;
-            left: 50%;
-            width: 0;
-            height: 2px;
-            background-color: var(--hover-color);
-            transition: width 0.3s ease-out, left 0.3s ease-out;
-            transform: translateX(-50%);
-        }
-
-        .main-nav .nav-item a:not(.btn-login, .btn-contact):hover::before,
-        .main-nav .nav-item.active a:not(.btn-login, .btn-contact)::before {
-            width: 100%;
-            left: 0;
-            transform: translateX(0);
-        }
-
-        .main-nav .nav-item a:not(.btn-login, .btn-contact):hover {
-            color: var(--hover-color);
-        }
-
-        .main-nav .nav-item.active a:not(.btn-login, .btn-contact) {
-            color: var(--hover-color);
-        }
-
-        /* Dropdown Menu Styling & Animation */
-        .main-nav .dropdown-menu {
-            display: none;
-            position: absolute;
-            top: 100%;
-            left: 0;
-            background-color: var(--dropdown-bg);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
-            min-width: 180px;
-            max-width: 250px;
-            border-radius: 8px;
-            overflow: hidden;
-            transform: translateY(15px) rotateX(-15deg);
             opacity: 0;
-            transition: transform 0.3s ease-out, opacity 0.3s ease-out;
-            transform-origin: top center;
-            z-index: 999;
-            pointer-events: none;
+            visibility: hidden;
+            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
         }
-
-        .main-nav .has-dropdown:hover > .dropdown-menu {
-            display: block;
-            transform: translateY(0) rotateX(0deg);
+        .modal-overlay.open {
             opacity: 1;
-            pointer-events: auto;
+            visibility: visible;
         }
-
-        .main-nav .dropdown-menu li a {
-            color: var(--dropdown-text);
-            padding: 10px 20px;
-            display: block;
-            white-space: nowrap;
-            transition: background-color 0.2s ease, color 0.2s ease, padding-left 0.2s ease;
-            font-weight: 400;
-            font-size: 0.9em;
-        }
-
-        .main-nav .dropdown-menu li a:hover {
-            background-color: #f0f0f0;
-            color: var(--nav-bg-start);
-            padding-left: 25px;
-        }
-
-        /* Distinct Buttons (Login & Contact Us) */
-        .btn-login, .btn-contact {
-            padding: 10px 20px;
-            border-radius: 25px;
-            font-weight: 600;
-            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            display: inline-block;
-            text-align: center;
-        }
-
-        .btn-login {
-            background-color: var(--button-bg-login);
-            color: var(--nav-text-color) !important;
-            margin-left: 20px;
-        }
-
-        .btn-login:hover {
-            background-color: var(--button-hover-login);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-        }
-
-        .btn-contact {
-            background-color: var(--button-bg-contact);
-            color: var(--nav-text-color) !important;
-            margin-left: 10px;
-        }
-
-        .btn-contact:hover {
-            background-color: var(--button-hover-contact);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-        }
-
-        /* Hamburger Menu (Hidden by default on desktop) */
-        .hamburger-menu {
-            display: none;
-            cursor: pointer;
-            flex-direction: column;
-            justify-content: space-between;
-            width: 30px;
-            height: 20px;
-            position: relative;
-            z-index: 1001;
-        }
-
-        .hamburger-menu .bar {
-            width: 100%;
-            height: 3px;
-            background-color: var(--nav-text-color);
-            border-radius: 2px;
-            transition: all 0.3s ease;
-        }
-
-        /* Main Content Styling */
-        .main-content {
-            padding: 100px 20px 50px; /* Adjust padding-top for fixed header */
-            max-width: 1200px; /* Constrain main content width */
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .main-content h1 {
-            margin-bottom: 20px;
-            color: var(--nav-bg-start);
-        }
-
-        /* Full-Width Image Slider Styles */
-        .app-slider-container {
-            position: relative;
-            width: 100%; /* Full width */
-            max-width: 100vw; /* Ensure it spans viewport width */
-            overflow: hidden;
-            margin-top: 20px; /* Space below header */
-            margin-bottom: 40px; /* Space above content */
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-        }
-
-        .app-slider-track {
-            display: flex;
-            transition: transform 0.8s ease-in-out; /* Smooth slide transition */
-            height: 450px; /* Fixed height for the slider */
-        }
-
-        .app-slide {
-            min-width: 100%; /* Each slide takes full width of the track */
-            flex-shrink: 0; /* Prevents slides from shrinking */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            background-color: #f0f0f0; /* Fallback background */
-        }
-
-        .app-slide img {
-            width: 100%;
-            height: 100%; /* Fill the height of the slide */
-            object-fit: cover; /* Cover the area, cropping if necessary */
-            display: block;
-        }
-
-        .app-slide-caption {
-            position: absolute;
-            bottom: 25px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: var(--slider-caption-bg);
-            color: white;
-            padding: 12px 25px;
-            border-radius: 8px;
-            font-size: 1.3em;
-            font-weight: 500;
-            text-align: center;
-            opacity: 0;
-            transition: opacity 0.5s ease;
-            white-space: nowrap; /* Prevent caption from wrapping */
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-        }
-
-        .app-slide.active .app-slide-caption {
-            opacity: 1;
-        }
-
-        /* Slider Navigation Arrows */
-        .app-slider-nav-btn {
-            cursor: pointer;
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 50px;
-            height: 50px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            font-weight: bold;
-            font-size: 28px;
-            transition: background-color 0.3s ease, transform 0.3s ease;
-            user-select: none;
-            background-color: var(--slider-arrow-bg);
-            z-index: 10;
-            border-radius: 50%; /* Circular buttons */
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-        }
-
-        .app-slider-nav-btn:hover {
-            background-color: var(--slider-arrow-hover-bg);
-            transform: translateY(-50%) scale(1.1);
-        }
-
-        .app-slider-prev {
-            left: 15px;
-        }
-
-        .app-slider-next {
-            right: 15px;
-        }
-
-        /* Slider Dots */
-        .app-slider-dots {
-            text-align: center;
-            position: absolute;
-            bottom: 15px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 10;
-        }
-
-        .app-dot {
-            cursor: pointer;
-            height: 14px;
-            width: 14px;
-            margin: 0 6px;
-            background-color: var(--slider-dot-color);
-            border-radius: 50%;
-            display: inline-block;
-            transition: background-color 0.4s ease, transform 0.2s ease;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-
-        .app-dot.active, .app-dot:hover {
-            background-color: var(--slider-dot-active-color);
-            transform: scale(1.2);
-        }
-
-        /* Footer Styling */
-        .main-footer {
-            background-color: #222;
-            color: #eee;
-            padding: 40px 20px;
-            margin-top: 50px;
-            font-size: 0.9em;
-        }
-
-        .footer-columns {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            max-width: 1200px;
-            margin: 0 auto;
-            gap: 30px;
-        }
-
-        .footer-col {
-            flex: 1;
-            min-width: 250px;
-            margin-bottom: 20px;
-        }
-
-        .footer-col h3 {
-            margin-bottom: 15px;
-            font-size: 1.2em;
-            color: var(--hover-color);
-            position: relative;
-            padding-bottom: 5px;
-        }
-
-        .footer-col h3::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 40px;
-            height: 2px;
-            background-color: var(--hover-color);
-        }
-
-        .footer-col ul {
-            padding: 0;
-        }
-
-        .footer-col ul li {
-            margin-bottom: 8px;
-        }
-
-        .footer-col ul li a {
-            color: #ccc;
-            transition: color 0.2s ease;
-        }
-
-        .footer-col ul li a:hover {
-            color: var(--hover-color);
-        }
-
-        .footer-bottom {
-            text-align: center;
-            padding-top: 20px;
-            margin-top: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            font-size: 0.85em;
-            color: #aaa;
-        }
-
-        /* Modal Styling */
-        .modal {
-            display: none; /* Hidden by default */
-            position: fixed; /* Stay in place */
-            z-index: 1001; /* Sit on top */
-            left: 0;
-            top: 0;
-            width: 100%; /* Full width */
-            height: 100%; /* Full height */
-            overflow: auto; /* Enable scroll if needed */
-            background-color: rgba(0,0,0,0.6); /* Black w/ opacity */
-            justify-content: center;
-            align-items: center;
-            animation: fadeIn 0.3s ease-out;
-        }
-
         .modal-content {
-            background-color: #fefefe;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            background: #ffffff;
+            padding: 2.5rem; /* More padding */
+            border-radius: 1.25rem; /* More rounded */
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4); /* Stronger shadow */
             width: 90%;
-            max-width: 500px;
+            max-width: 550px; /* Slightly wider */
+            max-height: 90vh; /* Limit height to prevent overflow on smaller screens */
+            overflow-y: auto; /* Enable scrolling for content that exceeds max-height */
+            transform: scale(0.9);
+            opacity: 0;
+            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
             position: relative;
-            animation: slideIn 0.3s ease-out;
-            transform-origin: center;
+            display: flex; /* Use flexbox for internal layout */
+            flex-direction: column;
+            gap: 1.5rem; /* Space between sections */
         }
-
-        .close-button {
-            color: #aaa;
+        .modal-overlay.open .modal-content {
+            transform: scale(1);
+            opacity: 1;
+        }
+        .modal-close-button {
             position: absolute;
-            top: 15px;
-            right: 20px;
-            font-size: 30px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: color 0.2s ease, transform 0.2s ease;
-        }
-
-        .close-button:hover,
-        .close-button:focus {
-            color: #333;
-            transform: rotate(90deg);
-        }
-
-        .modal-content h2 {
-            margin-bottom: 25px;
-            color: var(--nav-bg-start);
-            text-align: center;
-            font-size: 1.8em;
-        }
-
-        .form-group {
-            margin-bottom: 18px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-            color: #555;
-        }
-
-        .form-group input[type="text"],
-        .form-group input[type="email"],
-        .form-group input[type="tel"] {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            font-family: 'Inter', sans-serif; /* Using Inter for form inputs */
-            font-size: 1rem;
-            transition: border-color 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .form-group input[type="text"]:focus,
-        .form-group input[type="email"]:focus,
-        .form-group input[type="tel"]:focus {
-            border-color: var(--nav-bg-start);
-            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.3);
-            outline: none;
-        }
-
-        .modal-content button[type="submit"] {
-            background-color: var(--button-bg-contact);
-            color: white;
-            padding: 14px 25px;
+            top: 1.25rem;
+            right: 1.25rem;
+            background: none;
             border: none;
-            border-radius: 8px;
+            font-size: 1.75rem; /* Larger close button */
             cursor: pointer;
-            font-size: 1.1rem;
-            font-weight: 600;
+            color: #64748b;
+            transition: color 0.2s;
+        }
+        .modal-close-button:hover {
+            color: #1e293b;
+        }
+
+        /* Notification styling */
+        .notification {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            background-color: #28a745; /* Deeper green for success/info */
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            z-index: 999;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+        }
+        .notification.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .notification-close-button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1rem;
+            margin-left: 1rem;
+            cursor: pointer;
+        }
+
+        /* 3D Canvas Styling */
+        #three-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
-            margin-top: 15px;
-            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            height: 100%;
+            z-index: -1; /* Behind other content */
         }
 
-        .modal-content button[type="submit"]:hover {
-            background-color: var(--button-hover-contact);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        /* Loading spinner for LLM */
+        .loader {
+            border: 4px solid #f3f3f3; /* Light grey */
+            border-top: 4px solid #4338ca; /* Indigo-700 */
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            vertical-align: middle;
+            margin-left: 0.5rem;
         }
 
-        /* Animations for Modal */
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
-        @keyframes slideIn {
-            from { transform: translateY(-50px) scale(0.9); opacity: 0; }
-            to { transform: translateY(0) scale(1); opacity: 1; }
+        /* Feedback Slider Specific Styles */
+        .feedback-slider-container {
+            display: flex;
+            overflow-x: hidden; /* Hide scrollbar */
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+            scroll-snap-type: x mandatory; /* Snap to slides */
         }
 
+        .feedback-slide {
+            flex-shrink: 0;
+            width: 100%; /* Each slide takes full width of its container */
+            scroll-snap-align: center;
+            padding: 1rem; /* Adjust padding as needed */
+        }
 
-        /* Responsive Styling (Mobile View) */
-        @media (max-width: 768px) {
-            .header-content {
-                padding: 10px 15px;
-            }
+        .feedback-slider-nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 1.5rem;
+            gap: 0.75rem;
+        }
 
-            .main-nav {
-                display: none;
-                flex-direction: column;
-                position: absolute;
-                top: 70px;
-                left: 0;
-                width: 100%;
-                background: linear-gradient(135deg, var(--mobile-nav-bg-start), var(--mobile-nav-bg-end));
-                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-                padding: 10px 0;
-                overflow: hidden;
-                max-height: 0;
-                transition: max-height 0.4s ease-out, transform 0.3s ease-out;
-                z-index: 998;
-                transform-origin: top;
-                transform: scaleY(0);
-            }
+        .feedback-dot {
+            width: 10px;
+            height: 10px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
 
-            .main-nav.active {
-                display: flex;
-                max-height: 600px;
-                transform: scaleY(1);
-            }
-
-            .main-nav .nav-list {
-                flex-direction: column;
-                width: 100%;
-                padding: 10px 0;
-            }
-
-            .main-nav .nav-item {
-                margin: 0;
-                width: 100%;
-                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            }
-
-            .main-nav .nav-item:last-child {
-                border-bottom: none;
-            }
-
-            .main-nav .nav-item a {
-                padding: 15px 20px;
-                color: var(--nav-text-color);
-                text-align: left;
-                position: relative;
-                font-weight: 400;
-                transition: background-color 0.2s ease;
-            }
-
-            .main-nav .nav-item a::before {
-                display: none;
-            }
-
-            .main-nav .nav-item a:hover {
-                background-color: rgba(255, 255, 255, 0.15);
-            }
-
-            .main-nav .has-dropdown > a::after {
-                content: '+';
-                position: absolute;
-                right: 20px;
-                color: var(--nav-text-color);
-                font-size: 1.2em;
-                transition: transform 0.3s ease;
-            }
-
-            .main-nav .has-dropdown.open > a::after {
-                content: '-';
-                transform: rotate(180deg);
-            }
-
-            .main-nav .dropdown-menu {
-                position: static;
-                box-shadow: none;
-                background-color: rgba(0, 0, 0, 0.2);
-                transform: none;
-                opacity: 1;
-                max-height: 0;
-                overflow: hidden;
-                transition: max-height 0.3s ease-out;
-                pointer-events: auto;
-                border-radius: 0;
-                min-width: unset;
-                max-width: unset;
-            }
-
-            .main-nav .has-dropdown.open .dropdown-menu {
-                max-height: 300px;
-                padding-bottom: 10px;
-            }
-
-            .main-nav .dropdown-menu li a {
-                padding: 10px 30px;
-                color: var(--nav-text-color);
-                font-size: 0.95em;
-            }
-
-            .main-nav .dropdown-menu li a:hover {
-                background-color: rgba(0, 0, 0, 0.3);
-                padding-left: 35px;
-            }
-
-            .hamburger-menu {
-                display: flex;
-            }
-
-            .hamburger-menu.active .bar:nth-child(1) {
-                transform: translateY(8px) rotate(45deg);
-            }
-
-            .hamburger-menu.active .bar:nth-child(2) {
-                opacity: 0;
-            }
-
-            .hamburger-menu.active .bar:nth-child(3) {
-                transform: translateY(-8px) rotate(-45deg);
-            }
-
-            .btn-login, .btn-contact {
-                display: block;
-                margin: 10px 20px;
-                width: calc(100% - 40px);
-                text-align: center;
-            }
-
-            .main-content {
-                padding-top: 80px;
-            }
-
-            .footer-columns {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .footer-col {
-                text-align: center;
-            }
-
-            .footer-col h3::after {
-                left: 50%;
-                transform: translateX(-50%);
-            }
-
-            /* Slider specific responsive adjustments */
-            .app-slider-track {
-                height: 250px; /* Smaller height on mobile */
-            }
-            .app-slide-caption {
-                font-size: 1em;
-                bottom: 15px;
-                padding: 10px 20px;
-            }
-            .app-slider-nav-btn {
-                width: 40px;
-                height: 40px;
-                font-size: 22px;
-            }
-            .app-slider-prev {
-                left: 10px;
-            }
-            .app-slider-next {
-                right: 10px;
-            }
-            .app-dot {
-                height: 10px;
-                width: 10px;
-                margin: 0 4px;
-            }
+        .feedback-dot.active {
+            background-color: #ffffff;
         }
     </style>
 </head>
-<body>
-    <header class="main-header">
-        <div class="header-content">
-            <div class="logo">
-                <a href="#"><img src="https://placehold.co/150x50/3498db/ffffff?text=ALIF+LOGO" alt="Company Logo"></a>
+<body class="text-slate-700">
+
+    <div id="notification" class="notification">
+        <p>📢 Important Announcement: Admissions for 2025-2026 are now open!</p>
+        <button class="notification-close-button" onclick="hideNotification()">X</button>
+    </div>
+
+    <header class="bg-blue-50 shadow-lg py-4 px-6 md:px-12 sticky top-0 z-50 rounded-b-xl" style="perspective: 1000px;">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center">
+                <img src="https://placehold.co/60x60/4338ca/ffffff?text=ALIF" alt="School Logo" class="h-12 w-12 rounded-full mr-3 shadow-md">
+                <h1 class="text-2xl md:text-3xl font-bold text-indigo-700">ALIF INTERNATIONAL SCHOOL</h1>
             </div>
-            <nav class="main-nav">
-                <ul class="nav-list">
-                    <li class="nav-item active"><a href="#">Home</a></li>
-                    <li class="nav-item has-dropdown">
-                        <a href="#">About Us</a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">Principals Desk</a></li>
-                            <li><a href="#">Managing Director</a></li>
-                            <li><a href="#">Founder</a></li>
-                            <li><a href="#">Alif Vision & Mission</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item has-dropdown">
-                        <a href="#">Academics</a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">Levels</a></li>
-                            <li><a href="#">Academic Calendar</a></li>
-                            <li><a href="#">Teaching Faculty</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item has-dropdown">
-                        <a href="#">Admission</a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#" class="open-admission-form">Book Your Admission</a></li>
-                            <li><a href="#">Admission Procedure</a></li>
-                            <li><a href="#">Fee Structure</a></li>
-                            <li><a href="#">Rules & Regulations</a></li>
-                            <li><a href="#">Transfer Certificate</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item has-dropdown">
-                        <a href="#">Resource</a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">Circular Curriculum</a></li>
-                            <li><a href="#">Career</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item"><a href="#">News & Events</a></li>
-                    <li class="nav-item"><a href="#" class="btn-login">Login</a></li>
-                    <li class="nav-item"><a href="#" class="btn-contact">Contact Us</a></li>
-                </ul>
+
+            <nav class="hidden md:flex items-center space-x-6">
+                <a href="index.html" class="text-base font-medium text-slate-700 hover:text-indigo-700 nav-link-hover whitespace-nowrap">Home</a>
+
+                <div class="relative dropdown">
+                    <button class="text-base font-medium text-slate-700 hover:text-indigo-700 flex items-center nav-link-hover whitespace-nowrap">
+                        About Us <i class="fas fa-chevron-down ml-2 text-sm"></i>
+                    </button>
+                    <div class="dropdown-menu">
+                        <a href="#managing-director">Managing Director</a>
+                        <a href="#chairman">Chairman</a>
+                        <a href="#principal">Principal</a>
+                        <a href="#vision-mission">Vision & Mission</a>
+                    </div>
+                </div>
+
+                <div class="relative dropdown">
+                    <button class="text-base font-medium text-slate-700 hover:text-indigo-700 flex items-center nav-link-hover whitespace-nowrap">
+                        Admission <i class="fas fa-chevron-down ml-2 text-sm"></i>
+                    </button>
+                    <div class="dropdown-menu">
+                        <a href="admission.html#admission-info">Admission Info</a>
+                        <a href="admission.html#tc-application">TC Application</a>
+                    </div>
+                </div>
+
+                <a href="#academics" class="text-base font-medium text-slate-700 hover:text-indigo-700 nav-link-hover whitespace-nowrap">Academics</a>
+                <a href="resources.html" class="text-base font-medium text-slate-700 hover:text-indigo-700 nav-link-hover whitespace-nowrap">Resources</a>
+                <a href="#events" class="text-base font-medium text-slate-700 hover:text-indigo-700 nav-link-hover whitespace-nowrap">Events</a>
+                <a href="#contact-section" class="text-base font-medium text-slate-700 hover:text-indigo-700 nav-link-hover whitespace-nowrap">Contact</a>
+                <button class="bg-indigo-700 text-white px-6 py-2 rounded-full shadow-lg hover:bg-indigo-800 transition duration-300 ease-in-out transform hover:scale-105">
+                    Login
+                </button>
             </nav>
-            <div class="hamburger-menu">
-                <div class="bar"></div>
-                <div class="bar"></div>
-                <div class="bar"></div>
+
+            <button id="mobile-menu-button" class="md:hidden text-slate-700 text-2xl focus:outline-none">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden mt-4 bg-white rounded-lg shadow-md py-2">
+            <a href="index.html" class="block px-4 py-2 text-slate-700 hover:bg-blue-50 rounded-md">Home</a>
+            <div class="relative dropdown">
+                <button class="w-full text-left px-4 py-2 text-slate-700 hover:bg-blue-50 flex justify-between items-center rounded-md" onclick="toggleMobileDropdown(this)">
+                    About Us <i class="fas fa-chevron-down ml-2 text-sm"></i>
+                </button>
+                <div class="dropdown-menu ml-4 mt-1">
+                    <a href="#managing-director">Managing Director</a>
+                    <a href="#chairman">Chairman</a>
+                    <a href="#principal">Principal</a>
+                    <a href="#vision-mission">Vision & Mission</a>
+                </div>
             </div>
+            <div class="relative dropdown">
+                <button class="w-full text-left px-4 py-2 text-slate-700 hover:bg-blue-50 flex justify-between items-center rounded-md" onclick="toggleMobileDropdown(this)">
+                    Admission <i class="fas fa-chevron-down ml-2 text-sm"></i>
+                </button>
+                <div class="dropdown-menu ml-4 mt-1">
+                    <a href="admission.html#admission-info">Admission Info</a>
+                    <a href="admission.html#tc-application">TC Application</a>
+                </div>
+            </div>
+            <a href="#academics" class="block px-4 py-2 text-slate-700 hover:bg-blue-50 rounded-md">Academics</a>
+            <a href="resources.html" class="block px-4 py-2 text-slate-700 hover:bg-blue-50 rounded-md">Resources</a>
+            <a href="#events" class="block px-4 py-2 text-slate-700 hover:bg-blue-50 rounded-md">Events</a>
+            <a href="#contact-section" class="block px-4 py-2 text-slate-700 hover:bg-blue-50 rounded-md">Contact</a>
+            <button class="w-full text-left bg-indigo-700 text-white px-4 py-2 mt-2 rounded-full shadow-lg hover:bg-indigo-800 transition duration-300 ease-in-out transform hover:scale-105">
+                Login
+            </button>
         </div>
     </header>
 
-    <div class="app-slider-container">
-        <div class="app-slider-track">
-            <div class="app-slide">
-                <img src="https://placehold.co/1920x600/3498db/ffffff?text=Your+App+Screenshot+1" alt="App Screenshot 1">
-                <div class="app-slide-caption">Intuitive Dashboard</div>
-            </div>
-            <div class="app-slide">
-                <img src="https://placehold.co/1920x600/2ecc71/ffffff?text=Your+App+Screenshot+2" alt="App Screenshot 2">
-                <div class="app-slide-caption">Seamless User Experience</div>
-            </div>
-            <div class="app-slide">
-                <img src="https://placehold.co/1920x600/e74c3c/ffffff?text=Your+App+Screenshot+3" alt="App Screenshot 3">
-                <div class="app-slide-caption">Powerful Analytics</div>
-            </div>
-            <div class="app-slide">
-                <img src="https://placehold.co/1920x600/f1c40f/ffffff?text=Your+App+Screenshot+4" alt="App Screenshot 4">
-                <div class="app-slide-caption">Cross-Platform Compatibility</div>
-            </div>
+    <section id="home" class="relative w-full h-screen flex items-center justify-center text-white overflow-hidden rounded-b-3xl shadow-xl">
+        <canvas id="three-canvas" class="absolute inset-0"></canvas>
+
+        <div class="hero-background absolute inset-0"></div>
+        <div class="relative z-10 text-center p-4">
+            <h2 class="text-4xl md:text-6xl font-extrabold leading-tight mb-4 animate-fade-in">Welcome to ALIF INTERNATIONAL SCHOOL</h2>
+            <p class="text-lg md:text-xl mb-8 max-w-2xl mx-auto animate-fade-in" style="animation-delay: 0.2s;">
+                Nurturing Minds, Building Futures. Discover a world of excellence in education.
+            </p>
+            <button onclick="openAdmissionModal()" class="bg-emerald-500 text-indigo-900 px-8 py-4 rounded-full text-xl font-bold shadow-2xl hover:bg-emerald-600 transition duration-300 ease-in-out transform hover:scale-105 animate-fade-in" style="animation-delay: 0.4s;">
+                Admission Enquiry
+            </button>
         </div>
 
-        <a class="app-slider-nav-btn app-slider-prev" onclick="plusSlides(-1)">&#10094;</a>
-        <a class="app-slider-nav-btn app-slider-next" onclick="plusSlides(1)">&#10095;</a>
-
-        <div class="app-slider-dots">
-            <span class="app-dot" onclick="currentSlide(1)"></span>
-            <span class="app-dot" onclick="currentSlide(2)"></span>
-            <span class="app-dot" onclick="currentSlide(3)"></span>
-            <span class="app-dot" onclick="currentSlide(4)"></span>
-        </div>
-    </div>
-
-    <main class="main-content">
-        <h1>Discover the Future with Our App</h1>
-        <p>Explore the innovative features and benefits of our application designed to simplify your life.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-        <p>Suspendisse potenti. In hac habitasse platea dictumst. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec eu est a quam consequat efficitur a ac justo. Nullam eleifend, libero at efficitur pharetra, nulla justo tincidunt est, et pharetra quam nunc vel justo.</p>
-    </main>
-
-    <footer class="main-footer">
-        <div class="footer-columns">
-            <div class="footer-col">
-                <h3>About Us</h3>
-                <p>Brief description of your company or organization, focusing on quality and innovation.</p>
+        <div class="absolute bottom-8 w-full px-4 z-20">
+            <div id="image-slider" class="relative w-full max-w-4xl mx-auto h-48 md:h-64 overflow-hidden rounded-xl shadow-2xl">
+                <div class="slider-track flex transition-transform duration-500 ease-in-out h-full">
+                    <img src="https://placehold.co/800x400/14b8a6/000000?text=School+View+1" alt="School View 1" class="w-full flex-shrink-0 object-cover rounded-xl">
+                    <img src="https://placehold.co/800x400/67e8f9/000000?text=School+View+2" alt="School View 2" class="w-full flex-shrink-0 object-cover rounded-xl">
+                    <img src="https://placehold.co/800x400/c4b5fd/000000?text=School+View+3" alt="School View 3" class="w-full flex-shrink-0 object-cover rounded-xl">
+                </div>
+                <button onclick="prevSlide()" class="absolute left-4 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-white p-3 rounded-full hover:bg-opacity-75 transition"><i class="fas fa-chevron-left"></i></button>
+                <button onclick="nextSlide()" class="absolute right-4 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-white p-3 rounded-full hover:bg-opacity-75 transition"><i class="fas fa-chevron-right"></i></button>
+                <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2">
+                    <span class="slider-dot w-3 h-3 bg-white bg-opacity-50 rounded-full cursor-pointer" onclick="currentSlide(0)"></span>
+                    <span class="slider-dot w-3 h-3 bg-white bg-opacity-50 rounded-full cursor-pointer" onclick="currentSlide(1)"></span>
+                    <span class="slider-dot w-3 h-3 bg-white bg-opacity-50 rounded-full cursor-pointer" onclick="currentSlide(2)"></span>
+                </div>
             </div>
-            <div class="footer-col">
-                <h3>Quick Links</h3>
-                <ul>
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">Academics</a></li>
-                    <li><a href="#">Admission</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
+        </div>
+    </section>
+
+    <section id="about-us-home" class="py-16 bg-gradient-to-br from-indigo-50 to-blue-100 rounded-3xl mx-4 my-8 shadow-xl">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-4xl font-bold text-indigo-800 mb-12 animate-fade-in">Our Leadership & Values</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mb-16">
+                <div id="managing-director" class="bg-white p-8 rounded-2xl shadow-lg animate-fade-in card-hover-effect" style="animation-delay: 0.4s;">
+                    <img src="https://placehold.co/150x150/4338ca/ffffff?text=MD+Photo" alt="Managing Director" class="w-36 h-36 rounded-full mx-auto mb-6 object-cover border-4 border-indigo-300">
+                    <h3 class="text-2xl font-semibold text-indigo-700 mb-2">Dr. ALIF INTERNATIONAL</h3>
+                    <p class="text-indigo-500 mb-4">Managing Director</p>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        With over 20 years of experience in education leadership, Dr. ALIF INTERNATIONAL is a visionary dedicated to fostering an environment of innovation and academic rigor.
+                    </p>
+                </div>
+
+                <div id="chairman" class="bg-white p-8 rounded-2xl shadow-lg animate-fade-in card-hover-effect" style="animation-delay: 0.6s;">
+                    <img src="https://placehold.co/150x150/4338ca/ffffff?text=Chairman+Photo" alt="Chairman" class="w-36 h-36 rounded-full mx-auto mb-6 object-cover border-4 border-indigo-300">
+                    <h3 class="text-2xl font-semibold text-indigo-700 mb-2">Mr. John Doe</h3>
+                    <p class="text-indigo-500 mb-4">Chairman</p>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        Mr. Doe's commitment to community development and education has been instrumental in shaping the school's values and outreach programs.
+                    </p>
+                </div>
+
+                <div id="principal" class="bg-white p-8 rounded-2xl shadow-lg animate-fade-in card-hover-effect" style="animation-delay: 0.8s;">
+                    <img src="https://placehold.co/150x150/4338ca/ffffff?text=Principal+Photo" alt="Principal" class="w-36 h-36 rounded-full mx-auto mb-6 object-cover border-4 border-indigo-300">
+                    <h3 class="text-2xl font-semibold text-indigo-700 mb-2">Ms. Jane Smith</h3>
+                    <p class="text-indigo-500 mb-4">Principal</p>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        Ms. Smith leads with passion and dedication, ensuring a nurturing and challenging academic environment for all students.
+                    </p>
+                </div>
+            </div>
+
+            <div id="vision-mission" class="bg-white p-10 rounded-2xl shadow-lg animate-fade-in card-hover-effect" style="animation-delay: 1s;">
+                <h3 class="text-3xl font-bold text-indigo-800 mb-6">Our Vision & Mission</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
+                    <div>
+                        <h4 class="text-2xl font-semibold text-indigo-700 mb-3 flex items-center"><i class="fas fa-eye mr-3 text-indigo-600"></i> Our Vision</h4>
+                        <p class="text-slate-600 leading-relaxed">
+                            To be a leading educational institution that empowers students to achieve their full potential, fostering critical thinking, creativity, and a lifelong love for learning. We aim to prepare global citizens who are compassionate, responsible, and ready to contribute positively to society.
+                        </p>
+                    </div>
+                    <div>
+                        <h4 class="text-2xl font-semibold text-indigo-700 mb-3 flex items-center"><i class="fas fa-bullseye mr-3 text-indigo-600"></i> Our Mission</h4>
+                        <p class="text-slate-600 leading-relaxed">
+                            To provide a dynamic and inclusive learning environment that promotes academic excellence, character development, and social responsibility. We are dedicated to nurturing individual talents, encouraging innovation, and instilling values that prepare students for success in a rapidly changing world.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 bg-indigo-800 text-white rounded-3xl mx-4 my-8 shadow-xl">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-4xl font-bold mb-12 animate-fade-in">Our Achievements at a Glance</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
+                <div class="bg-indigo-900 p-8 rounded-2xl shadow-lg counter-item card-hover-effect" style="animation-delay: 0.2s;">
+                    <i class="fas fa-users text-5xl text-emerald-400 mb-4"></i>
+                    <div class="text-5xl font-extrabold mb-2" data-target="4000">0</div>
+                    <p class="text-xl font-medium">Students Enrolled</p>
+                </div>
+                <div class="bg-indigo-900 p-8 rounded-2xl shadow-lg counter-item card-hover-effect" style="animation-delay: 0.4s;">
+                    <i class="fas fa-chalkboard-teacher text-5xl text-emerald-400 mb-4"></i>
+                    <div class="text-5xl font-extrabold mb-2" data-target="100">0</div>
+                    <p class="text-xl font-medium">Experienced Teachers</p>
+                </div>
+                <div class="bg-indigo-900 p-8 rounded-2xl shadow-lg counter-item card-hover-effect" style="animation-delay: 0.6s;">
+                    <i class="fas fa-building text-5xl text-emerald-400 mb-4"></i>
+                    <div class="text-5xl font-extrabold mb-2" data-target="5">0</div>
+                    <p class="text-xl font-medium">Branches Worldwide</p>
+                </div>
+                <div class="bg-indigo-900 p-8 rounded-2xl shadow-lg counter-item card-hover-effect" style="animation-delay: 0.8s;">
+                    <i class="fas fa-calendar-alt text-5xl text-emerald-400 mb-4"></i>
+                    <div class="text-5xl font-extrabold mb-2" data-target="5">0</div>
+                    <p class="text-xl font-medium">Years of Experience</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="academics" class="py-16 bg-gradient-to-br from-indigo-100 to-blue-100 rounded-3xl mx-4 my-8 shadow-xl">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-4xl font-bold text-indigo-800 mb-12 animate-fade-in">Our Academic Programs</h2>
+            <p class="text-lg max-w-3xl mx-auto mb-12 leading-relaxed animate-fade-in" style="animation-delay: 0.2s;">
+                ALIF INTERNATIONAL SCHOOL offers a comprehensive curriculum designed to foster intellectual curiosity and academic excellence from pre-primary to higher secondary levels.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white p-8 rounded-2xl shadow-lg animate-fade-in card-hover-effect" style="animation-delay: 0.4s;">
+                    <i class="fas fa-book-open text-5xl text-indigo-600 mb-4"></i>
+                    <h3 class="text-2xl font-semibold text-indigo-700 mb-3">Primary Education</h3>
+                    <p class="text-slate-600">
+                        Foundational learning with a focus on literacy, numeracy, and environmental awareness. Engaging activities and play-based learning.
+                    </p>
+                </div>
+                <div class="bg-white p-8 rounded-2xl shadow-lg animate-fade-in card-hover-effect" style="animation-delay: 0.6s;">
+                    <i class="fas fa-flask text-5xl text-indigo-600 mb-4"></i>
+                    <h3 class="text-2xl font-semibold text-indigo-700 mb-3">Secondary Education</h3>
+                    <p class="text-slate-600">
+                        In-depth subject knowledge, critical thinking, and preparation for board examinations. Emphasis on science, mathematics, and humanities.
+                    </p>
+                </div>
+                <div class="bg-white p-8 rounded-2xl shadow-lg animate-fade-in card-hover-effect" style="animation-delay: 0.8s;">
+                    <i class="fas fa-graduation-cap text-5xl text-indigo-600 mb-4"></i>
+                    <h3 class="text-2xl font-semibold text-indigo-700 mb-3">Higher Secondary</h3>
+                    <p class="text-slate-600">
+                        Specialized streams (Science, Commerce, Arts) with career-oriented guidance and preparation for competitive exams.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 bg-indigo-800 text-white rounded-3xl mx-4 my-8 shadow-xl">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-4xl font-bold mb-12 animate-fade-in">What Our Parents Say</h2>
+            <div class="relative w-full max-w-3xl mx-auto">
+                <div id="feedback-slider" class="feedback-slider-container">
+                    <div class="feedback-slide">
+                        <div class="bg-indigo-900 p-8 rounded-2xl shadow-lg card-hover-effect">
+                            <i class="fas fa-quote-left text-emerald-400 text-3xl mb-4"></i>
+                            <p class="text-lg italic mb-6">
+                                "ALIF INTERNATIONAL SCHOOL has transformed my child's learning journey. The teachers are incredibly supportive, and the curriculum is outstanding. Highly recommended!"
+                            </p>
+                            <p class="font-semibold text-emerald-300">- Mrs. Priya Sharma, Parent of Grade 5 Student</p>
+                        </div>
+                    </div>
+                    <div class="feedback-slide">
+                        <div class="bg-indigo-900 p-8 rounded-2xl shadow-lg card-hover-effect">
+                            <i class="fas fa-quote-left text-emerald-400 text-3xl mb-4"></i>
+                            <p class="text-lg italic mb-6">
+                                "The school's focus on holistic development is truly commendable. My child not only excels academically but also participates enthusiastically in co-curricular activities."
+                            </p>
+                            <p class="font-semibold text-emerald-300">- Mr. Rajesh Kumar, Parent of Grade 8 Student</p>
+                        </div>
+                    </div>
+                    <div class="feedback-slide">
+                        <div class="bg-indigo-900 p-8 rounded-2xl shadow-lg card-hover-effect">
+                            <i class="fas fa-quote-left text-emerald-400 text-3xl mb-4"></i>
+                            <p class="text-lg italic mb-6">
+                                "My children love going to ALIF INTERNATIONAL SCHOOL every day! The engaging activities and supportive staff make learning a joy. A truly wonderful environment."
+                            </p>
+                            <p class="font-semibold text-emerald-300">- Ms. Sarah Khan, Parent of Grade 2 & 6 Students</p>
+                        </div>
+                    </div>
+                </div>
+                <button onclick="prevFeedback()" class="absolute left-0 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-75 transition"><i class="fas fa-chevron-left"></i></button>
+                <button onclick="nextFeedback()" class="absolute right-0 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-75 transition"><i class="fas fa-chevron-right"></i></button>
+                <div class="feedback-slider-nav">
+                    <span class="feedback-dot active" onclick="currentFeedback(0)"></span>
+                    <span class="feedback-dot" onclick="currentFeedback(1)"></span>
+                    <span class="feedback-dot" onclick="currentFeedback(2)"></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="events" class="py-16 bg-white rounded-3xl mx-4 my-8 shadow-xl">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-4xl font-bold text-indigo-800 mb-12 animate-fade-in">Upcoming Events & News</h2>
+            <p class="text-lg max-w-3xl mx-auto mb-12 leading-relaxed animate-fade-in" style="animation-delay: 0.2s;">
+                Stay updated with the latest happenings, academic calendars, and cultural events at ALIF INTERNATIONAL SCHOOL. (Content will be added here for the Events page)
+            </p>
+            <button class="bg-indigo-700 text-white px-8 py-3 rounded-full shadow-lg hover:bg-indigo-800 transition duration-300 ease-in-out transform hover:scale-105">
+                View All Events
+            </button>
+        </div>
+    </section>
+
+    <section id="contact-section" class="py-16 bg-indigo-100 rounded-3xl mx-4 my-8 shadow-xl">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-4xl font-bold text-indigo-800 mb-12 animate-fade-in">Get In Touch With Us</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <div class="bg-white p-8 rounded-2xl shadow-lg animate-fade-in card-hover-effect" style="animation-delay: 0.2s;">
+                    <h3 class="text-3xl font-semibold text-indigo-700 mb-6">Send Us a Message</h3>
+                    <form class="text-left space-y-6">
+                        <div>
+                            <label for="name" class="block text-slate-700 text-sm font-bold mb-2">Your Name</label>
+                            <input type="text" id="name" name="name" class="shadow-sm appearance-none border rounded-lg w-full py-3 px-4 text-slate-700 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent" placeholder="John Doe">
+                        </div>
+                        <div>
+                            <label for="email" class="block text-slate-700 text-sm font-bold mb-2">Your Email</label>
+                            <input type="email" id="email" name="email" class="shadow-sm appearance-none border rounded-lg w-full py-3 px-4 text-slate-700 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent" placeholder="you@example.com">
+                        </div>
+                        <div>
+                            <label for="message" class="block text-slate-700 text-sm font-bold mb-2">Message</label>
+                            <textarea id="message" name="message" rows="5" class="shadow-sm appearance-none border rounded-lg w-full py-3 px-4 text-slate-700 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent" placeholder="Your message..."></textarea>
+                        </div>
+                        <button type="submit" class="bg-indigo-700 text-white px-8 py-3 rounded-full shadow-lg hover:bg-indigo-800 transition duration-300 ease-in-out transform hover:scale-105">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+
+                <div class="bg-white p-8 rounded-2xl shadow-lg animate-fade-in card-hover-effect" style="animation-delay: 0.4s;">
+                    <h3 class="text-3xl font-semibold text-indigo-700 mb-6">Our Location</h3>
+                    <div class="text-left text-slate-600 space-y-4 mb-8">
+                        <p><i class="fas fa-map-marker-alt text-indigo-600 mr-3"></i> 123 School Lane, Education City, State, Country - 12345</p>
+                        <p><i class="fas fa-phone-alt text-indigo-600 mr-3"></i> +91 123 456 7890</p>
+                        <p><i class="fas fa-envelope text-indigo-600 mr-3"></i> info@alifedu.edu</p>
+                        <p><i class="fas fa-clock text-indigo-600 mr-3"></i> Mon - Fri: 9:00 AM - 5:00 PM</p>
+                    </div>
+                    <div class="w-full h-64 bg-gray-200 rounded-xl overflow-hidden shadow-inner">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.203365985061!2d-73.98785468459424!3d40.74844077932808!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c2596489379659%3A0x1d4a8e2f2e2d2b2b!2sEmpire%20State%20Building!5e0!3m2!1sen!2sin!4v1678901234567!5m2!1sen!2sin"
+                            width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <footer class="bg-zinc-900 text-white py-12 rounded-t-3xl shadow-2xl">
+        <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div>
+                <h3 class="text-2xl font-bold mb-4 text-indigo-300">ALIF INTERNATIONAL SCHOOL</h3>
+                <p class="text-indigo-200 text-sm leading-relaxed">
+                    Dedicated to providing quality education and fostering a nurturing environment for students to excel academically and personally.
+                </p>
+            </div>
+
+            <div>
+                <h3 class="text-2xl font-bold mb-4 text-indigo-300">Quick Links</h3>
+                <ul class="space-y-2">
+                    <li><a href="index.html" class="text-indigo-200 hover:text-white transition duration-200">Home</a></li>
+                    <li><a href="#about-us-home" class="text-indigo-200 hover:text-white transition duration-200">About Us</a></li>
+                    <li><a href="admission.html" class="text-indigo-200 hover:text-white transition duration-200">Admission</a></li>
+                    <li><a href="#academics" class="text-indigo-200 hover:text-white transition duration-200">Academics</a></li>
+                    <li><a href="#events" class="text-indigo-200 hover:text-white transition duration-200">Events</a></li>
+                    <li><a href="#contact-section" class="text-indigo-200 hover:text-white transition duration-200">Contact</a></li>
                 </ul>
             </div>
-            <div class="footer-col">
-                <h3>Contact Info</h3>
-                <p>123 Modern Street, Tech City, Country</p>
-                <p>Email: info@yourdomain.com</p>
-                <p>Phone: +123 456 7890</p>
+
+            <div>
+                <h3 class="text-2xl font-bold mb-4 text-indigo-300">Contact Us</h3>
+                <p class="text-indigo-200 mb-2"><i class="fas fa-map-marker-alt mr-2"></i> 123 School Lane, Education City, State, Country - 12345</p>
+                <p class="text-indigo-200 mb-2"><i class="fas fa-phone-alt mr-2"></i> +91 123 456 7890</p>
+                <p class="text-indigo-200 mb-2"><i class="fas fa-envelope mr-2"></i> info@alifedu.edu</p>
+                <div class="flex space-x-4 mt-4">
+                    <a href="#" class="text-indigo-200 hover:text-white text-xl transition duration-200"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="text-indigo-200 hover:text-white text-xl transition duration-200"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-indigo-200 hover:text-white text-xl transition duration-200"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-indigo-200 hover:text-white text-xl transition duration-200"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+
+            <div>
+                <h3 class="text-2xl font-bold mb-4 text-indigo-300">Our Branches</h3>
+                <ul class="space-y-2">
+                    <li><a href="#" class="text-indigo-200 hover:text-white transition duration-200">Branch 1 - City A</a></li>
+                    <li><a href="#" class="text-indigo-200 hover:text-white transition duration-200">Branch 2 - City B</a></li>
+                    <li><a href="#" class="text-indigo-200 hover:text-white transition duration-200">Branch 3 - City C</a></li>
+                    <li><a href="#" class="text-indigo-200 hover:text-white transition duration-200">Branch 4 - City D</a></li>
+                    <li><a href="#" class="text-indigo-200 hover:text-white transition duration-200">Branch 5 - City E</a></li>
+                </ul>
             </div>
         </div>
-        <div class="footer-bottom">
-            <p>&copy; 2024 Your Company. All rights reserved. Designed with ❤️</p>
+        <div class="text-center text-indigo-300 mt-8 pt-8 border-t border-indigo-800">
+            © 2025 ALIF INTERNATIONAL SCHOOL. Reserved by Alif Edu.
         </div>
     </footer>
 
-    <div id="admissionModal" class="modal">
+    <div id="admission-modal" class="modal-overlay">
         <div class="modal-content">
-            <span class="close-button">&times;</span>
-            <h2>Book Your Admission</h2>
-            <form id="admissionForm" action="YOUR_GOOGLE_SHEET_FORM_URL" method="POST" target="_blank">
-                <div class="form-group">
-                    <label for="name">Name:</label>
-                    <input type="text" id="name" name="Name" required>
+            <button class="modal-close-button" onclick="closeAdmissionModal()">X</button>
+
+            <div class="border-b pb-6 mb-6 border-gray-200">
+                <h3 class="text-3xl font-bold text-indigo-800 mb-6 text-center">Admission Enquiry</h3>
+                <form class="space-y-5">
+                    <div>
+                        <label for="enquiry-name" class="block text-slate-700 text-sm font-bold mb-2">Student's Name</label>
+                        <input type="text" id="enquiry-name" class="shadow-sm appearance-none border rounded-lg w-full py-3 px-4 text-slate-700 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="Full Name" required>
+                    </div>
+                    <div>
+                        <label for="enquiry-parent-name" class="block text-slate-700 text-sm font-bold mb-2">Parent's Name</label>
+                        <input type="text" id="enquiry-parent-name" class="shadow-sm appearance-none border rounded-lg w-full py-3 px-4 text-slate-700 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="Parent/Guardian Name" required>
+                    </div>
+                    <div>
+                        <label for="enquiry-email" class="block text-slate-700 text-sm font-bold mb-2">Email Address</label>
+                        <input type="email" id="enquiry-email" class="shadow-sm appearance-none border rounded-lg w-full py-3 px-4 text-slate-700 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="your_email@example.com" required>
+                    </div>
+                    <div>
+                        <label for="enquiry-phone" class="block text-slate-700 text-sm font-bold mb-2">Phone Number</label>
+                        <input type="tel" id="enquiry-phone" class="shadow-sm appearance-none border rounded-lg w-full py-3 px-4 text-slate-700 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="+91 9876543210" required>
+                    </div>
+                    <div>
+                        <label for="enquiry-grade" class="block text-slate-700 text-sm font-bold mb-2">Applying for Grade</label>
+                        <select id="enquiry-grade" class="shadow-sm appearance-none border rounded-lg w-full py-3 px-4 text-slate-700 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                            <option value="">Select Grade</option>
+                            <option value="Nursery">Nursery</option>
+                            <option value="LKG">LKG</option>
+                            <option value="UKG">UKG</option>
+                            <option value="Grade 1">Grade 1</option>
+                            <option value="Grade 2">Grade 2</option>
+                            <option value="Grade 3">Grade 3</option>
+                            <option value="Grade 4">Grade 4</option>
+                            <option value="Grade 5">Grade 5</option>
+                            <option value="Grade 6">Grade 6</option>
+                            <option value="Grade 7">Grade 7</option>
+                            <option value="Grade 8">Grade 8</option>
+                            <option value="Grade 9">Grade 9</option>
+                            <option value="Grade 10">Grade 10</option>
+                            <option value="Grade 11">Grade 11</option>
+                            <option value="Grade 12">Grade 12</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="enquiry-message" class="block text-slate-700 text-sm font-bold mb-2">Additional Message</label>
+                        <textarea id="enquiry-message" rows="3" class="shadow-sm appearance-none border rounded-lg w-full py-3 px-4 text-slate-700 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="Any specific questions or details..."></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-indigo-700 text-white px-6 py-3 rounded-full shadow-lg hover:bg-indigo-800 transition duration-300 ease-in-out transform hover:scale-105">
+                        Submit Enquiry
+                    </button>
+                </form>
+            </div>
+
+            <div>
+                <h3 class="text-2xl font-bold text-indigo-800 mb-4 text-center">✨ Ask Our Admission Assistant ✨</h3>
+                <p class="text-slate-600 text-center mb-4">Have quick questions about our school? Ask our AI assistant!</p>
+                <div class="space-y-4">
+                    <div>
+                        <label for="llm-question" class="block text-slate-700 text-sm font-bold mb-2">Your Question</label>
+                        <textarea id="llm-question" rows="3" class="shadow-sm appearance-none border rounded-lg w-full py-3 px-4 text-slate-700 leading-tight focus:outline-none focus:ring-2 focus:ring-orange-500" placeholder="e.g., What is the age limit for Nursery admission?"></textarea>
+                    </div>
+                    <button onclick="askAdmissionAssistant()" class="w-full bg-orange-500 text-white px-6 py-3 rounded-full shadow-lg hover:bg-orange-600 transition duration-300 ease-in-out transform hover:scale-105 flex items-center justify-center">
+                        Ask Assistant
+                        <span id="llm-loading" class="loader hidden"></span>
+                    </button>
+                    <div id="llm-response" class="mt-4 p-4 bg-orange-50 rounded-lg border border-orange-200 text-slate-800 text-sm leading-relaxed hidden">
+                        </div>
                 </div>
-                <div class="form-group">
-                    <label for="email">Email:</label>
-                    <input type="email" id="email" name="Email" required>
-                </div>
-                <div class="form-group">
-                    <label for="phone">Phone:</label>
-                    <input type="tel" id="phone" name="Phone" required>
-                </div>
-                <div class="form-group">
-                    <label for="grade">Desired Grade:</label>
-                    <input type="text" id="grade" name="Desired Grade" required>
-                </div>
-                <button type="submit">Submit Admission</button>
-            </form>
+            </div>
         </div>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const hamburgerMenu = document.querySelector('.hamburger-menu');
-            const mainNav = document.querySelector('.main-nav');
-            const navItemsWithDropdown = document.querySelectorAll('.main-nav .has-dropdown');
-            const openAdmissionFormBtn = document.querySelector('.open-admission-form');
-            const admissionModal = document.getElementById('admissionModal');
-            const closeModalBtn = document.querySelector('.close-button');
-            const admissionForm = document.getElementById('admissionForm');
+        // --- Mobile Menu Toggle ---
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        });
 
-            // Automatically open the admission modal when the page loads
-            admissionModal.style.display = 'flex'; // UNCOMMENTED: This line now makes the modal auto-open
-            console.log('Admission modal set to display flex on DOMContentLoaded.'); // Added for debugging
+        // Function to toggle mobile dropdowns
+        function toggleMobileDropdown(button) {
+            const parentDropdown = button.closest('.dropdown');
+            parentDropdown.classList.toggle('active'); // Use 'active' class to show/hide dropdown
+        }
 
-            // Hamburger menu toggle for mobile
-            hamburgerMenu.addEventListener('click', () => {
-                mainNav.classList.toggle('active');
-                hamburgerMenu.classList.toggle('active');
-                if (!mainNav.classList.contains('active')) {
-                    navItemsWithDropdown.forEach(item => {
-                        item.classList.remove('open');
-                    });
-                }
+        // Close mobile menu when a link is clicked
+        document.querySelectorAll('#mobile-menu a').forEach(item => {
+            item.addEventListener('click', () => {
+                document.getElementById('mobile-menu').classList.add('hidden');
+                // Also close any open mobile dropdowns
+                document.querySelectorAll('#mobile-menu .dropdown.active').forEach(dropdown => {
+                    dropdown.classList.remove('active');
+                });
             });
+        });
 
-            // Mobile dropdown accordion behavior
-            navItemsWithDropdown.forEach(item => {
-                const parentLink = item.querySelector('a');
-                parentLink.addEventListener('click', (e) => {
-                    if (window.innerWidth <= 768) {
-                        e.preventDefault();
-                        navItemsWithDropdown.forEach(otherItem => {
-                            if (otherItem !== item && otherItem.classList.contains('open')) {
-                                otherItem.classList.remove('open');
+
+        // --- Image Slider ---
+        let slideIndex = 0;
+        const slides = document.querySelector('.slider-track');
+        const dots = document.querySelectorAll('.slider-dot');
+        const totalSlides = slides.children.length;
+        let slideInterval;
+
+        function showSlides() {
+            // Hide all dots
+            dots.forEach(dot => dot.classList.remove('bg-opacity-100'));
+            // Set active dot
+            dots[slideIndex].classList.add('bg-opacity-100');
+
+            // Move the slider track
+            slides.style.transform = `translateX(-${slideIndex * 100}%)`;
+        }
+
+        function nextSlide() {
+            slideIndex = (slideIndex + 1) % totalSlides;
+            showSlides();
+            resetAutoSlide();
+        }
+
+        function prevSlide() {
+            slideIndex = (slideIndex - 1 + totalSlides) % totalSlides;
+            showSlides();
+            resetAutoSlide();
+        }
+
+        function currentSlide(n) {
+            slideIndex = n;
+            showSlides();
+            resetAutoSlide();
+        }
+
+        function startAutoSlide() {
+            slideInterval = setInterval(nextSlide, 5000); // Change image every 5 seconds
+        }
+
+        function resetAutoSlide() {
+            clearInterval(slideInterval);
+            startAutoSlide();
+        }
+
+        // Initialize slider
+        showSlides();
+        startAutoSlide();
+
+        // --- Admission Enquiry Modal ---
+        const admissionModal = document.getElementById('admission-modal');
+        const llmResponseDiv = document.getElementById('llm-response');
+        const llmLoadingSpinner = document.getElementById('llm-loading');
+
+        function openAdmissionModal() {
+            admissionModal.classList.add('open');
+            document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
+        }
+
+        function closeAdmissionModal() {
+            admissionModal.classList.remove('open');
+            document.body.style.overflow = ''; // Restore scrolling
+            // Clear LLM response when modal closes
+            llmResponseDiv.innerHTML = '';
+            llmResponseDiv.classList.add('hidden');
+            document.getElementById('llm-question').value = '';
+        }
+
+        // Close modal if clicked outside content
+        admissionModal.addEventListener('click', (e) => {
+            if (e.target === admissionModal) {
+                closeAdmissionModal();
+            }
+        });
+
+        // --- Notification Pop-up ---
+        const notification = document.getElementById('notification');
+
+        function showNotification() {
+            notification.classList.add('show');
+        }
+
+        function hideNotification() {
+            notification.classList.remove('show');
+        }
+
+        // Show notification after a delay
+        window.onload = function() {
+            setTimeout(showNotification, 2000); // Show after 2 seconds
+            initThreeJS(); // Initialize Three.js when window loads
+            animateCounters(); // Re-enabled counter animation
+            setTimeout(openAdmissionModal, 1000); // Open admission modal after 1 second
+        };
+
+        // --- Counter Animation ---
+        function animateCounters() {
+            const counterItems = document.querySelectorAll('.counter-item');
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.5 // Trigger when 50% of the item is visible
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const targetElement = entry.target.querySelector('[data-target]');
+                        const targetValue = parseInt(targetElement.dataset.target);
+                        let currentValue = 0;
+                        const duration = 2000; // 2 seconds
+                        const increment = targetValue / (duration / 10); // Increment every 10ms
+
+                        const updateCounter = () => {
+                            if (currentValue < targetValue) {
+                                currentValue += increment;
+                                targetElement.textContent = Math.floor(currentValue) + (targetValue === 4000 ? '+' : ''); // Add '+' for 4000
+                                requestAnimationFrame(updateCounter);
+                            } else {
+                                targetElement.textContent = targetValue + (targetValue === 4000 ? '+' : '');
                             }
-                        });
-                        item.classList.toggle('open');
+                        };
+                        updateCounter();
+                        entry.target.classList.add('animate-fade-in'); // Add fade-in animation
+                        observer.unobserve(entry.target); // Stop observing after animation
                     }
                 });
+            }, observerOptions);
+
+            counterItems.forEach(item => {
+                observer.observe(item);
+            });
+        }
+
+        // --- Three.js for 3D UI/UX ---
+        let scene, camera, renderer, object;
+
+        function initThreeJS() {
+            const container = document.getElementById('three-canvas');
+
+            // Scene
+            scene = new THREE.Scene();
+
+            // Camera
+            camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+            camera.position.z = 5;
+
+            // Renderer
+            renderer = new THREE.WebGLRenderer({ canvas: container, alpha: true }); // alpha: true for transparent background
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+
+            // Responsive canvas sizing
+            window.addEventListener('resize', () => {
+                camera.aspect = container.clientWidth / container.clientHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(container.clientWidth, container.clientHeight);
             });
 
-            // Open Admission Form Modal
-            openAdmissionFormBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                admissionModal.style.display = 'flex';
-                mainNav.classList.remove('active');
-                hamburgerMenu.classList.remove('active');
-                console.log('Admission modal opened via button click.'); // Added for debugging
+            // Geometry (a simple dodecahedron for a complex, school-like feel)
+            const geometry = new THREE.DodecahedronGeometry(2); // Radius 2
+            const material = new THREE.MeshPhongMaterial({
+                color: 0x4338ca, // Indigo-700
+                specular: 0x14b8a6, // Teal-500 for specular highlight
+                shininess: 40, // More shininess
+                flatShading: false // Smooth shading
             });
+            object = new THREE.Mesh(geometry, material);
+            scene.add(object);
 
-            // Close Modal when clicking on the close button
-            closeModalBtn.addEventListener('click', () => {
-                admissionModal.style.display = 'none';
-                console.log('Admission modal closed via close button.'); // Added for debugging
-            });
+            // Lights
+            const ambientLight = new THREE.AmbientLight(0x505050); // Slightly stronger ambient light
+            scene.add(ambientLight);
 
-            // Close Modal when clicking outside the modal content
-            window.addEventListener('click', (event) => {
-                if (event.target === admissionModal) {
-                    admissionModal.style.display = 'none';
-                    console.log('Admission modal closed via outside click.'); // Added for debugging
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.9); // White light, intensity 0.9
+            directionalLight.position.set(1, 1, 1).normalize();
+            scene.add(directionalLight);
+
+            const pointLight = new THREE.PointLight(0xffffff, 0.6); // Another light source
+            pointLight.position.set(-5, 5, 5);
+            scene.add(pointLight);
+
+            // Animation loop
+            animateThreeJS();
+        }
+
+        function animateThreeJS() {
+            requestAnimationFrame(animateThreeJS);
+
+            // Rotate the object
+            object.rotation.x += 0.005;
+            object.rotation.y += 0.005;
+
+            renderer.render(scene, camera);
+        }
+
+        // Mouse interaction for camera (optional, but good for 3D feel)
+        let isDragging = false;
+        let previousMousePosition = {
+            x: 0,
+            y: 0
+        };
+
+        const threeCanvas = document.getElementById('three-canvas');
+
+        threeCanvas.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            previousMousePosition = {
+                x: e.clientX,
+                y: e.clientY
+            };
+        });
+
+        threeCanvas.addEventListener('mouseup', () => {
+            isDragging = false;
+        });
+
+        threeCanvas.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+
+            const deltaX = e.clientX - previousMousePosition.x;
+            const deltaY = e.clientY - previousMousePosition.y;
+
+            // Rotate camera based on mouse movement
+            camera.rotation.y += deltaX * 0.005;
+            camera.rotation.x += deltaY * 0.005;
+
+            // Clamp camera rotation to prevent flipping
+            camera.rotation.x = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, camera.rotation.x));
+
+            previousMousePosition = {
+                x: e.clientX,
+                y: e.clientY
+            };
+        });
+
+        // Touch events for mobile
+        threeCanvas.addEventListener('touchstart', (e) => {
+            isDragging = true;
+            const touch = e.touches[0];
+            previousMousePosition = {
+                x: touch.clientX,
+                y: touch.clientY
+            };
+        });
+
+        threeCanvas.addEventListener('touchend', () => {
+            isDragging = false;
+        });
+
+        threeCanvas.addEventListener('touchmove', (e) => {
+            if (!isDragging) return;
+            e.preventDefault(); // Prevent scrolling while dragging
+
+            const touch = e.touches[0];
+            const deltaX = touch.clientX - previousMousePosition.x;
+            const deltaY = touch.clientY - previousMousePosition.y;
+
+            camera.rotation.y += deltaX * 0.005;
+            camera.rotation.x += deltaY * 0.005;
+
+            camera.rotation.x = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, camera.rotation.x));
+
+            previousMousePosition = {
+                x: touch.clientX,
+                y: touch.clientY
+            };
+        });
+
+        // --- Feedback Slider ---
+        let feedbackSlideIndex = 0;
+        const feedbackSlider = document.getElementById('feedback-slider');
+        const feedbackSlides = document.querySelectorAll('.feedback-slide');
+        const feedbackDotsContainer = document.querySelector('.feedback-slider-nav');
+        const totalFeedbackSlides = feedbackSlides.length;
+
+        function updateFeedbackDots() {
+            feedbackDotsContainer.innerHTML = ''; // Clear existing dots
+            for (let i = 0; i < totalFeedbackSlides; i++) {
+                const dot = document.createElement('span');
+                dot.classList.add('feedback-dot');
+                if (i === feedbackSlideIndex) {
+                    dot.classList.add('active');
                 }
-            });
+                dot.onclick = () => currentFeedback(i);
+                feedbackDotsContainer.appendChild(dot);
+            }
+        }
 
-            // Handle form submission (placeholder for Google Sheet)
-            admissionForm.addEventListener('submit', (e) => {
-                // e.preventDefault(); // Uncomment to prevent default form submission for testing or AJAX
-                // In a real application, you'd send this data to a server or Google Sheet
-                // For now, we'll just simulate a submission and close the modal.
-                console.log('Form submitted!'); // Using console.log instead of alert
-                // alert('Form submitted! (This is a placeholder. Data will be sent to Google Sheet if URL is correct)');
+        function showFeedbackSlide() {
+            feedbackSlider.scrollLeft = feedbackSlideIndex * feedbackSlider.clientWidth;
+            updateFeedbackDots();
+        }
 
-                setTimeout(() => {
-                    admissionModal.style.display = 'none';
-                    admissionForm.reset();
-                }, 100);
-            });
+        function nextFeedback() {
+            feedbackSlideIndex = (feedbackSlideIndex + 1) % totalFeedbackSlides;
+            showFeedbackSlide();
+        }
 
-            // APP SLIDER JAVASCRIPT
-            let slideIndex = 0; // Start with the first slide (0-indexed for array)
-            let slideInterval; // Variable to hold the interval for auto-sliding
+        function prevFeedback() {
+            feedbackSlideIndex = (feedbackSlideIndex - 1 + totalFeedbackSlides) % totalFeedbackSlides;
+            showFeedbackSlide();
+        }
 
-            // Function to display slides
-            function showSlides(n) {
-                const slides = document.querySelectorAll(".app-slide");
-                const dots = document.querySelectorAll(".app-dot");
-                const sliderTrack = document.querySelector(".app-slider-track");
+        function currentFeedback(n) {
+            feedbackSlideIndex = n;
+            showFeedbackSlide();
+        }
 
-                if (slides.length === 0) return; // Exit if no slides
+        // Initialize feedback slider
+        updateFeedbackDots(); // Create dots on load
+        window.addEventListener('resize', showFeedbackSlide); // Adjust on resize
 
-                // Handle wrapping around (go from last to first, or first to last)
-                if (n >= slides.length) {
-                    slideIndex = 0;
-                } else if (n < 0) {
-                    slideIndex = slides.length - 1;
+        // --- Gemini API Integration: Smart Admission Assistant ---
+        async function askAdmissionAssistant() {
+            const questionInput = document.getElementById('llm-question');
+            const question = questionInput.value.trim();
+
+            if (!question) {
+                llmResponseDiv.innerHTML = '<p class="text-red-600">Please enter a question.</p>';
+                llmResponseDiv.classList.remove('hidden');
+                return;
+            }
+
+            llmResponseDiv.classList.add('hidden'); // Hide previous response
+            llmResponseDiv.innerHTML = ''; // Clear previous response
+            llmLoadingSpinner.classList.remove('hidden'); // Show loading spinner
+
+            try {
+                let chatHistory = [];
+                // Provide context to the LLM about the school and its policies
+                chatHistory.push({
+                    role: "user",
+                    parts: [{
+                        text: `You are an admission assistant for ALIF INTERNATIONAL SCHOOL. Your goal is to provide helpful and concise answers to prospective students and parents about our school. Here's some general information about ALIF INTERNATIONAL SCHOOL:
+                        - We offer education from Nursery to Grade 12 (Higher Secondary).
+                        - Our curriculum focuses on academic excellence, character development, and social responsibility.
+                        - We have experienced teachers and modern facilities including digital libraries, computer labs, science labs, Wi-Fi campus, transport, and a cafeteria.
+                        - Admission forms are available from March 1st, last date for submission is April 30th. Entrance exams are May 15th-20th. Results on June 5th.
+                        - Required documents: Birth Certificate, Previous School Report, Aadhar Card.
+                        - For TC applications, a written application to the Principal's office, clearing dues, and student ID copy are required.
+                        - Our vision is to empower students, foster critical thinking and creativity. Our mission is to provide a dynamic and inclusive learning environment.
+                        - We have 4000+ students, 100+ teachers, 5+ branches, and 5+ years of experience.
+
+                        Please answer the following question based on the provided information, or state if the information is not available. Keep your answers brief and to the point.`
+                    }]
+                });
+                chatHistory.push({ role: "user", parts: [{ text: question }] });
+
+                const payload = {
+                    contents: chatHistory
+                };
+                const apiKey = ""; // Leave as-is, Canvas will provide at runtime
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+
+                if (result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    const text = result.candidates[0].content.parts[0].text;
+                    llmResponseDiv.innerHTML = `<p>${text}</p>`;
                 } else {
-                    slideIndex = n;
+                    llmResponseDiv.innerHTML = '<p class="text-red-600">Sorry, I could not get a response from the assistant. Please try again.</p>';
                 }
-
-                // Move the slider track to show the current slide
-                sliderTrack.style.transform = `translateX(-${slideIndex * 100}%)`;
-
-                // Remove active class from all slides and dots
-                slides.forEach(slide => slide.classList.remove('active'));
-                dots.forEach(dot => dot.classList.remove('active'));
-
-                // Add active class to the current slide and dot
-                slides[slideIndex].classList.add('active');
-                dots[slideIndex].classList.add('active');
+            } catch (error) {
+                console.error('Error calling Gemini API:', error);
+                llmResponseDiv.innerHTML = `<p class="text-red-600">An error occurred: ${error.message}. Please try again later.</p>`;
+            } finally {
+                llmLoadingSpinner.classList.add('hidden'); // Hide loading spinner
+                llmResponseDiv.classList.remove('hidden'); // Show response div
             }
-
-            // Function to change slide with next/prev buttons
-            function plusSlides(n) {
-                showSlides(slideIndex + n);
-                resetAutoSlide(); // Reset auto-slide timer on manual navigation
-            }
-
-            // Function to jump to a specific slide using dots
-            function currentSlide(n) {
-                showSlides(n - 1); // Adjust for 0-indexed array vs 1-indexed dot numbers
-                resetAutoSlide(); // Reset auto-slide timer on manual navigation
-            }
-
-            // Function to start auto-sliding
-            function startAutoSlide() {
-                slideInterval = setInterval(() => {
-                    showSlides(slideIndex + 1);
-                }, 4000); // Change image every 4 seconds
-            }
-
-            // Function to reset auto-slide timer
-            function resetAutoSlide() {
-                clearInterval(slideInterval);
-                startAutoSlide();
-            }
-
-            // Initialize the slider and start auto-sliding when the page loads
-            showSlides(slideIndex); // Display the first slide
-            startAutoSlide(); // Start auto-sliding
-
-            // Pause auto-slide on hover
-            const appSliderContainer = document.querySelector('.app-slider-container');
-            if (appSliderContainer) {
-                appSliderContainer.addEventListener('mouseenter', () => {
-                    clearInterval(slideInterval);
-                });
-                appSliderContainer.addEventListener('mouseleave', () => {
-                    startAutoSlide();
-                });
-            }
-            // END APP SLIDER JAVASCRIPT
-        }); // End of DOMContentLoaded
+        }
     </script>
 </body>
 </html>
