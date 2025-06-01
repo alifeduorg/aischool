@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALIF INTERNATIONAL SCHOOL - Contact Us</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden; /* Prevent horizontal scroll due to animations/transforms */
+            background-color: #f0f4f8; /* Lighter, premium background */
+        }
+        /* Custom scrollbar for better aesthetics */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #e2e8f0;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #0A1128; /* Navy Blue */
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #070B1A; /* Darker Navy Blue */
+        }
+
+        /* Card hover animation (bulge out) */
+        .card-hover-effect {
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+        .card-hover-effect:hover {
+            transform: scale(1.03); /* Slightly bulge out */
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2); /* More pronounced shadow */
+        }
+
+        /* Dropdown menu styling */
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            background-color: #ffffff;
+            min-width: 180px; /* Slightly wider */
+            box-shadow: 0px 8px 20px 0px rgba(0,0,0,0.15); /* Softer shadow */
+            z-index: 100;
+            border-radius: 0.75rem; /* More rounded */
+            overflow: hidden;
+            transform: translateY(10px); /* Initial state for animation */
+            opacity: 0;
+            transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+            pointer-events: none; /* Prevent interaction when hidden */
+            border: 1px solid #e2e8f0; /* Subtle border */
+        }
+        .dropdown:hover .dropdown-menu,
+        .dropdown.active .dropdown-menu {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+        .dropdown-menu a {
+            color: #334155;
+            padding: 12px 18px; /* More padding */
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+        }
+        .dropdown-menu a:hover {
+            background-color: #FFFBEB; /* Lighter golden yellow hover */
+            color: #D97706; /* Golden yellow on hover */
+        }
+
+        /* Menu item hover animation with subtle 3D feel and button background */
+        .nav-link-hover {
+            transition: transform 0.2s ease-in-out, color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, background-color 0.2s ease-in-out;
+            position: relative; /* Needed for transform-style */
+            transform-style: preserve-3d; /* Enable 3D transformations */
+        }
+        .nav-link-hover:hover {
+            transform: translateY(-4px) scale(1.05) translateZ(10px); /* Lift, slight scale, and pop-out */
+            color: #D97706; /* Golden yellow on hover */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+            background-color: #FFFBEB; /* Lighter golden yellow hover for button feel */
+        }
+        /* Ensure buttons also have the clicky feel */
+        button {
+            transition: transform 0.1s ease-out; /* Ensure smooth transition for active state */
+        }
+
+        button:active {
+            transform: scale(0.95); /* Slightly shrink on click */
+        }
+
+        /* Modal styling */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7); /* Slightly darker overlay */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+        }
+        .modal-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-content {
+            background: #ffffff;
+            padding: 2.5rem; /* More padding */
+            border-radius: 1.25rem; /* More rounded */
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4); /* Stronger shadow */
+            width: 90%;
+            max-width: 550px; /* Slightly wider */
+            max-height: 90vh; /* Limit height to prevent overflow on smaller screens */
+            overflow-y: auto; /* Enable scrolling for content that exceeds max-height */
+            transform: scale(0.9);
+            opacity: 0;
+            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            position: relative;
+            display: flex; /* Use flexbox for internal layout */
+            flex-direction: column;
+            gap: 1.5rem; /* Space between sections */
+        }
+        .modal-overlay.open .modal-content {
+            transform: scale(1);
+            opacity: 1;
+        }
+        .modal-close-button {
+            position: absolute;
+            top: 1.25rem;
+            right: 1.25rem;
+            background: none;
+            border: none;
+            font-size: 1.75rem; /* Larger close button */
+            cursor: pointer;
+            color: #64748b;
+            transition: color 0.2s;
+        }
+        .modal-close-button:hover {
+            color: #1e293b;
+        }
+
+        /* Notification styling */
+        .notification {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            background-color: #DC2626; /* Red-600 for notifications */
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            z-index: 999;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+        }
+        .notification.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .notification-close-button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1rem;
+            margin-left: 1rem;
+            cursor: pointer;
+        }
+
+        /* Loading spinner for LLM */
+        .loader {
+            border: 4px solid #f3f3f3; /* Light grey */
+            border-top: 4px solid #0A1128; /* Navy Blue */
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            vertical-align: middle;
+            margin-left: 0.5rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Mobile menu specific styles */
+        #mobile-menu {
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 100vh;
+            width: 75%; /* Adjust as needed */
+            max-width: 300px; /* Max width for larger mobile devices */
+            background-color: #ffffff;
+            box-shadow: -5px 0 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            transform: translateX(100%); /* Start off-screen */
+            transition: transform 0.3s ease-in-out;
+            padding-top: 2rem; /* Space for close button */
+            overflow-y: auto;
+        }
+
+        #mobile-menu.open {
+            transform: translateX(0); /* Slide in */
+        }
+
+        #mobile-menu-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden; /* Use visibility for non-interactable state */
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        #mobile-menu-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Custom 3D effect for image on hover */
+        .image-3d-effect {
+            transition: transform 0.4s ease-out, box-shadow 0.4s ease-out;
+            transform-style: preserve-3d; /* Allows child elements to be positioned in 3D space */
+            border-radius: 50%; /* Ensure it stays round */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Initial subtle shadow */
+            border: none; /* Explicitly remove border */
+        }
+
+        .image-3d-effect:hover {
+            transform: rotateY(10deg) scale(1.05) translateZ(20px); /* Rotate, scale, and move forward */
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3); /* More pronounced shadow for depth */
+        }
+
+        /* Contact form styling */
+        .contact-form-container {
+            background-color: #ffffff;
+            padding: 2.5rem;
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        .contact-form-container input[type="text"],
+        .contact-form-container input[type="email"],
+        .contact-form-container textarea {
+            width: 100%;
+            padding: 0.8rem 1.2rem;
+            margin-bottom: 1rem;
+            border: 1px solid #cbd5e1; /* Slate 300 */
+            border-radius: 0.75rem;
+            font-size: 1rem;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .contact-form-container input[type="text"]:focus,
+        .contact-form-container input[type="email"]:focus,
+        .contact-form-container textarea:focus {
+            outline: none;
+            border-color: #0A1128; /* Navy Blue */
+            box-shadow: 0 0 0 3px rgba(10, 17, 40, 0.2); /* Focus ring */
+        }
+        .contact-form-container button[type="submit"] {
+            background-color: #0A1128; /* Navy Blue */
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 9999px; /* Pill shape */
+            font-weight: 600;
+            transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            width: 100%;
+        }
+        .contact-form-container button[type="submit"]:hover {
+            background-color: #070B1A; /* Darker Navy Blue */
+            transform: translateY(-2px);
+        }
+
+        /* Info card styling */
+        .info-card {
+            background-color: #ffffff;
+            padding: 2rem;
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        .info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+        .info-card i {
+            font-size: 3rem;
+            color: #FFBF00; /* Golden Yellow */
+            margin-bottom: 1rem;
+        }
+        .info-card h3 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #0A1128; /* Navy Blue */
+            margin-bottom: 0.75rem;
+        }
+        .info-card p, .info-card a {
+            color: #475569; /* Slate 600 */
+            font-size: 1.125rem;
+            line-height: 1.6;
+        }
+        .info-card a:hover {
+            color: #D97706; /* Darker golden yellow on hover */
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body class="text-slate-700">
+
+    <div id="notification" class="notification">
+        </div>
+
+    <div class="flex flex-col md:flex-row justify-between items-center py-4 px-6 md:px-12 mx-auto max-w-7xl relative">
+        <div class="flex space-x-4 mb-4 md:mb-0 md:absolute md:left-0 md:top-1/2 md:-translate-y-1/2">
+            <a href="#" class="text-blue-950 hover:text-amber-600 transition duration-200"><i class="fab fa-instagram text-2xl"></i></a>
+            <a href="#" class="text-blue-950 hover:text-amber-600 transition duration-200"><i class="fab fa-twitter text-2xl"></i></a>
+            <a href="#" class="text-blue-950 hover:text-amber-600 transition duration-200"><i class="fab fa-facebook text-2xl"></i></a>
+            <a href="#" class="text-blue-950 hover:text-amber-600 transition duration-200"><i class="fab fa-whatsapp text-2xl"></i></a>
+        </div>
+
+        <div class="flex items-center flex-grow justify-center md:justify-center">
+            <img src="1.png" alt="ALIF INTERNATIONAL SCHOOL Logo" class="h-12 w-12 mr-3 shadow-md">
+            <img src="ALIF INTERNATINAL SCHOOL (1).png" alt="ALIF School Text Logo" class="h-16 md:h-20 lg:h-24 w-auto">
+        </div>
+
+        <div class="flex space-x-4 mt-4 md:mt-0 md:absolute md:right-0 md:top-1/2 md:-translate-y-1/2">
+            <button onclick="window.location.href='admission.html'" class="bg-red-600 text-white px-4 py-2 rounded-full shadow-lg hover:bg-red-700 transition duration-300 ease-in-out transform hover:scale-105 text-sm md:text-base whitespace-nowrap">
+                Admission Open
+            </button>
+        </div>
+
+        <button id="mobile-menu-button" class="md:hidden text-slate-700 text-2xl focus:outline-none absolute top-4 right-6">
+            <i class="fas fa-bars"></i>
+        </button>
+    </div>
+
+    <header class="bg-blue-50 shadow-lg py-3 px-4 md:px-8 mx-auto w-fit sticky top-0 z-50 rounded-xl" style="perspective: 1000px;">
+        <nav class="hidden md:flex items-center space-x-3 justify-center">
+            <a href="index.html" class="text-base font-medium text-slate-700 hover:text-amber-700 nav-link-hover whitespace-nowrap px-3 py-2 rounded-md">Home</a>
+
+            <div class="relative dropdown">
+                <button class="text-base font-medium text-slate-700 hover:text-amber-700 flex items-center nav-link-hover whitespace-nowrap px-3 py-2 rounded-md">
+                    About Us <i class="fas fa-chevron-down ml-2 text-sm"></i>
+                </button>
+                <div class="dropdown-menu">
+                    <a href="chairman.html">Chairman</a>
+                    <a href="md.html">Managing Director</a>
+                    <a href="principal.html">Principal</a>
+                    <a href="vision-mission.html">Vision & Mission</a>
+                </div>
+            </div>
+
+            <div class="relative dropdown">
+                <button class="text-base font-medium text-slate-700 hover:text-amber-700 flex items-center nav-link-hover whitespace-nowrap px-3 py-2 rounded-md">
+                    Admission <i class="fas fa-chevron-down ml-2 text-sm"></i>
+                </button>
+                <div class="dropdown-menu">
+                    <a href="admission.html">Admission Info</a>
+                    <a href="tc-application.html">TC Application</a>
+                </div>
+            </div>
+
+            <div class="relative dropdown">
+                <button class="text-base font-medium text-slate-700 hover:text-amber-700 flex items-center nav-link-hover whitespace-nowrap px-3 py-2 rounded-md">
+                    Academics <i class="fas fa-chevron-down ml-2 text-sm"></i>
+                </button>
+                <div class="dropdown-menu">
+                    <a href="cbsecuriccularm.html">CBSE Curriculum</a>
+                    <a href="academiccaleder.html">ACADEMIC CALENDAR</a>
+                </div>
+            </div>
+
+            <div class="relative dropdown">
+                <button class="text-base font-medium text-slate-700 hover:text-amber-700 flex items-center nav-link-hover whitespace-nowrap px-3 py-2 rounded-md">
+                    Resources <i class="fas fa-chevron-down ml-2 text-sm"></i>
+                </button>
+                <div class="dropdown-menu">
+                    <a href="circular.html">CIRCULAR </a>
+                    <a href="ANNUAL_REPORT.html">ANNUAL REPORT</a>
+                </div>
+            </div>
+            <a href="events.html" class="text-base font-medium text-slate-700 hover:text-amber-700 nav-link-hover whitespace-nowrap px-3 py-2 rounded-md">Events</a>
+            <a href="contact.html" class="text-base font-medium text-slate-700 hover:text-amber-700 nav-link-hover whitespace-nowrap px-3 py-2 rounded-md">Contact</a>
+            <a href="https://alifedu.org/login" class="bg-blue-950 text-amber-400 px-6 py-2 rounded-full shadow-lg hover:bg-blue-800 transition duration-300 ease-in-out transform hover:scale-105">
+                Login
+            </a>
+        </nav>
+    </header>
+
+    <div id="mobile-menu-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-[999] hidden opacity-0 transition-opacity duration-300"></div>
+
+    <div id="mobile-menu" class="fixed top-0 right-0 h-full w-3/4 max-w-xs bg-white shadow-lg z-[1000] transform translate-x-full transition-transform duration-300 ease-in-out py-6 px-4 overflow-y-auto">
+        <button class="absolute top-4 right-4 text-slate-700 text-2xl" onclick="closeMobileMenu()">
+            <i class="fas fa-times"></i>
+        </button>
+        <a href="index.html" class="block px-4 py-2 text-slate-700 hover:bg-amber-50 rounded-md">Home</a>
+        <div class="relative dropdown">
+            <button class="w-full text-left px-4 py-2 text-slate-700 hover:bg-amber-50 flex justify-between items-center rounded-md" onclick="toggleMobileDropdown(this)">
+                About Us <i class="fas fa-chevron-down ml-2 text-sm"></i>
+            </button>
+            <div class="dropdown-menu ml-4 mt-1">
+                <a href="chairman.html">Chairman</a>
+                <a href="md.html">Managing Director</a>
+                <a href="principal.html">Principal</a>
+                <a href="vision-mission.html">Vision & Mission</a>
+            </div>
+        </div>
+        <div class="relative dropdown">
+            <button class="w-full text-left px-4 py-2 text-slate-700 hover:bg-amber-50 flex justify-between items-center rounded-md" onclick="toggleMobileDropdown(this)">
+                Admission <i class="fas fa-chevron-down ml-2 text-sm"></i>
+            </button>
+            <div class="dropdown-menu ml-4 mt-1">
+                <a href="admission.html">Admission Info</a>
+                <a href="tc-application.html">TC Application</a>
+            </div>
+        </div>
+        <div class="relative dropdown">
+            <button class="w-full text-left px-4 py-2 text-slate-700 hover:bg-amber-50 flex justify-between items-center rounded-md" onclick="toggleMobileDropdown(this)">
+                Academics <i class="fas fa-chevron-down ml-2 text-sm"></i>
+            </button>
+            <div class="dropdown-menu ml-4 mt-1">
+                <a href="cbsecuriccularm.html">CBSE Curriculum</a>
+                <a href="academiccaleder.html">ACADEMIC CALENDAR</a>
+            </div>
+        </div>
+        <div class="relative dropdown">
+            <button class="w-full text-left px-4 py-2 text-slate-700 hover:bg-amber-50 flex justify-between items-center rounded-md" onclick="toggleMobileDropdown(this)">
+                Resources <i class="fas fa-chevron-down ml-2 text-sm"></i>
+            </button>
+            <div class="dropdown-menu ml-4 mt-1">
+                <a href="circular.html">CIRCULAR </a>
+                <a href="ANNUAL_REPORT.html">ANNUAL REPORT</a>
+            </div>
+        </div>
+        <a href="events.html" class="block px-4 py-2 text-slate-700 hover:bg-amber-50 rounded-md">Events</a>
+        <a href="contact.html" class="block px-4 py-2 text-slate-700 hover:bg-amber-50 rounded-md">Contact</a>
+        <a href="https://alifedu.org/login" class="w-full text-left bg-blue-950 text-amber-400 px-4 py-2 mt-2 rounded-full shadow-lg hover:bg-blue-800 transition duration-300 ease-in-out transform hover:scale-105">
+            Login
+        </a>
+    </div>
+    <section class="relative w-full h-[400px] md:h-[500px] overflow-hidden rounded-3xl mx-4 my-8 shadow-xl">
+        <img src="Website (23).jpg" alt="ALIF School Event Banner" class="w-full h-full object-cover object-center">
+        <div class="absolute inset-0 bg-blue-950 bg-opacity-60 flex items-center justify-center">
+            <h1 class="text-4xl md:text-6xl font-extrabold text-white text-center drop-shadow-lg animate-fade-in-up">
+                Our Vibrant Events & Gallery
+            </h1>
+        </div>
+    </section>
+
+    <section class="py-12 bg-white rounded-3xl mx-4 my-8 shadow-xl">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-4xl font-bold text-blue-950 mb-10">Event Highlights</h2>
+            <div class="carousel-container">
+                <div class="carousel-track" id="event-carousel-track">
+                    <div class="carousel-item">
+                        <img src="Website (23).jpg" alt="Annual Sports Day">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="Website (23).jpg" alt="Science Exhibition">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="Website (23).jpg" alt="Cultural Fest">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="Website (23).jpg" alt="Graduation Ceremony">
+                    </div>
+                </div>
+                <button class="carousel-button prev" onclick="moveCarousel(-1)"><i class="fas fa-chevron-left"></i></button>
+                <button class="carousel-button next" onclick="moveCarousel(1)"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+    <section class="relative w-full h-[300px] md:h-[400px] overflow-hidden rounded-3xl mx-4 my-8 shadow-xl">
+        <img src="https://placehold.co/1200x400/0A1128/FFBF00?text=Contact+Us" alt="Contact Us Banner" class="w-full h-full object-cover object-center">
+        <div class="absolute inset-0 bg-blue-950 bg-opacity-70 flex items-center justify-center">
+            <h1 class="text-4xl md:text-6xl font-extrabold text-white text-center drop-shadow-lg animate-fade-in-up">
+                Get in Touch
+            </h1>
+        </div>
+    </section>
+
+    <section class="py-16 bg-gradient-to-br from-blue-50 to-amber-50 rounded-3xl mx-4 my-8 shadow-xl">
+        <div class="container mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+            <div class="contact-form-container">
+                <h2 class="text-3xl font-bold text-blue-950 mb-8 text-center">Send Us a Message</h2>
+                <form class="space-y-4">
+                    <div>
+                        <label for="contact-name" class="block text-slate-700 text-sm font-bold mb-2">Your Name</label>
+                        <input type="text" id="contact-name" placeholder="Full Name" required>
+                    </div>
+                    <div>
+                        <label for="contact-email" class="block text-slate-700 text-sm font-bold mb-2">Your Email</label>
+                        <input type="email" id="contact-email" placeholder="your_email@example.com" required>
+                    </div>
+                    <div>
+                        <label for="contact-subject" class="block text-slate-700 text-sm font-bold mb-2">Subject</label>
+                        <input type="text" id="contact-subject" placeholder="Subject of your message" required>
+                    </div>
+                    <div>
+                        <label for="contact-message" class="block text-slate-700 text-sm font-bold mb-2">Message</label>
+                        <textarea id="contact-message" rows="5" placeholder="Your message here..." required></textarea>
+                    </div>
+                    <button type="submit">Send Message</button>
+                </form>
+            </div>
+
+            <div class="space-y-8">
+                <h2 class="text-3xl font-bold text-blue-950 mb-8 text-center lg:text-left">Our Contact Details</h2>
+
+                <div class="info-card">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <h3>Address</h3>
+                    <p>ALIF International School</p>
+                    <p>123 School Lane, Education City,</p>
+                    <p>State, Country - 12345</p>
+                </div>
+
+                <div class="info-card">
+                    <i class="fas fa-envelope"></i>
+                    <h3>Email Us</h3>
+                    <p>General Enquiries: <a href="mailto:info@alifedu.edu" class="hover:underline">info@alifedu.edu</a></p>
+                    <p>Principal: <a href="mailto:principal@mgmt.alifedu.org" class="hover:underline">principal@mgmt.alifedu.org</a></p>
+                </div>
+
+                <div class="info-card">
+                    <i class="fas fa-phone-alt"></i>
+                    <h3>Call Us</h3>
+                    <p>Office Number: <a href="tel:+918590127323" class="hover:underline">+91 8590127323</a></p>
+                    <p>Principal's Direct Line: <a href="tel:+917510791561" class="hover:underline">+91 75107 91561</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 bg-white rounded-3xl mx-4 my-8 shadow-xl">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-4xl font-bold text-blue-950 mb-12">Find Us on the Map</h2>
+            <div class="w-full h-[400px] rounded-2xl overflow-hidden shadow-lg">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3929.355180000001!2d76.1042079147937!3d10.0210087751493!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b080d0d0d0d0d0d%3A0x3b080d0d0d0d0d0d!2sALIF%20INTERNATIONAL%20SCHOOL!5e0!3m2!1sen!2sin!4v1678901234567!5m2!1sen!2sin"
+                    width="100%"
+                    height="100%"
+                    style="border:0;"
+                    allowfullscreen=""
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"
+                ></iframe>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-blue-950 text-white py-12 rounded-t-3xl shadow-2xl">
+        <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div>
+                <h3 class="text-2xl font-bold mb-4 text-amber-300">ALIF INTERNATIONAL SCHOOL</h3>
+                <p class="text-amber-200 text-sm leading-relaxed">
+                    Dedicated to providing quality education and fostering a nurturing environment for students to excel academically and personally.
+                </p>
+            </div>
+
+            <div>
+                <h3 class="text-2xl font-bold mb-4 text-amber-300">Quick Links</h3>
+                <ul class="space-y-2">
+                    <li><a href="index.html" class="text-amber-200 hover:text-white transition duration-200">Home</a></li>
+                    <li><a href="about.html" class="text-amber-200 hover:text-white transition duration-200">About Us</a></li>
+                    <li><a href="admission.html" class="text-amber-200 hover:text-white transition duration-200">Admission</a></li>
+                    <li><a href="academics.html" class="text-amber-200 hover:text-white transition duration-200">Academics</a></li>
+                    <li><a href="events.html" class="text-amber-200 hover:text-white transition duration-200">Events</a></li>
+                    <li><a href="contact.html" class="text-amber-200 hover:text-white transition duration-200">Contact</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h3 class="text-2xl font-bold mb-4 text-amber-300">Contact Us</h3>
+                <p class="text-amber-200 mb-2"><i class="fas fa-map-marker-alt mr-2"></i> 123 School Lane, Education City, State, Country - 12345</p>
+                <p class="text-amber-200 mb-2"><i class="fas fa-phone-alt mr-2"></i> +91 123 456 7890</p>
+                <p class="text-amber-200 mb-2"><i class="fas fa-envelope mr-2"></i> info@alifedu.edu</p>
+                <div class="flex space-x-4 mt-4">
+                    <a href="#" class="text-amber-200 hover:text-white text-xl transition duration-200"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="text-amber-200 hover:text-white text-xl transition duration-200"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-amber-200 hover:text-white text-xl transition duration-200"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-amber-200 hover:text-white text-xl transition duration-200"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+
+            <div>
+                <h3 class="text-2xl font-bold mb-4 text-amber-300">Our Branches</h3>
+                <ul class="space-y-2">
+                    <li><a href="#" class="text-amber-200 hover:text-white transition duration-200">Branch 1 - City A</a></li>
+                    <li><a href="#" class="text-amber-200 hover:text-white transition duration-200">Branch 2 - City B</a></li>
+                    <li><a href="#" class="text-amber-200 hover:text-white transition duration-200">Branch 3 - City C</a></li>
+                    <li><a href="#" class="text-amber-200 hover:text-white transition duration-200">Branch 4 - City D</a></li>
+                    <li><a href="#" class="text-amber-200 hover:text-white transition duration-200">Branch 5 - City E</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="text-center text-amber-300 mt-8 pt-8 border-t border-blue-800">
+            © 2025 ALIF INTERNATIONAL SCHOOL. Reserved by Alif Edu.
+        </div>
+    </footer>
+
+    <div id="admission-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close-button" onclick="closeAdmissionModal()">X</button>
+
+            <div class="border-b pb-6 mb-6 border-gray-200">
+                <h3 class="text-3xl font-bold text-blue-950 mb-6 text-center">Admission Enquiry</h3>
+                <form class="space-y-5">
+                    <div>
+                        <label for="enquiry-name" class="block text-slate-700 text-sm font-bold mb-2">Student's Name</label>
+                        <input type="text" id="enquiry-name" class="shadow-sm appearance-none border rounded-lg w-full py-3 px-4 text-slate-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-950" placeholder="Full Name" required>
+                    </div>
+                    <div>
+                        <label for="enquiry-parent-name" class="block text-slate-700 text-sm font-bold mb-2">Parent's Name</label>
+                        <input type="text" id="enquiry-parent-name" class="shadow-sm appearance-none border rounded-lg w-full py-3 px-4 text-slate-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-950" placeholder="Parent/Guardian Name" required>
+                    </div>
+                    <div>
+                        <label for="enquiry-email" class="block text-slate-700 text-sm font-bold mb-2">Email Address</label>
+                        <input type="email" id="enquiry-email" class="shadow-sm appearance-none border rounded-lg w-full py-3 px-4 text-slate-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-950" placeholder="your_email@example.com" required>
+                    </div>
+                    <div>
+                        <label for="enquiry-phone" class="block text-slate-700 text-sm font-bold mb-2">Phone Number</label>
+                        <input type="tel" id="enquiry-phone" class="shadow-sm appearance-none border rounded-lg w-full py-3 px-4 text-slate-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-950" placeholder="+91 9876543210" required>
+                    </div>
+                    <div>
+                        <label for="enquiry-grade" class="block text-slate-700 text-sm font-bold mb-2">Applying for Grade</label>
+                        <select id="enquiry-grade" class="shadow-sm appearance-none border rounded-lg w-full py-3 px-4 text-slate-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-950" required>
+                            <option value="">Select Grade</option>
+                            <option value="Nursery">Nursery</option>
+                            <option value="LKG">LKG</option>
+                            <option value="UKG">UKG</option>
+                            <option value="Grade 1">Grade 1</option>
+                            <option value="Grade 2">Grade 2</option>
+                            <option value="Grade 3">Grade 3</option>
+                            <option value="Grade 4">Grade 4</option>
+                            <option value="Grade 5">Grade 5</option>
+                            <option value="Grade 6">Grade 6</option>
+                            <option value="Grade 7">Grade 7</option>
+                            <option value="Grade 8">Grade 8</option>
+                            <option value="Grade 9">Grade 9</option>
+                            <option value="Grade 10">Grade 10</option>
+                            <option value="Grade 11">Grade 11</option>
+                            <option value="Grade 12">Grade 12</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="enquiry-message" class="block text-slate-700 text-sm font-bold mb-2">Additional Message</label>
+                        <textarea id="enquiry-message" rows="3" class="shadow-sm appearance-none border rounded-lg w-full py-3 px-4 text-slate-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-950" placeholder="Any specific questions or details..."></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-blue-950 text-amber-400 px-6 py-3 rounded-full shadow-lg hover:bg-blue-800 transition duration-300 ease-in-out transform hover:scale-105">
+                        Submit Enquiry
+                    </button>
+                </form>
+            </div>
+
+            <div>
+                <h3 class="text-2xl font-bold text-blue-950 mb-4 text-center">✨ Ask Our Admission Assistant ✨</h3>
+                <p class="text-slate-600 text-center mb-4">Have quick questions about our school? Ask our AI assistant!</p>
+                <div class="space-y-4">
+                    <div>
+                        <label for="llm-question" class="block text-slate-700 text-sm font-bold mb-2">Your Question</label>
+                        <textarea id="llm-question" rows="3" class="shadow-sm appearance-none border rounded-lg w-full py-3 px-4 text-slate-700 leading-tight focus:outline-none focus:ring-2 focus:ring-red-500" placeholder="e.g., What is the age limit for Nursery admission?"></textarea>
+                    </div>
+                    <button onclick="askAdmissionAssistant()" class="w-full bg-red-600 text-white px-6 py-3 rounded-full shadow-lg hover:bg-red-700 transition duration-300 ease-in-out transform hover:scale-105 flex items-center justify-center">
+                        Ask Assistant
+                        <span id="llm-loading" class="loader hidden"></span>
+                    </button>
+                    <div id="llm-response" class="mt-4 p-4 bg-red-50 rounded-lg border border-red-200 text-slate-800 text-sm leading-relaxed hidden">
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- Mobile Menu Toggle ---
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+
+        function openMobileMenu() {
+            mobileMenu.classList.add('open');
+            mobileMenuOverlay.classList.add('open');
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        }
+
+        function closeMobileMenu() {
+            mobileMenu.classList.remove('open');
+            mobileMenuOverlay.classList.remove('open');
+            document.body.style.overflow = ''; // Restore background scrolling
+        }
+
+        mobileMenuButton.addEventListener('click', openMobileMenu);
+        mobileMenuOverlay.addEventListener('click', closeMobileMenu); // Close when overlay is clicked
+
+        // Function to toggle mobile dropdowns
+        function toggleMobileDropdown(button) {
+            const parentDropdown = button.closest('.dropdown');
+            parentDropdown.classList.toggle('active'); // Use 'active' class to show/hide dropdown
+        }
+
+        // Close mobile menu when a link is clicked
+        document.querySelectorAll('#mobile-menu a').forEach(item => {
+            item.addEventListener('click', () => {
+                closeMobileMenu();
+                // Also close any open mobile dropdowns
+                document.querySelectorAll('#mobile-menu .dropdown.active').forEach(dropdown => {
+                    dropdown.classList.remove('active');
+                });
+            });
+        });
+
+        // --- Admission Enquiry Modal ---
+        const admissionModal = document.getElementById('admission-modal');
+        const llmResponseDiv = document.getElementById('llm-response');
+        const llmLoadingSpinner = document.getElementById('llm-loading');
+
+        function openAdmissionModal() {
+            admissionModal.classList.add('open');
+            document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
+        }
+
+        function closeAdmissionModal() {
+            admissionModal.classList.remove('open');
+            document.body.style.overflow = ''; // Restore scrolling
+            // Clear LLM response when modal closes
+            llmResponseDiv.innerHTML = '';
+            llmResponseDiv.classList.add('hidden');
+            document.getElementById('llm-question').value = '';
+        }
+
+        // Close modal if clicked outside content
+        admissionModal.addEventListener('click', (e) => {
+            if (e.target === admissionModal) {
+                closeAdmissionModal();
+            }
+        });
+
+        // --- Notification Pop-up (Multiple Notifications) ---
+        const notificationsData = [
+            { message: "📢 Important Announcement: Admissions for 2025-2026 are now open!", duration: 5000 },
+            { message: "🎉 Event Alert: Annual Sports Day on October 20th!", duration: 4000 },
+            { message: "📚 New: Digital Library now accessible to all students!", duration: 6000 }
+        ];
+        let currentNotificationIndex = 0;
+        let notificationTimeout;
+        const notificationElement = document.getElementById('notification');
+
+        function displayNextNotification() {
+            if (notificationsData.length === 0) {
+                notificationElement.classList.remove('show');
+                return;
+            }
+
+            // Loop back to the start if all notifications have been shown
+            if (currentNotificationIndex >= notificationsData.length) {
+                currentNotificationIndex = 0;
+            }
+
+            const currentNotification = notificationsData[currentNotificationIndex];
+            notificationElement.innerHTML = `
+                <p>${currentNotification.message}</p>
+                <button class="notification-close-button" onclick="hideNotification()">X</button>
+            `;
+            notificationElement.classList.add('show');
+
+            // Set timeout to hide current notification and then display the next one
+            notificationTimeout = setTimeout(() => {
+                notificationElement.classList.remove('show');
+                // Small delay before showing the next notification
+                setTimeout(() => {
+                    currentNotificationIndex++;
+                    displayNextNotification();
+                }, 1000); // 1 second delay between notifications
+            }, currentNotification.duration);
+        }
+
+        function hideNotification() {
+            notificationElement.classList.remove('show');
+            clearTimeout(notificationTimeout); // Clear any pending timeout
+        }
+
+        // --- Gemini API Integration: Smart Admission Assistant ---
+        async function askAdmissionAssistant() {
+            const questionInput = document.getElementById('llm-question');
+            const question = questionInput.value.trim();
+
+            if (!question) {
+                llmResponseDiv.innerHTML = '<p class="text-red-600">Please enter a question.</p>';
+                llmResponseDiv.classList.remove('hidden');
+                return;
+            }
+
+            llmResponseDiv.classList.add('hidden'); // Hide previous response
+            llmResponseDiv.innerHTML = ''; // Clear previous response
+            llmLoadingSpinner.classList.remove('hidden'); // Show loading spinner
+
+            try {
+                let chatHistory = [];
+                // Provide context to the LLM about the school and its policies
+                chatHistory.push({
+                    role: "user",
+                    parts: [{
+                        text: `You are an admission assistant for ALIF INTERNATIONAL SCHOOL. Your goal is to provide helpful and concise answers to prospective students and parents about our school. Here's some general information about ALIF INTERNATIONAL SCHOOL:
+                        - We offer education from Nursery to Grade 12 (Higher Secondary).
+                        - Our curriculum focuses on academic excellence, character development, and social responsibility.
+                        - We have experienced teachers and modern facilities including digital libraries, computer labs, science labs, Wi-Fi campus, transport, and a cafeteria.
+                        - Admission forms are available from March 1st, last date for submission is April 30th. Entrance exams are May 15th-20th. Results on June 5th.
+                        - Required documents: Birth Certificate, Previous School Report, Aadhar Card.
+                        - For TC applications, a written application to the Principal's office, clearing dues, and student ID copy are required.
+                        - Our vision is to empower students, foster critical thinking and creativity. Our mission is to provide a dynamic and inclusive learning environment.
+                        - We have 4000+ students, 100+ teachers, 5+ branches, and 5+ years of experience.
+
+                        Please answer the following question based on the provided information, or state if the information is not available. Keep your answers brief and to the point.`
+                    }]
+                });
+                chatHistory.push({ role: "user", parts: [{ text: question }] });
+
+                const payload = {
+                    contents: chatHistory
+                };
+                const apiKey = ""; // Leave as-is, Canvas will provide at runtime
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+
+                if (result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    const text = result.candidates[0].content.parts[0].text;
+                    llmResponseDiv.innerHTML = `<p>${text}</p>`;
+                } else {
+                    llmResponseDiv.innerHTML = '<p class="text-red-600">Sorry, I could not get a response from the assistant. Please try again.</p>';
+                }
+            } catch (error) {
+                console.error('Error calling Gemini API:', error);
+                llmResponseDiv.innerHTML = `<p class="text-red-600">An error occurred: ${error.message}. Please try again later.</p>`;
+            } finally {
+                llmLoadingSpinner.classList.add('hidden'); // Hide loading spinner
+                llmResponseDiv.classList.remove('hidden'); // Show response div
+            }
+        }
+
+        // Initialize display of notifications on window load
+        window.onload = function() {
+            displayNextNotification(); // Start the notification sequence
+        };
+    </script>
+</body>
+</html>
