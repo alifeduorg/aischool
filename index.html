@@ -348,7 +348,7 @@
         </button>
     </div>
 
-    <header class="bg-blue-50 shadow-lg py-3 px-4 md:px-8 mx-auto w-fit sticky top-0 z-50 rounded-xl" style="perspective: 1000px;">
+     <header class="bg-blue-50 shadow-lg py-3 px-4 md:px-8 mx-auto w-fit sticky top-0 z-50 rounded-xl" style="perspective: 1000px;">
         <nav class="hidden md:flex items-center space-x-3 justify-center">
             <a href="index.html" class="text-base font-medium text-slate-700 hover:text-amber-700 nav-link-hover whitespace-nowrap px-3 py-2 rounded-md">Home</a>
 
@@ -357,10 +357,10 @@
                     About Us <i class="fas fa-chevron-down ml-2 text-sm"></i>
                 </button>
                 <div class="dropdown-menu">
-                     <a href="chairman.html">Chairman</a>
+                    <a href="chairman.html">Chairman</a>
                     <a href="md.html">Managing Director</a>
                     <a href="principal.html">Principal</a>
-                   <a href="vision-mission.html">Vision & Mission</a>
+                    <a href="vision-mission.html">Vision & Mission</a>
                 </div>
             </div>
 
@@ -369,18 +369,35 @@
                     Admission <i class="fas fa-chevron-down ml-2 text-sm"></i>
                 </button>
                 <div class="dropdown-menu">
-                    <a href="admission.html#admission-info">Admission Info</a>
-                    <a href="admission.html#tc-application">TC Application</a>
+                    <a href="admission.html">Admission Info</a>
+                    <a href="tc-application.html">TC Application</a>
                 </div>
             </div>
 
-            <a href="academics.html" class="text-base font-medium text-slate-700 hover:text-amber-700 nav-link-hover whitespace-nowrap px-3 py-2 rounded-md">Academics</a>
-            <a href="resources.html" class="text-base font-medium text-slate-700 hover:text-amber-700 nav-link-hover whitespace-nowrap px-3 py-2 rounded-md">Resources</a>
+            <div class="relative dropdown">
+                <button class="text-base font-medium text-slate-700 hover:text-amber-700 flex items-center nav-link-hover whitespace-nowrap px-3 py-2 rounded-md">
+                    Academics <i class="fas fa-chevron-down ml-2 text-sm"></i>
+                </button>
+                <div class="dropdown-menu">
+                    <a href="cbsecuriccularm.html">CBSE Curriculum</a>
+                    <a href="academiccaleder.html">ACADEMIC CALENDAR</a>
+                </div>
+            </div>
+
+            <div class="relative dropdown">
+                <button class="text-base font-medium text-slate-700 hover:text-amber-700 flex items-center nav-link-hover whitespace-nowrap px-3 py-2 rounded-md">
+                    Resources <i class="fas fa-chevron-down ml-2 text-sm"></i>
+                </button>
+                <div class="dropdown-menu">
+                    <a href="circular.html">CIRCULAR </a>
+                    <a href="ANNUAL_REPORT.html">ANNUAL REPORT</a>
+                </div>
+            </div>
             <a href="events.html" class="text-base font-medium text-slate-700 hover:text-amber-700 nav-link-hover whitespace-nowrap px-3 py-2 rounded-md">Events</a>
             <a href="contact.html" class="text-base font-medium text-slate-700 hover:text-amber-700 nav-link-hover whitespace-nowrap px-3 py-2 rounded-md">Contact</a>
-            <button class="bg-blue-950 text-amber-400 px-6 py-2 rounded-full shadow-lg hover:bg-blue-800 transition duration-300 ease-in-out transform hover:scale-105">
+            <a href="https://alifedu.org/login" class="bg-blue-950 text-amber-400 px-6 py-2 rounded-full shadow-lg hover:bg-blue-800 transition duration-300 ease-in-out transform hover:scale-105">
                 Login
-            </button>
+            </a>
         </nav>
     </header>
 
@@ -396,10 +413,10 @@
                 About Us <i class="fas fa-chevron-down ml-2 text-sm"></i>
             </button>
             <div class="dropdown-menu ml-4 mt-1">
-                 <a href="chairman.html">Chairman</a>
-                    <a href="md.html">Managing Director</a>
-                    <a href="principal.html">Principal</a>
-                   <a href="vision-mission.html">Vision & Mission</a>
+                <a href="chairman.html">Chairman</a>
+                <a href="md.html">Managing Director</a>
+                <a href="principal.html">Principal</a>
+                <a href="vision-mission.html">Vision & Mission</a>
             </div>
         </div>
         <div class="relative dropdown">
@@ -407,17 +424,33 @@
                 Admission <i class="fas fa-chevron-down ml-2 text-sm"></i>
             </button>
             <div class="dropdown-menu ml-4 mt-1">
-                <a href="admission.html#admission-info">Admission Info</a>
-                <a href="admission.html#tc-application">TC Application</a>
+                <a href="admission.html">Admission Info</a>
+                <a href="tc-application.html">TC Application</a>
             </div>
         </div>
-        <a href="academics.html" class="block px-4 py-2 text-slate-700 hover:bg-amber-50 rounded-md">Academics</a>
-        <a href="resources.html" class="block px-4 py-2 text-slate-700 hover:bg-amber-50 rounded-md">Resources</a>
+        <div class="relative dropdown">
+            <button class="w-full text-left px-4 py-2 text-slate-700 hover:bg-amber-50 flex justify-between items-center rounded-md" onclick="toggleMobileDropdown(this)">
+                Academics <i class="fas fa-chevron-down ml-2 text-sm"></i>
+            </button>
+            <div class="dropdown-menu ml-4 mt-1">
+                <a href="cbsecuriccularm.html">CBSE Curriculum</a>
+                <a href="academiccaleder.html">ACADEMIC CALENDAR</a>
+            </div>
+        </div>
+        <div class="relative dropdown">
+            <button class="w-full text-left px-4 py-2 text-slate-700 hover:bg-amber-50 flex justify-between items-center rounded-md" onclick="toggleMobileDropdown(this)">
+                Resources <i class="fas fa-chevron-down ml-2 text-sm"></i>
+            </button>
+            <div class="dropdown-menu ml-4 mt-1">
+                <a href="circular.html">CIRCULAR </a>
+                <a href="ANNUAL_REPORT.html">ANNUAL REPORT</a>
+            </div>
+        </div>
         <a href="events.html" class="block px-4 py-2 text-slate-700 hover:bg-amber-50 rounded-md">Events</a>
         <a href="contact.html" class="block px-4 py-2 text-slate-700 hover:bg-amber-50 rounded-md">Contact</a>
-        <button class="w-full text-left bg-blue-950 text-amber-400 px-4 py-2 mt-2 rounded-full shadow-lg hover:bg-blue-800 transition duration-300 ease-in-out transform hover:scale-105">
+        <a href="https://alifedu.org/login" class="w-full text-left bg-blue-950 text-amber-400 px-4 py-2 mt-2 rounded-full shadow-lg hover:bg-blue-800 transition duration-300 ease-in-out transform hover:scale-105">
             Login
-        </button>
+        </a>
     </div>
 
     <section id="home" class="relative w-full h-screen flex items-center justify-center text-white overflow-hidden rounded-b-3xl shadow-xl">
