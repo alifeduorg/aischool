@@ -22,11 +22,11 @@
             border-radius: 10px;
         }
         ::-webkit-scrollbar-thumb {
-            background: #4f46e5; /* Indigo-600 */
+            background: #0A1128; /* Navy Blue */
             border-radius: 10px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: #4338ca; /* Indigo-700 */
+            background: #070B1A; /* Darker Navy Blue */
         }
 
         /* Hero section background image with overlay */
@@ -106,8 +106,8 @@
             transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
         }
         .dropdown-menu a:hover {
-            background-color: #eef2ff; /* Lighter indigo hover */
-            color: #4338ca; /* Primary indigo on hover */
+            background-color: #FFFBEB; /* Lighter golden yellow hover */
+            color: #D97706; /* Golden yellow on hover */
         }
 
         /* Menu item hover animation with subtle 3D feel and button background */
@@ -118,9 +118,9 @@
         }
         .nav-link-hover:hover {
             transform: translateY(-4px) scale(1.05) translateZ(10px); /* Lift, slight scale, and pop-out */
-            color: #4338ca; /* Primary indigo on hover */
+            color: #D97706; /* Golden yellow on hover */
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
-            background-color: #eef2ff; /* Lighter indigo hover for button feel */
+            background-color: #FFFBEB; /* Lighter golden yellow hover for button feel */
         }
         /* Ensure buttons also have the clicky feel */
         button,
@@ -194,7 +194,7 @@
             position: fixed;
             bottom: 1.5rem;
             right: 1.5rem;
-            background-color: #28a745; /* Deeper green for success/info */
+            background-color: #DC2626; /* Red-600 for notifications */
             color: white;
             padding: 1rem 1.5rem;
             border-radius: 0.75rem;
@@ -230,7 +230,7 @@
         /* Loading spinner for LLM */
         .loader {
             border: 4px solid #f3f3f3; /* Light grey */
-            border-top: 4px solid #4338ca; /* Indigo-700 */
+            border-top: 4px solid #0A1128; /* Navy Blue */
             border-radius: 50%;
             width: 24px;
             height: 24px;
@@ -296,10 +296,10 @@
             </div>
 
             <nav class="hidden md:flex items-center space-x-6">
-                <a href="index.html" class="text-base font-medium text-slate-700 hover:text-indigo-700 nav-link-hover whitespace-nowrap px-4 py-2 rounded-md">Home</a>
+                <a href="index.html" class="text-base font-medium text-slate-700 hover:text-amber-700 nav-link-hover whitespace-nowrap px-4 py-2 rounded-md">Home</a>
 
                 <div class="relative dropdown">
-                    <button class="text-base font-medium text-slate-700 hover:text-indigo-700 flex items-center nav-link-hover whitespace-nowrap px-4 py-2 rounded-md">
+                    <button class="text-base font-medium text-slate-700 hover:text-amber-700 flex items-center nav-link-hover whitespace-nowrap px-4 py-2 rounded-md">
                         About Us <i class="fas fa-chevron-down ml-2 text-sm"></i>
                     </button>
                     <div class="dropdown-menu">
@@ -311,7 +311,7 @@
                 </div>
 
                 <div class="relative dropdown">
-                    <button class="text-base font-medium text-slate-700 hover:text-indigo-700 flex items-center nav-link-hover whitespace-nowrap px-4 py-2 rounded-md">
+                    <button class="text-base font-medium text-slate-700 hover:text-amber-700 flex items-center nav-link-hover whitespace-nowrap px-4 py-2 rounded-md">
                         Admission <i class="fas fa-chevron-down ml-2 text-sm"></i>
                     </button>
                     <div class="dropdown-menu">
@@ -320,11 +320,11 @@
                     </div>
                 </div>
 
-                <a href="#academics" class="text-base font-medium text-slate-700 hover:text-indigo-700 nav-link-hover whitespace-nowrap px-4 py-2 rounded-md">Academics</a>
-                <a href="resources.html" class="text-base font-medium text-slate-700 hover:text-indigo-700 nav-link-hover whitespace-nowrap px-4 py-2 rounded-md">Resources</a>
-                <a href="#events" class="text-base font-medium text-slate-700 hover:text-indigo-700 nav-link-hover whitespace-nowrap px-4 py-2 rounded-md">Events</a>
-                <a href="#contact-section" class="text-base font-medium text-slate-700 hover:text-indigo-700 nav-link-hover whitespace-nowrap px-4 py-2 rounded-md">Contact</a>
-                <button class="bg-indigo-700 text-white px-6 py-2 rounded-full shadow-lg hover:bg-indigo-800 transition duration-300 ease-in-out transform hover:scale-105">
+                <a href="#academics" class="text-base font-medium text-slate-700 hover:text-amber-700 nav-link-hover whitespace-nowrap px-4 py-2 rounded-md">Academics</a>
+                <a href="resources.html" class="text-base font-medium text-slate-700 hover:text-amber-700 nav-link-hover whitespace-nowrap px-4 py-2 rounded-md">Resources</a>
+                <a href="#events" class="text-base font-medium text-slate-700 hover:text-amber-700 nav-link-hover whitespace-nowrap px-4 py-2 rounded-md">Events</a>
+                <a href="#contact-section" class="text-base font-medium text-slate-700 hover:text-amber-700 nav-link-hover whitespace-nowrap px-4 py-2 rounded-md">Contact</a>
+                <button class="bg-blue-950 text-amber-400 px-6 py-2 rounded-full shadow-lg hover:bg-blue-800 transition duration-300 ease-in-out transform hover:scale-105">
                     Login
                 </button>
             </nav>
@@ -335,9 +335,9 @@
         </div>
 
         <div id="mobile-menu" class="hidden md:hidden mt-4 bg-white rounded-lg shadow-md py-2">
-            <a href="index.html" class="block px-4 py-2 text-slate-700 hover:bg-blue-50 rounded-md">Home</a>
+            <a href="index.html" class="block px-4 py-2 text-slate-700 hover:bg-amber-50 rounded-md">Home</a>
             <div class="relative dropdown">
-                <button class="w-full text-left px-4 py-2 text-slate-700 hover:bg-blue-50 flex justify-between items-center rounded-md" onclick="toggleMobileDropdown(this)">
+                <button class="w-full text-left px-4 py-2 text-slate-700 hover:bg-amber-50 flex justify-between items-center rounded-md" onclick="toggleMobileDropdown(this)">
                     About Us <i class="fas fa-chevron-down ml-2 text-sm"></i>
                 </button>
                 <div class="dropdown-menu ml-4 mt-1">
@@ -348,7 +348,7 @@
                 </div>
             </div>
             <div class="relative dropdown">
-                <button class="w-full text-left px-4 py-2 text-slate-700 hover:bg-blue-50 flex justify-between items-center rounded-md" onclick="toggleMobileDropdown(this)">
+                <button class="w-full text-left px-4 py-2 text-slate-700 hover:bg-amber-50 flex justify-between items-center rounded-md" onclick="toggleMobileDropdown(this)">
                     Admission <i class="fas fa-chevron-down ml-2 text-sm"></i>
                 </button>
                 <div class="dropdown-menu ml-4 mt-1">
@@ -356,11 +356,11 @@
                     <a href="admission.html#tc-application">TC Application</a>
                 </div>
             </div>
-            <a href="#academics" class="block px-4 py-2 text-slate-700 hover:bg-blue-50 rounded-md">Academics</a>
-            <a href="resources.html" class="block px-4 py-2 text-slate-700 hover:bg-blue-50 rounded-md">Resources</a>
-            <a href="#events" class="block px-4 py-2 text-slate-700 hover:bg-blue-50 rounded-md">Events</a>
-            <a href="#contact-section" class="block px-4 py-2 text-slate-700 hover:bg-blue-50 rounded-md">Contact</a>
-            <button class="w-full text-left bg-indigo-700 text-white px-4 py-2 mt-2 rounded-full shadow-lg hover:bg-indigo-800 transition duration-300 ease-in-out transform hover:scale-105">
+            <a href="#academics" class="block px-4 py-2 text-slate-700 hover:bg-amber-50 rounded-md">Academics</a>
+            <a href="resources.html" class="block px-4 py-2 text-slate-700 hover:bg-amber-50 rounded-md">Resources</a>
+            <a href="#events" class="block px-4 py-2 text-slate-700 hover:bg-amber-50 rounded-md">Events</a>
+            <a href="#contact-section" class="block px-4 py-2 text-slate-700 hover:bg-amber-50 rounded-md">Contact</a>
+            <button class="w-full text-left bg-blue-950 text-amber-400 px-4 py-2 mt-2 rounded-full shadow-lg hover:bg-blue-800 transition duration-300 ease-in-out transform hover:scale-105">
                 Login
             </button>
         </div>
@@ -375,7 +375,7 @@
             <p class="text-lg md:text-xl mb-8 max-w-2xl mx-auto animate-fade-in" style="animation-delay: 0.2s;">
                 Nurturing Minds, Building Futures. Discover a world of excellence in education.
             </p>
-            <button onclick="openAdmissionModal()" class="bg-emerald-500 text-indigo-900 px-8 py-4 rounded-full text-xl font-bold shadow-2xl hover:bg-emerald-600 transition duration-300 ease-in-out transform hover:scale-105 animate-fade-in" style="animation-delay: 0.4s;">
+            <button onclick="openAdmissionModal()" class="bg-amber-400 text-blue-950 px-8 py-4 rounded-full text-xl font-bold shadow-2xl hover:bg-amber-500 transition duration-300 ease-in-out transform hover:scale-105 animate-fade-in" style="animation-delay: 0.4s;">
                 Admission Enquiry
             </button>
         </div>
@@ -383,7 +383,7 @@
 
     <section class="py-8 bg-gray-50 rounded-3xl mx-4 my-8 shadow-xl">
         <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-bold text-indigo-800 text-center mb-8">Our Campus Glimpses</h2>
+            <h2 class="text-3xl font-bold text-blue-950 text-center mb-8">Our Campus Glimpses</h2>
             <div id="image-slider" class="relative w-full max-w-4xl mx-auto aspect-video overflow-hidden rounded-xl shadow-2xl">
                 <div class="slider-track flex transition-transform duration-500 ease-in-out h-full">
                     <img src="alif school.png" alt="School View 1" class="w-full flex-shrink-0 object-cover rounded-xl">
@@ -401,15 +401,15 @@
         </div>
     </section>
 
-    <section id="about-us-home" class="py-16 bg-gradient-to-br from-indigo-50 to-blue-100 rounded-3xl mx-4 my-8 shadow-xl">
+    <section id="about-us-home" class="py-16 bg-gradient-to-br from-blue-50 to-amber-50 rounded-3xl mx-4 my-8 shadow-xl">
         <div class="container mx-auto px-6 text-center">
-            <h2 class="text-4xl font-bold text-indigo-800 mb-12 animate-fade-in">Our Leadership & Values</h2>
+            <h2 class="text-4xl font-bold text-blue-950 mb-12 animate-fade-in">Our Leadership & Values</h2>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mb-16">
                 <div id="managing-director" class="bg-white p-8 rounded-2xl shadow-lg animate-fade-in card-hover-effect" style="animation-delay: 0.4s;">
                     <img src="md.png" alt="Managing Director" class="w-36 h-36 mx-auto mb-6 object-cover">
-                    <h3 class="text-2xl font-semibold text-indigo-700 mb-2">Aflah Zman.k</h3>
-                    <p class="text-indigo-500 mb-4">Managing Director</p>
+                    <h3 class="text-2xl font-semibold text-blue-950 mb-2">Aflah Zman.k</h3>
+                    <p class="text-amber-700 mb-4">Managing Director</p>
                     <p class="text-slate-600 text-sm leading-relaxed">
                         With over 20 years of experience in education leadership, Aflah Zman.k is a visionary dedicated to fostering an environment of innovation and academic rigor.
                     </p>
@@ -417,8 +417,8 @@
 
                 <div id="chairman" class="bg-white p-8 rounded-2xl shadow-lg animate-fade-in card-hover-effect" style="animation-delay: 0.6s;">
                     <img src="founder.png" alt="Chairman / Founder" class="w-36 h-36 mx-auto mb-6 object-cover">
-                    <h3 class="text-2xl font-semibold text-indigo-700 mb-2">Mr. Aslah Khan</h3>
-                    <p class="text-indigo-500 mb-4">Chairman / Founder</p>
+                    <h3 class="text-2xl font-semibold text-blue-950 mb-2">Mr. Aslah Khan</h3>
+                    <p class="text-amber-700 mb-4">Chairman / Founder</p>
                     <p class="text-slate-600 text-sm leading-relaxed">
                         Mr. Aslah Khan's commitment to community development and education has been instrumental in shaping the school's values and outreach programs.
                     </p>
@@ -426,8 +426,8 @@
 
                 <div id="principal" class="bg-white p-8 rounded-2xl shadow-lg animate-fade-in card-hover-effect" style="animation-delay: 0.8s;">
                     <img src="principal.png" alt="Principal" class="w-36 h-36 mx-auto mb-6 object-cover">
-                    <h3 class="text-2xl font-semibold text-indigo-700 mb-2">Mr. Abhinav Ak</h3>
-                    <p class="text-indigo-500 mb-4">Principal</p>
+                    <h3 class="text-2xl font-semibold text-blue-950 mb-2">Mr. Abhinav Ak</h3>
+                    <p class="text-amber-700 mb-4">Principal</p>
                     <p class="text-slate-600 text-sm leading-relaxed">
                         Mr. Abhinav Ak leads with passion and dedication, ensuring a nurturing and challenging academic environment for all students.
                     </p>
@@ -435,16 +435,16 @@
             </div>
 
             <div id="vision-mission" class="bg-white p-10 rounded-2xl shadow-lg animate-fade-in card-hover-effect" style="animation-delay: 1s;">
-                <h3 class="text-3xl font-bold text-indigo-800 mb-6">Our Vision & Mission</h3>
+                <h3 class="text-3xl font-bold text-blue-950 mb-6">Our Vision & Mission</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
                     <div>
-                        <h4 class="text-2xl font-semibold text-indigo-700 mb-3 flex items-center"><i class="fas fa-eye mr-3 text-indigo-600"></i> Our Vision</h4>
+                        <h4 class="text-2xl font-semibold text-blue-950 mb-3 flex items-center"><i class="fas fa-eye mr-3 text-amber-600"></i> Our Vision</h4>
                         <p class="text-slate-600 leading-relaxed">
                             To be a leading educational institution that empowers students to achieve their full potential, fostering critical thinking, creativity, and a lifelong love for learning. We aim to prepare global citizens who are compassionate, responsible, and ready to contribute positively to society.
                         </p>
                     </div>
                     <div>
-                        <h4 class="text-2xl font-semibold text-indigo-700 mb-3 flex items-center"><i class="fas fa-bullseye mr-3 text-indigo-600"></i> Our Mission</h4>
+                        <h4 class="text-2xl font-semibold text-blue-950 mb-3 flex items-center"><i class="fas fa-bullseye mr-3 text-amber-600"></i> Our Mission</h4>
                         <p class="text-slate-600 leading-relaxed">
                             To provide a dynamic and inclusive learning environment that promotes academic excellence, character development, and social responsibility. We are dedicated to nurturing individual talents, encouraging innovation, and instilling values that prepare students for success in a rapidly changing world.
                         </p>
@@ -454,27 +454,27 @@
         </div>
     </section>
 
-    <section class="py-16 bg-indigo-800 text-white rounded-3xl mx-4 my-8 shadow-xl">
+    <section class="py-16 bg-blue-950 text-white rounded-3xl mx-4 my-8 shadow-xl">
         <div class="container mx-auto px-6 text-center">
             <h2 class="text-4xl font-bold mb-12 animate-fade-in">Our Achievements at a Glance</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
-                <div class="bg-indigo-900 p-8 rounded-2xl shadow-lg counter-item card-hover-effect" style="animation-delay: 0.2s;">
-                    <i class="fas fa-users text-5xl text-emerald-400 mb-4"></i>
+                <div class="bg-blue-900 p-8 rounded-2xl shadow-lg counter-item card-hover-effect" style="animation-delay: 0.2s;">
+                    <i class="fas fa-users text-5xl text-amber-400 mb-4"></i>
                     <div class="text-5xl font-extrabold mb-2" data-target="4000">0</div>
                     <p class="text-xl font-medium">Students Enrolled</p>
                 </div>
-                <div class="bg-indigo-900 p-8 rounded-2xl shadow-lg counter-item card-hover-effect" style="animation-delay: 0.4s;">
-                    <i class="fas fa-chalkboard-teacher text-5xl text-emerald-400 mb-4"></i>
+                <div class="bg-blue-900 p-8 rounded-2xl shadow-lg counter-item card-hover-effect" style="animation-delay: 0.4s;">
+                    <i class="fas fa-chalkboard-teacher text-5xl text-amber-400 mb-4"></i>
                     <div class="text-5xl font-extrabold mb-2" data-target="100">0</div>
                     <p class="text-xl font-medium">Experienced Teachers</p>
                 </div>
-                <div class="bg-indigo-900 p-8 rounded-2xl shadow-lg counter-item card-hover-effect" style="animation-delay: 0.6s;">
-                    <i class="fas fa-building text-5xl text-emerald-400 mb-4"></i>
+                <div class="bg-blue-900 p-8 rounded-2xl shadow-lg counter-item card-hover-effect" style="animation-delay: 0.6s;">
+                    <i class="fas fa-building text-5xl text-amber-400 mb-4"></i>
                     <div class="text-5xl font-extrabold mb-2" data-target="5">0</div>
                     <p class="text-xl font-medium">Branches Worldwide</p>
                 </div>
-                <div class="bg-indigo-900 p-8 rounded-2xl shadow-lg counter-item card-hover-effect" style="animation-delay: 0.8s;">
-                    <i class="fas fa-calendar-alt text-5xl text-emerald-400 mb-4"></i>
+                <div class="bg-blue-900 p-8 rounded-2xl shadow-lg counter-item card-hover-effect" style="animation-delay: 0.8s;">
+                    <i class="fas fa-calendar-alt text-5xl text-amber-400 mb-4"></i>
                     <div class="text-5xl font-extrabold mb-2" data-target="5">0</div>
                     <p class="text-xl font-medium">Years of Experience</p>
                 </div>
@@ -482,30 +482,30 @@
         </div>
     </section>
 
-    <section id="academics" class="py-16 bg-gradient-to-br from-indigo-100 to-blue-100 rounded-3xl mx-4 my-8 shadow-xl">
+    <section id="academics" class="py-16 bg-gradient-to-br from-blue-100 to-amber-100 rounded-3xl mx-4 my-8 shadow-xl">
         <div class="container mx-auto px-6 text-center">
-            <h2 class="text-4xl font-bold text-indigo-800 mb-12 animate-fade-in">Our Academic Programs</h2>
+            <h2 class="text-4xl font-bold text-blue-950 mb-12 animate-fade-in">Our Academic Programs</h2>
             <p class="text-lg max-w-3xl mx-auto mb-12 leading-relaxed animate-fade-in" style="animation-delay: 0.2s;">
                 ALIF INTERNATIONAL SCHOOL offers a comprehensive curriculum designed to foster intellectual curiosity and academic excellence from pre-primary to higher secondary levels.
             </p>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div class="bg-white p-8 rounded-2xl shadow-lg animate-fade-in card-hover-effect" style="animation-delay: 0.4s;">
-                    <i class="fas fa-book-open text-5xl text-indigo-600 mb-4"></i>
-                    <h3 class="text-2xl font-semibold text-indigo-700 mb-3">Primary Education</h3>
+                    <i class="fas fa-book-open text-5xl text-blue-950 mb-4"></i>
+                    <h3 class="text-2xl font-semibold text-blue-950 mb-3">Primary Education</h3>
                     <p class="text-slate-600">
                         Foundational learning with a focus on literacy, numeracy, and environmental awareness. Engaging activities and play-based learning.
                     </p>
                 </div>
                 <div class="bg-white p-8 rounded-2xl shadow-lg animate-fade-in card-hover-effect" style="animation-delay: 0.6s;">
-                    <i class="fas fa-flask text-5xl text-indigo-600 mb-4"></i>
-                    <h3 class="text-2xl font-semibold text-indigo-700 mb-3">Secondary Education</h3>
+                    <i class="fas fa-flask text-5xl text-blue-950 mb-4"></i>
+                    <h3 class="text-2xl font-semibold text-blue-950 mb-3">Secondary Education</h3>
                     <p class="text-slate-600">
                         In-depth subject knowledge, critical thinking, and preparation for board examinations. Emphasis on science, mathematics, and humanities.
                     </p>
                 </div>
                 <div class="bg-white p-8 rounded-2xl shadow-lg animate-fade-in card-hover-effect" style="animation-delay: 0.8s;">
-                    <i class="fas fa-graduation-cap text-5xl text-indigo-600 mb-4"></i>
-                    <h3 class="text-2xl font-semibold text-indigo-700 mb-3">Higher Secondary</h3>
+                    <i class="fas fa-graduation-cap text-5xl text-blue-950 mb-4"></i>
+                    <h3 class="text-2xl font-semibold text-blue-950 mb-3">Higher Secondary</h3>
                     <p class="text-slate-600">
                         Specialized streams (Science, Commerce, Arts) with career-oriented guidance and preparation for competitive exams.
                     </p>
@@ -514,36 +514,36 @@
         </div>
     </section>
 
-    <section class="py-16 bg-indigo-800 text-white rounded-3xl mx-4 my-8 shadow-xl">
+    <section class="py-16 bg-blue-950 text-white rounded-3xl mx-4 my-8 shadow-xl">
         <div class="container mx-auto px-6 text-center">
             <h2 class="text-4xl font-bold mb-12 animate-fade-in">What Our Parents Say</h2>
             <div class="relative w-full max-w-3xl mx-auto">
                 <div id="feedback-slider" class="feedback-slider-container">
                     <div class="feedback-slide">
-                        <div class="bg-indigo-900 p-8 rounded-2xl shadow-lg card-hover-effect">
-                            <i class="fas fa-quote-left text-emerald-400 text-3xl mb-4"></i>
+                        <div class="bg-blue-900 p-8 rounded-2xl shadow-lg card-hover-effect">
+                            <i class="fas fa-quote-left text-amber-400 text-3xl mb-4"></i>
                             <p class="text-lg italic mb-6">
                                 "ALIF INTERNATIONAL SCHOOL has transformed my child's learning journey. The teachers are incredibly supportive, and the curriculum is outstanding. Highly recommended!"
                             </p>
-                            <p class="font-semibold text-emerald-300">- Mrs. Priya Sharma, Parent of Grade 5 Student</p>
+                            <p class="font-semibold text-amber-300">- Mrs. Priya Sharma, Parent of Grade 5 Student</p>
                         </div>
                     </div>
                     <div class="feedback-slide">
-                        <div class="bg-indigo-900 p-8 rounded-2xl shadow-lg card-hover-effect">
-                            <i class="fas fa-quote-left text-emerald-400 text-3xl mb-4"></i>
+                        <div class="bg-blue-900 p-8 rounded-2xl shadow-lg card-hover-effect">
+                            <i class="fas fa-quote-left text-amber-400 text-3xl mb-4"></i>
                             <p class="text-lg italic mb-6">
                                 "The school's focus on holistic development is truly commendable. My child not only excels academically but also participates enthusiastically in co-curricular activities."
                             </p>
-                            <p class="font-semibold text-emerald-300">- Mr. Rajesh Kumar, Parent of Grade 8 Student</p>
+                            <p class="font-semibold text-amber-300">- Mr. Rajesh Kumar, Parent of Grade 8 Student</p>
                         </div>
                     </div>
                     <div class="feedback-slide">
-                        <div class="bg-indigo-900 p-8 rounded-2xl shadow-lg card-hover-effect">
-                            <i class="fas fa-quote-left text-emerald-400 text-3xl mb-4"></i>
+                        <div class="bg-blue-900 p-8 rounded-2xl shadow-lg card-hover-effect">
+                            <i class="fas fa-quote-left text-amber-400 text-3xl mb-4"></i>
                             <p class="text-lg italic mb-6">
                                 "My children love going to ALIF INTERNATIONAL SCHOOL every day! The engaging activities and supportive staff make learning a joy. A truly wonderful environment."
                             </p>
-                            <p class="font-semibold text-emerald-300">- Ms. Sarah Khan, Parent of Grade 2 & 6 Students</p>
+                            <p class="font-semibold text-amber-300">- Ms. Sarah Khan, Parent of Grade 2 & 6 Students</p>
                         </div>
                     </div>
                 </div>
@@ -560,48 +560,48 @@
 
     <section id="events" class="py-16 bg-white rounded-3xl mx-4 my-8 shadow-xl">
         <div class="container mx-auto px-6 text-center">
-            <h2 class="text-4xl font-bold text-indigo-800 mb-12 animate-fade-in">Upcoming Events & News</h2>
+            <h2 class="text-4xl font-bold text-blue-950 mb-12 animate-fade-in">Upcoming Events & News</h2>
             <p class="text-lg max-w-3xl mx-auto mb-12 leading-relaxed animate-fade-in" style="animation-delay: 0.2s;">
                 Stay updated with the latest happenings, academic calendars, and cultural events at ALIF INTERNATIONAL SCHOOL. (Content will be added here for the Events page)
             </p>
-            <button class="bg-indigo-700 text-white px-8 py-3 rounded-full shadow-lg hover:bg-indigo-800 transition duration-300 ease-in-out transform hover:scale-105">
+            <button class="bg-blue-950 text-amber-400 px-8 py-3 rounded-full shadow-lg hover:bg-blue-800 transition duration-300 ease-in-out transform hover:scale-105">
                 View All Events
             </button>
         </div>
     </section>
 
-    <section id="contact-section" class="py-16 bg-indigo-100 rounded-3xl mx-4 my-8 shadow-xl">
+    <section id="contact-section" class="py-16 bg-blue-100 rounded-3xl mx-4 my-8 shadow-xl">
         <div class="container mx-auto px-6 text-center">
-            <h2 class="text-4xl font-bold text-indigo-800 mb-12 animate-fade-in">Get In Touch With Us</h2>
+            <h2 class="text-4xl font-bold text-blue-950 mb-12 animate-fade-in">Get In Touch With Us</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
                 <div class="bg-white p-8 rounded-2xl shadow-lg animate-fade-in card-hover-effect" style="animation-delay: 0.2s;">
-                    <h3 class="text-3xl font-semibold text-indigo-700 mb-6">Send Us a Message</h3>
+                    <h3 class="text-3xl font-semibold text-blue-950 mb-6">Send Us a Message</h3>
                     <form class="text-left space-y-6">
                         <div>
                             <label for="name" class="block text-slate-700 text-sm font-bold mb-2">Your Name</label>
-                            <input type="text" id="name" name="name" class="shadow-sm appearance-none border rounded-lg w-full py-3 px-4 text-slate-700 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent" placeholder="John Doe">
+                            <input type="text" id="name" name="name" class="shadow-sm appearance-none border rounded-lg w-full py-3 px-4 text-slate-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-950 focus:border-transparent" placeholder="John Doe">
                         </div>
                         <div>
                             <label for="email" class="block text-slate-700 text-sm font-bold mb-2">Your Email</label>
-                            <input type="email" id="email" name="email" class="shadow-sm appearance-none border rounded-lg w-full py-3 px-4 text-slate-700 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent" placeholder="you@example.com">
+                            <input type="email" id="email" name="email" class="shadow-sm appearance-none border rounded-lg w-full py-3 px-4 text-slate-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-950 focus:border-transparent" placeholder="you@example.com">
                         </div>
                         <div>
                             <label for="message" class="block text-slate-700 text-sm font-bold mb-2">Additional Message</label>
-                            <textarea id="message" name="message" rows="5" class="shadow-sm appearance-none border rounded-lg w-full py-3 px-4 text-slate-700 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent" placeholder="Your message..."></textarea>
+                            <textarea id="message" name="message" rows="5" class="shadow-sm appearance-none border rounded-lg w-full py-3 px-4 text-slate-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-950 focus:border-transparent" placeholder="Your message..."></textarea>
                         </div>
-                        <button type="submit" class="w-full bg-indigo-700 text-white px-6 py-3 rounded-full shadow-lg hover:bg-indigo-800 transition duration-300 ease-in-out transform hover:scale-105">
+                        <button type="submit" class="w-full bg-blue-950 text-amber-400 px-6 py-3 rounded-full shadow-lg hover:bg-blue-800 transition duration-300 ease-in-out transform hover:scale-105">
                             Send Message
                         </button>
                     </form>
                 </div>
 
                 <div class="bg-white p-8 rounded-2xl shadow-lg animate-fade-in card-hover-effect" style="animation-delay: 0.4s;">
-                    <h3 class="text-3xl font-semibold text-indigo-700 mb-6">Our Location</h3>
+                    <h3 class="text-3xl font-semibold text-blue-950 mb-6">Our Location</h3>
                     <div class="text-left text-slate-600 space-y-4 mb-8">
-                        <p><i class="fas fa-map-marker-alt text-indigo-600 mr-3"></i> 123 School Lane, Education City, State, Country - 12345</p>
-                        <p><i class="fas fa-phone-alt text-indigo-600 mr-3"></i> +91 123 456 7890</p>
+                        <p><i class="fas fa-map-marker-alt text-amber-600 mr-3"></i> 123 School Lane, Education City, State, Country - 12345</p>
+                        <p><i class="fas fa-phone-alt text-amber-600 mr-3"></i> +91 123 456 7890</p>
                         <p><i class="fas fa-envelope mr-3"></i> info@alifedu.edu</p>
-                        <p><i class="fas fa-clock text-indigo-600 mr-3"></i> Mon - Fri: 9:00 AM - 5:00 PM</p>
+                        <p><i class="fas fa-clock text-amber-600 mr-3"></i> Mon - Fri: 9:00 AM - 5:00 PM</p>
                     </div>
                     <div class="w-full h-64 bg-gray-200 rounded-xl overflow-hidden shadow-inner">
                         <iframe
@@ -615,52 +615,52 @@
     </section>
 
 
-    <footer class="bg-zinc-900 text-white py-12 rounded-t-3xl shadow-2xl">
+    <footer class="bg-blue-950 text-white py-12 rounded-t-3xl shadow-2xl">
         <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
-                <h3 class="text-2xl font-bold mb-4 text-indigo-300">ALIF INTERNATIONAL SCHOOL</h3>
-                <p class="text-indigo-200 text-sm leading-relaxed">
+                <h3 class="text-2xl font-bold mb-4 text-amber-300">ALIF INTERNATIONAL SCHOOL</h3>
+                <p class="text-amber-200 text-sm leading-relaxed">
                     Dedicated to providing quality education and fostering a nurturing environment for students to excel academically and personally.
                 </p>
             </div>
 
             <div>
-                <h3 class="text-2xl font-bold mb-4 text-indigo-300">Quick Links</h3>
+                <h3 class="text-2xl font-bold mb-4 text-amber-300">Quick Links</h3>
                 <ul class="space-y-2">
-                    <li><a href="index.html" class="text-indigo-200 hover:text-white transition duration-200">Home</a></li>
-                    <li><a href="#about-us-home" class="text-indigo-200 hover:text-white transition duration-200">About Us</a></li>
-                    <li><a href="admission.html" class="text-indigo-200 hover:text-white transition duration-200">Admission</a></li>
-                    <li><a href="#academics" class="text-indigo-200 hover:text-white transition duration-200">Academics</a></li>
-                    <li><a href="#events" class="text-indigo-200 hover:text-white transition duration-200">Events</a></li>
-                    <li><a href="#contact-section" class="text-indigo-200 hover:text-white transition duration-200">Contact</a></li>
+                    <li><a href="index.html" class="text-amber-200 hover:text-white transition duration-200">Home</a></li>
+                    <li><a href="#about-us-home" class="text-amber-200 hover:text-white transition duration-200">About Us</a></li>
+                    <li><a href="admission.html" class="text-amber-200 hover:text-white transition duration-200">Admission</a></li>
+                    <li><a href="#academics" class="text-amber-200 hover:text-white transition duration-200">Academics</a></li>
+                    <li><a href="#events" class="text-amber-200 hover:text-white transition duration-200">Events</a></li>
+                    <li><a href="#contact-section" class="text-amber-200 hover:text-white transition duration-200">Contact</a></li>
                 </ul>
             </div>
 
             <div>
-                <h3 class="text-2xl font-bold mb-4 text-indigo-300">Contact Us</h3>
-                <p class="text-indigo-200 mb-2"><i class="fas fa-map-marker-alt mr-2"></i> 123 School Lane, Education City, State, Country - 12345</p>
-                <p class="text-indigo-200 mb-2"><i class="fas fa-phone-alt mr-2"></i> +91 123 456 7890</p>
-                <p class="text-indigo-200 mb-2"><i class="fas fa-envelope mr-2"></i> info@alifedu.edu</p>
+                <h3 class="text-2xl font-bold mb-4 text-amber-300">Contact Us</h3>
+                <p class="text-amber-200 mb-2"><i class="fas fa-map-marker-alt mr-2"></i> 123 School Lane, Education City, State, Country - 12345</p>
+                <p class="text-amber-200 mb-2"><i class="fas fa-phone-alt mr-2"></i> +91 123 456 7890</p>
+                <p class="text-amber-200 mb-2"><i class="fas fa-envelope mr-2"></i> info@alifedu.edu</p>
                 <div class="flex space-x-4 mt-4">
-                    <a href="#" class="text-indigo-200 hover:text-white text-xl transition duration-200"><i class="fab fa-facebook"></i></a>
-                    <a href="#" class="text-indigo-200 hover:text-white text-xl transition duration-200"><i class="fab fa-twitter"></i></a>
-                    <a href="#" class="text-indigo-200 hover:text-white text-xl transition duration-200"><i class="fab fa-instagram"></i></a>
-                    <a href="#" class="text-indigo-200 hover:text-white text-xl transition duration-200"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" class="text-amber-200 hover:text-white text-xl transition duration-200"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="text-amber-200 hover:text-white text-xl transition duration-200"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-amber-200 hover:text-white text-xl transition duration-200"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-amber-200 hover:text-white text-xl transition duration-200"><i class="fab fa-linkedin"></i></a>
                 </div>
             </div>
 
             <div>
-                <h3 class="text-2xl font-bold mb-4 text-indigo-300">Our Branches</h3>
+                <h3 class="text-2xl font-bold mb-4 text-amber-300">Our Branches</h3>
                 <ul class="space-y-2">
-                    <li><a href="#" class="text-indigo-200 hover:text-white transition duration-200">Branch 1 - City A</a></li>
-                    <li><a href="#" class="text-indigo-200 hover:text-white transition duration-200">Branch 2 - City B</a></li>
-                    <li><a href="#" class="text-indigo-200 hover:text-white transition duration-200">Branch 3 - City C</a></li>
-                    <li><a href="#" class="text-indigo-200 hover:text-white transition duration-200">Branch 4 - City D</a></li>
-                    <li><a href="#" class="text-indigo-200 hover:text-white transition duration-200">Branch 5 - City E</a></li>
+                    <li><a href="#" class="text-amber-200 hover:text-white transition duration-200">Branch 1 - City A</a></li>
+                    <li><a href="#" class="text-amber-200 hover:text-white transition duration-200">Branch 2 - City B</a></li>
+                    <li><a href="#" class="text-amber-200 hover:text-white transition duration-200">Branch 3 - City C</a></li>
+                    <li><a href="#" class="text-amber-200 hover:text-white transition duration-200">Branch 4 - City D</a></li>
+                    <li><a href="#" class="text-amber-200 hover:text-white transition duration-200">Branch 5 - City E</a></li>
                 </ul>
             </div>
         </div>
-        <div class="text-center text-indigo-300 mt-8 pt-8 border-t border-indigo-800">
+        <div class="text-center text-amber-300 mt-8 pt-8 border-t border-blue-800">
             © 2025 ALIF INTERNATIONAL SCHOOL. Reserved by Alif Edu.
         </div>
     </footer>
@@ -670,27 +670,27 @@
             <button class="modal-close-button" onclick="closeAdmissionModal()">X</button>
 
             <div class="border-b pb-6 mb-6 border-gray-200">
-                <h3 class="text-3xl font-bold text-indigo-800 mb-6 text-center">Admission Enquiry</h3>
+                <h3 class="text-3xl font-bold text-blue-950 mb-6 text-center">Admission Enquiry</h3>
                 <form class="space-y-5">
                     <div>
                         <label for="enquiry-name" class="block text-slate-700 text-sm font-bold mb-2">Student's Name</label>
-                        <input type="text" id="enquiry-name" class="shadow-sm appearance-none border rounded-lg w-full py-3 px-4 text-slate-700 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="Full Name" required>
+                        <input type="text" id="enquiry-name" class="shadow-sm appearance-none border rounded-lg w-full py-3 px-4 text-slate-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-950" placeholder="Full Name" required>
                     </div>
                     <div>
                         <label for="enquiry-parent-name" class="block text-slate-700 text-sm font-bold mb-2">Parent's Name</label>
-                        <input type="text" id="enquiry-parent-name" class="shadow-sm appearance-none border rounded-lg w-full py-3 px-4 text-slate-700 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="Parent/Guardian Name" required>
+                        <input type="text" id="enquiry-parent-name" class="shadow-sm appearance-none border rounded-lg w-full py-3 px-4 text-slate-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-950" placeholder="Parent/Guardian Name" required>
                     </div>
                     <div>
                         <label for="enquiry-email" class="block text-slate-700 text-sm font-bold mb-2">Email Address</label>
-                        <input type="email" id="enquiry-email" class="shadow-sm appearance-none border rounded-lg w-full py-3 px-4 text-slate-700 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="your_email@example.com" required>
+                        <input type="email" id="enquiry-email" class="shadow-sm appearance-none border rounded-lg w-full py-3 px-4 text-slate-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-950" placeholder="your_email@example.com" required>
                     </div>
                     <div>
                         <label for="enquiry-phone" class="block text-slate-700 text-sm font-bold mb-2">Phone Number</label>
-                        <input type="tel" id="enquiry-phone" class="shadow-sm appearance-none border rounded-lg w-full py-3 px-4 text-slate-700 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="+91 9876543210" required>
+                        <input type="tel" id="enquiry-phone" class="shadow-sm appearance-none border rounded-lg w-full py-3 px-4 text-slate-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-950" placeholder="+91 9876543210" required>
                     </div>
                     <div>
                         <label for="enquiry-grade" class="block text-slate-700 text-sm font-bold mb-2">Applying for Grade</label>
-                        <select id="enquiry-grade" class="shadow-sm appearance-none border rounded-lg w-full py-3 px-4 text-slate-700 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                        <select id="enquiry-grade" class="shadow-sm appearance-none border rounded-lg w-full py-3 px-4 text-slate-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-950" required>
                             <option value="">Select Grade</option>
                             <option value="Nursery">Nursery</option>
                             <option value="LKG">LKG</option>
@@ -711,27 +711,27 @@
                     </div>
                     <div>
                         <label for="enquiry-message" class="block text-slate-700 text-sm font-bold mb-2">Additional Message</label>
-                        <textarea id="enquiry-message" rows="3" class="shadow-sm appearance-none border rounded-lg w-full py-3 px-4 text-slate-700 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="Any specific questions or details..."></textarea>
+                        <textarea id="enquiry-message" rows="3" class="shadow-sm appearance-none border rounded-lg w-full py-3 px-4 text-slate-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-950" placeholder="Any specific questions or details..."></textarea>
                     </div>
-                    <button type="submit" class="w-full bg-indigo-700 text-white px-6 py-3 rounded-full shadow-lg hover:bg-indigo-800 transition duration-300 ease-in-out transform hover:scale-105">
+                    <button type="submit" class="w-full bg-blue-950 text-amber-400 px-6 py-3 rounded-full shadow-lg hover:bg-blue-800 transition duration-300 ease-in-out transform hover:scale-105">
                         Submit Enquiry
                     </button>
                 </form>
             </div>
 
             <div>
-                <h3 class="text-2xl font-bold text-indigo-800 mb-4 text-center">✨ Ask Our Admission Assistant ✨</h3>
+                <h3 class="text-2xl font-bold text-blue-950 mb-4 text-center">✨ Ask Our Admission Assistant ✨</h3>
                 <p class="text-slate-600 text-center mb-4">Have quick questions about our school? Ask our AI assistant!</p>
                 <div class="space-y-4">
                     <div>
                         <label for="llm-question" class="block text-slate-700 text-sm font-bold mb-2">Your Question</label>
-                        <textarea id="llm-question" rows="3" class="shadow-sm appearance-none border rounded-lg w-full py-3 px-4 text-slate-700 leading-tight focus:outline-none focus:ring-2 focus:ring-orange-500" placeholder="e.g., What is the age limit for Nursery admission?"></textarea>
+                        <textarea id="llm-question" rows="3" class="shadow-sm appearance-none border rounded-lg w-full py-3 px-4 text-slate-700 leading-tight focus:outline-none focus:ring-2 focus:ring-red-500" placeholder="e.g., What is the age limit for Nursery admission?"></textarea>
                     </div>
-                    <button onclick="askAdmissionAssistant()" class="w-full bg-orange-500 text-white px-6 py-3 rounded-full shadow-lg hover:bg-orange-600 transition duration-300 ease-in-out transform hover:scale-105 flex items-center justify-center">
+                    <button onclick="askAdmissionAssistant()" class="w-full bg-red-600 text-white px-6 py-3 rounded-full shadow-lg hover:bg-red-700 transition duration-300 ease-in-out transform hover:scale-105 flex items-center justify-center">
                         Ask Assistant
                         <span id="llm-loading" class="loader hidden"></span>
                     </button>
-                    <div id="llm-response" class="mt-4 p-4 bg-orange-50 rounded-lg border border-orange-200 text-slate-800 text-sm leading-relaxed hidden">
+                    <div id="llm-response" class="mt-4 p-4 bg-red-50 rounded-lg border border-red-200 text-slate-800 text-sm leading-relaxed hidden">
                         </div>
                 </div>
             </div>
@@ -949,8 +949,8 @@
             // Geometry (a simple dodecahedron for a complex, school-like feel)
             const geometry = new THREE.DodecahedronGeometry(2); // Radius 2
             const material = new THREE.MeshPhongMaterial({
-                color: 0x4338ca, // Indigo-700
-                specular: 0x14b8a6, // Teal-500 for specular highlight
+                color: 0x0A1128, // Navy Blue
+                specular: 0xD97706, // Golden Yellow for specular highlight
                 shininess: 40, // More shininess
                 flatShading: false // Smooth shading
             });
