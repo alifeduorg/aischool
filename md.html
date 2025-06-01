@@ -232,21 +232,13 @@
             visibility: visible;
         }
 
-        /* Custom 3D effect for MD image on hover */
-        .md-image-container {
-            perspective: 1000px; /* Establishes 3D context */
+        /* MD Image hover effect */
+        .md-image-hover {
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
         }
-
-        .md-image-3d {
-            transition: transform 0.4s ease-out, box-shadow 0.4s ease-out;
-            transform-style: preserve-3d; /* Allows child elements to be positioned in 3D space */
-            border-radius: 50%; /* Ensure it stays round */
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Initial subtle shadow */
-        }
-
-        .md-image-3d:hover {
-            transform: rotateY(10deg) scale(1.05) translateZ(20px); /* Rotate, scale, and move forward */
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3); /* More pronounced shadow for depth */
+        .md-image-hover:hover {
+            transform: scale(1.05); /* Slightly enlarge on hover */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Add a more pronounced shadow */
         }
     </style>
 </head>
@@ -355,12 +347,12 @@
         <div class="container mx-auto px-6 text-center">
             <h2 class="text-4xl font-bold text-blue-950 mb-12">Message from the Managing Director</h2>
 
-            <div class="bg-white p-8 rounded-2xl shadow-lg max-w-3xl mx-auto card-hover-effect flex flex-col md:flex-row md:items-start md:text-left">
-                <div class="md-image-container flex-shrink-0 mx-auto md:mx-0 mb-6 md:mb-0 md:mr-8">
-                    <img src="md.png" alt="Managing Director Mr. Aflah Zaman.K" class="w-48 h-48 object-cover rounded-full shadow-md md-image-3d">
+            <div class="bg-white p-8 rounded-2xl shadow-lg max-w-7xl mx-auto card-hover-effect flex flex-col md:flex-row md:items-start md:text-left">
+                <div class="flex-shrink-0 mx-auto md:mx-0 mb-6 md:mb-0 md:mr-8">
+                    <img src="md.png" alt="Managing Director Mr. Aflah Zaman.K" class="w-64 h-64 object-cover shadow-md md-image-hover">
                 </div>
                 
-                <div>
+                <div class="flex-grow">
                     <h3 class="text-3xl font-semibold text-blue-950 mb-2">Mr. Aflah Zaman.K</h3>
                     <p class="text-amber-700 text-xl mb-6">Managing Director</p>
                     <p class="text-slate-600 text-lg leading-relaxed">
