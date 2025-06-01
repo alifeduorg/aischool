@@ -281,6 +281,42 @@
         .feedback-dot.active {
             background-color: #ffffff;
         }
+
+        /* Mobile menu specific styles */
+        #mobile-menu {
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 100vh;
+            width: 75%; /* Adjust as needed */
+            max-width: 300px; /* Max width for larger mobile devices */
+            background-color: #ffffff;
+            box-shadow: -5px 0 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            transform: translateX(100%); /* Start off-screen */
+            transition: transform 0.3s ease-in-out;
+            padding-top: 2rem; /* Space for close button */
+            overflow-y: auto;
+        }
+
+        #mobile-menu.open {
+            transform: translateX(0); /* Slide in */
+        }
+
+        #mobile-menu-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden; /* Use visibility for non-interactable state */
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        #mobile-menu-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
     </style>
 </head>
 <body class="text-slate-700">
@@ -313,8 +349,12 @@
     </div>
 
     <header class="bg-blue-50 shadow-lg py-3 px-4 md:px-8 mx-auto w-fit sticky top-0 z-50 rounded-xl" style="perspective: 1000px;">
-        <nav class="hidden md:flex items-center space-x-3 justify-center"> <a href="index.html" class="text-base font-medium text-slate-700 hover:text-amber-700 nav-link-hover whitespace-nowrap px-3 py-2 rounded-md">Home</a> <div class="relative dropdown">
-                <button class="text-base font-medium text-slate-700 hover:text-amber-700 flex items-center nav-link-hover whitespace-nowrap px-3 py-2 rounded-md"> About Us <i class="fas fa-chevron-down ml-2 text-sm"></i>
+        <nav class="hidden md:flex items-center space-x-3 justify-center">
+            <a href="index.html" class="text-base font-medium text-slate-700 hover:text-amber-700 nav-link-hover whitespace-nowrap px-3 py-2 rounded-md">Home</a>
+
+            <div class="relative dropdown">
+                <button class="text-base font-medium text-slate-700 hover:text-amber-700 flex items-center nav-link-hover whitespace-nowrap px-3 py-2 rounded-md">
+                    About Us <i class="fas fa-chevron-down ml-2 text-sm"></i>
                 </button>
                 <div class="dropdown-menu">
                     <a href="about.html#managing-director">Managing Director</a>
@@ -325,7 +365,8 @@
             </div>
 
             <div class="relative dropdown">
-                <button class="text-base font-medium text-slate-700 hover:text-amber-700 flex items-center nav-link-hover whitespace-nowrap px-3 py-2 rounded-md"> Admission <i class="fas fa-chevron-down ml-2 text-sm"></i>
+                <button class="text-base font-medium text-slate-700 hover:text-amber-700 flex items-center nav-link-hover whitespace-nowrap px-3 py-2 rounded-md">
+                    Admission <i class="fas fa-chevron-down ml-2 text-sm"></i>
                 </button>
                 <div class="dropdown-menu">
                     <a href="admission.html#admission-info">Admission Info</a>
@@ -333,42 +374,51 @@
                 </div>
             </div>
 
-            <a href="academics.html" class="text-base font-medium text-slate-700 hover:text-amber-700 nav-link-hover whitespace-nowrap px-3 py-2 rounded-md">Academics</a> <a href="resources.html" class="text-base font-medium text-slate-700 hover:text-amber-700 nav-link-hover whitespace-nowrap px-3 py-2 rounded-md">Resources</a> <a href="events.html" class="text-base font-medium text-slate-700 hover:text-amber-700 nav-link-hover whitespace-nowrap px-3 py-2 rounded-md">Events</a> <a href="contact.html" class="text-base font-medium text-slate-700 hover:text-amber-700 nav-link-hover whitespace-nowrap px-3 py-2 rounded-md">Contact</a> <button class="bg-blue-950 text-amber-400 px-6 py-2 rounded-full shadow-lg hover:bg-blue-800 transition duration-300 ease-in-out transform hover:scale-105">
+            <a href="academics.html" class="text-base font-medium text-slate-700 hover:text-amber-700 nav-link-hover whitespace-nowrap px-3 py-2 rounded-md">Academics</a>
+            <a href="resources.html" class="text-base font-medium text-slate-700 hover:text-amber-700 nav-link-hover whitespace-nowrap px-3 py-2 rounded-md">Resources</a>
+            <a href="events.html" class="text-base font-medium text-slate-700 hover:text-amber-700 nav-link-hover whitespace-nowrap px-3 py-2 rounded-md">Events</a>
+            <a href="contact.html" class="text-base font-medium text-slate-700 hover:text-amber-700 nav-link-hover whitespace-nowrap px-3 py-2 rounded-md">Contact</a>
+            <button class="bg-blue-950 text-amber-400 px-6 py-2 rounded-full shadow-lg hover:bg-blue-800 transition duration-300 ease-in-out transform hover:scale-105">
                 Login
             </button>
         </nav>
-
-        <div id="mobile-menu" class="hidden md:hidden mt-4 bg-white rounded-lg shadow-md py-2">
-            <a href="index.html" class="block px-4 py-2 text-slate-700 hover:bg-amber-50 rounded-md">Home</a>
-            <div class="relative dropdown">
-                <button class="w-full text-left px-4 py-2 text-slate-700 hover:bg-amber-50 flex justify-between items-center rounded-md" onclick="toggleMobileDropdown(this)">
-                    About Us <i class="fas fa-chevron-down ml-2 text-sm"></i>
-                </button>
-                <div class="dropdown-menu ml-4 mt-1">
-                    <a href="about.html#managing-director">Managing Director</a>
-                    <a href="about.html#chairman">Chairman</a>
-                    <a href="about.html#principal">Principal</a>
-                    <a href="about.html#vision-mission">Vision & Mission</a>
-                </div>
-            </div>
-            <div class="relative dropdown">
-                <button class="w-full text-left px-4 py-2 text-slate-700 hover:bg-amber-50 flex justify-between items-center rounded-md" onclick="toggleMobileDropdown(this)">
-                    Admission <i class="fas fa-chevron-down ml-2 text-sm"></i>
-                </button>
-                <div class="dropdown-menu ml-4 mt-1">
-                    <a href="admission.html#admission-info">Admission Info</a>
-                    <a href="admission.html#tc-application">TC Application</a>
-                </div>
-            </div>
-            <a href="academics.html" class="block px-4 py-2 text-slate-700 hover:bg-amber-50 rounded-md">Academics</a>
-            <a href="resources.html" class="block px-4 py-2 text-slate-700 hover:bg-amber-50 rounded-md">Resources</a>
-            <a href="events.html" class="block px-4 py-2 text-slate-700 hover:bg-amber-50 rounded-md">Events</a>
-            <a href="contact.html" class="block px-4 py-2 text-slate-700 hover:bg-amber-50 rounded-md">Contact</a>
-            <button class="w-full text-left bg-blue-950 text-amber-400 px-4 py-2 mt-2 rounded-full shadow-lg hover:bg-blue-800 transition duration-300 ease-in-out transform hover:scale-105">
-                Login
-            </button>
-        </div>
     </header>
+
+    <div id="mobile-menu-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-[999] hidden opacity-0 transition-opacity duration-300"></div>
+
+    <div id="mobile-menu" class="fixed top-0 right-0 h-full w-3/4 max-w-xs bg-white shadow-lg z-[1000] transform translate-x-full transition-transform duration-300 ease-in-out py-6 px-4 overflow-y-auto">
+        <button class="absolute top-4 right-4 text-slate-700 text-2xl" onclick="closeMobileMenu()">
+            <i class="fas fa-times"></i>
+        </button>
+        <a href="index.html" class="block px-4 py-2 text-slate-700 hover:bg-amber-50 rounded-md">Home</a>
+        <div class="relative dropdown">
+            <button class="w-full text-left px-4 py-2 text-slate-700 hover:bg-amber-50 flex justify-between items-center rounded-md" onclick="toggleMobileDropdown(this)">
+                About Us <i class="fas fa-chevron-down ml-2 text-sm"></i>
+            </button>
+            <div class="dropdown-menu ml-4 mt-1">
+                <a href="about.html#managing-director">Managing Director</a>
+                <a href="about.html#chairman">Chairman</a>
+                <a href="about.html#principal">Principal</a>
+                <a href="about.html#vision-mission">Vision & Mission</a>
+            </div>
+        </div>
+        <div class="relative dropdown">
+            <button class="w-full text-left px-4 py-2 text-slate-700 hover:bg-amber-50 flex justify-between items-center rounded-md" onclick="toggleMobileDropdown(this)">
+                Admission <i class="fas fa-chevron-down ml-2 text-sm"></i>
+            </button>
+            <div class="dropdown-menu ml-4 mt-1">
+                <a href="admission.html#admission-info">Admission Info</a>
+                <a href="admission.html#tc-application">TC Application</a>
+            </div>
+        </div>
+        <a href="academics.html" class="block px-4 py-2 text-slate-700 hover:bg-amber-50 rounded-md">Academics</a>
+        <a href="resources.html" class="block px-4 py-2 text-slate-700 hover:bg-amber-50 rounded-md">Resources</a>
+        <a href="events.html" class="block px-4 py-2 text-slate-700 hover:bg-amber-50 rounded-md">Events</a>
+        <a href="contact.html" class="block px-4 py-2 text-slate-700 hover:bg-amber-50 rounded-md">Contact</a>
+        <button class="w-full text-left bg-blue-950 text-amber-400 px-4 py-2 mt-2 rounded-full shadow-lg hover:bg-blue-800 transition duration-300 ease-in-out transform hover:scale-105">
+            Login
+        </button>
+    </div>
 
     <section id="home" class="relative w-full h-screen flex items-center justify-center text-white overflow-hidden rounded-b-3xl shadow-xl">
         <canvas id="three-canvas" class="absolute inset-0"></canvas>
@@ -745,10 +795,24 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
         // --- Mobile Menu Toggle ---
-        document.getElementById('mobile-menu-button').addEventListener('click', function() {
-            const mobileMenu = document.getElementById('mobile-menu');
-            mobileMenu.classList.toggle('hidden');
-        });
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+
+        function openMobileMenu() {
+            mobileMenu.classList.add('open');
+            mobileMenuOverlay.classList.add('open');
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        }
+
+        function closeMobileMenu() {
+            mobileMenu.classList.remove('open');
+            mobileMenuOverlay.classList.remove('open');
+            document.body.style.overflow = ''; // Restore background scrolling
+        }
+
+        mobileMenuButton.addEventListener('click', openMobileMenu);
+        mobileMenuOverlay.addEventListener('click', closeMobileMenu); // Close when overlay is clicked
 
         // Function to toggle mobile dropdowns
         function toggleMobileDropdown(button) {
@@ -759,7 +823,7 @@
         // Close mobile menu when a link is clicked
         document.querySelectorAll('#mobile-menu a').forEach(item => {
             item.addEventListener('click', () => {
-                document.getElementById('mobile-menu').classList.add('hidden');
+                closeMobileMenu();
                 // Also close any open mobile dropdowns
                 document.querySelectorAll('#mobile-menu .dropdown.active').forEach(dropdown => {
                     dropdown.classList.remove('active');
