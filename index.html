@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ALIF INTERNATIONAL SCHOOL - Home</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Oswald:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
@@ -31,7 +31,8 @@
 
         /* Hero section background image with overlay */
         .hero-background {
-            background-image: url('https://placehold.co/1920x1080/4338ca/ffffff?text=School+Campus'); /* Updated image color to indigo-700 */
+            /* Updated school campus image */
+            background-image: url('alif school.png');
             background-size: cover;
             background-position: center;
             position: relative;
@@ -284,15 +285,13 @@
 <body class="text-slate-700">
 
     <div id="notification" class="notification">
-        <p>📢 Important Announcement: Admissions for 2025-2026 are now open!</p>
-        <button class="notification-close-button" onclick="hideNotification()">X</button>
-    </div>
+        </div>
 
     <header class="bg-blue-50 shadow-lg py-4 px-6 md:px-12 sticky top-0 z-50 rounded-b-xl" style="perspective: 1000px;">
         <div class="container mx-auto flex justify-between items-center">
             <div class="flex items-center">
-                <img src="1.png" alt="ALIF INTERNATIONAL SCHOOL Logo" class="h-12 w-12 mr-3 shadow-md">
-                <img src="ALIF INTERNATINAL SCHOOL (1).png" alt="ALIF School Text Logo" class="h-10 w-auto">
+                <img src="aliflogo.png" alt="ALIF INTERNATIONAL SCHOOL Logo" class="h-12 w-12 mr-3 shadow-md">
+                <img src="ALIF INTERNATINAL SCHOOL (1).png" alt="ALIF School Text Logo" class="h-16 w-auto">
             </div>
 
             <nav class="hidden md:flex items-center space-x-6">
@@ -386,9 +385,9 @@
             <h2 class="text-3xl font-bold text-indigo-800 text-center mb-8">Our Campus Glimpses</h2>
             <div id="image-slider" class="relative w-full max-w-4xl mx-auto h-48 md:h-64 overflow-hidden rounded-xl shadow-2xl">
                 <div class="slider-track flex transition-transform duration-500 ease-in-out h-full">
-                    <img src="https://placehold.co/800x400/14b8a6/000000?text=School+View+1" alt="School View 1" class="w-full flex-shrink-0 object-cover rounded-xl">
-                    <img src="https://placehold.co/800x400/67e8f9/000000?text=School+View+2" alt="School View 2" class="w-full flex-shrink-0 object-cover rounded-xl">
-                    <img src="https://placehold.co/800x400/c4b5fd/000000?text=School+View+3" alt="School View 3" class="w-full flex-shrink-0 object-cover rounded-xl">
+                    <img src="alif school.png" alt="School View 1" class="w-full flex-shrink-0 object-cover rounded-xl">
+                    <img src="alif school.png" alt="School View 2" class="w-full flex-shrink-0 object-cover rounded-xl">
+                    <img src="alif school.png" alt="School View 3" class="w-full flex-shrink-0 object-cover rounded-xl">
                 </div>
                 <button onclick="prevSlide()" class="absolute left-4 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-white p-3 rounded-full hover:bg-opacity-75 transition"><i class="fas fa-chevron-left"></i></button>
                 <button onclick="nextSlide()" class="absolute right-4 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 text-white p-3 rounded-full hover:bg-opacity-75 transition"><i class="fas fa-chevron-right"></i></button>
@@ -448,8 +447,8 @@
                         <p class="text-slate-600 leading-relaxed">
                             To provide a dynamic and inclusive learning environment that promotes academic excellence, character development, and social responsibility. We are dedicated to nurturing individual talents, encouraging innovation, and instilling values that prepare students for success in a rapidly changing world.
                         </p>
-                    </div
-                >
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -838,24 +837,49 @@
             }
         });
 
-        // --- Notification Pop-up ---
-        const notification = document.getElementById('notification');
+        // --- Notification Pop-up (Multiple Notifications) ---
+        const notificationsData = [
+            { message: "📢 Important Announcement: Admissions for 2025-2026 are now open!", duration: 5000 },
+            { message: "🎉 Event Alert: Annual Sports Day on October 20th!", duration: 4000 },
+            { message: "📚 New: Digital Library now accessible to all students!", duration: 6000 }
+        ];
+        let currentNotificationIndex = 0;
+        let notificationTimeout;
+        const notificationElement = document.getElementById('notification');
 
-        function showNotification() {
-            notification.classList.add('show');
+        function displayNextNotification() {
+            if (notificationsData.length === 0) {
+                notificationElement.classList.remove('show');
+                return;
+            }
+
+            // Loop back to the start if all notifications have been shown
+            if (currentNotificationIndex >= notificationsData.length) {
+                currentNotificationIndex = 0;
+            }
+
+            const currentNotification = notificationsData[currentNotificationIndex];
+            notificationElement.innerHTML = `
+                <p>${currentNotification.message}</p>
+                <button class="notification-close-button" onclick="hideNotification()">X</button>
+            `;
+            notificationElement.classList.add('show');
+
+            // Set timeout to hide current notification and then display the next one
+            notificationTimeout = setTimeout(() => {
+                notificationElement.classList.remove('show');
+                // Small delay before showing the next notification
+                setTimeout(() => {
+                    currentNotificationIndex++;
+                    displayNextNotification();
+                }, 1000); // 1 second delay between notifications
+            }, currentNotification.duration);
         }
 
         function hideNotification() {
-            notification.classList.remove('show');
+            notificationElement.classList.remove('show');
+            clearTimeout(notificationTimeout); // Clear any pending timeout
         }
-
-        // Show notification after a delay
-        window.onload = function() {
-            setTimeout(showNotification, 2000); // Show after 2 seconds
-            initThreeJS(); // Initialize Three.js when window loads
-            animateCounters(); // Re-enabled counter animation
-            setTimeout(openAdmissionModal, 1000); // Open admission modal after 1 second
-        };
 
         // --- Counter Animation ---
         function animateCounters() {
@@ -1141,6 +1165,14 @@
                 llmResponseDiv.classList.remove('hidden'); // Show response div
             }
         }
+
+        // Initialize display of notifications on window load
+        window.onload = function() {
+            initThreeJS();
+            animateCounters();
+            setTimeout(openAdmissionModal, 1000);
+            displayNextNotification(); // Start the notification sequence
+        };
     </script>
 </body>
 </html>
