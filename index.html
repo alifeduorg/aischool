@@ -110,9 +110,9 @@
             color: #4338ca; /* Primary indigo on hover */
         }
 
-        /* Menu item hover animation with subtle 3D feel */
+        /* Menu item hover animation with subtle 3D feel and button background */
         .nav-link-hover {
-            transition: transform 0.2s ease-in-out, color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            transition: transform 0.2s ease-in-out, color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, background-color 0.2s ease-in-out;
             position: relative; /* Needed for transform-style */
             transform-style: preserve-3d; /* Enable 3D transformations */
         }
@@ -120,6 +120,7 @@
             transform: translateY(-4px) scale(1.05) translateZ(10px); /* Lift, slight scale, and pop-out */
             color: #4338ca; /* Primary indigo on hover */
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+            background-color: #eef2ff; /* Lighter indigo hover for button feel */
         }
         /* Ensure buttons also have the clicky feel */
         button,
@@ -290,15 +291,15 @@
     <header class="bg-blue-50 shadow-lg py-4 px-6 md:px-12 sticky top-0 z-50 rounded-b-xl" style="perspective: 1000px;">
         <div class="container mx-auto flex justify-between items-center">
             <div class="flex items-center">
-                <img src="aliflogo.png" alt="ALIF INTERNATIONAL SCHOOL Logo" class="h-12 w-12 mr-3 shadow-md">
-                <img src="ALIF INTERNATINAL SCHOOL (1).png" alt="ALIF School Text Logo" class="h-16 w-auto">
+                <img src="1.png" alt="ALIF INTERNATIONAL SCHOOL Logo" class="h-12 w-12 mr-3 shadow-md">
+                <img src="ALIF INTERNATINAL SCHOOL (1).png" alt="ALIF School Text Logo" class="h-16 md:h-20 lg:h-24 w-auto">
             </div>
 
             <nav class="hidden md:flex items-center space-x-6">
-                <a href="index.html" class="text-base font-medium text-slate-700 hover:text-indigo-700 nav-link-hover whitespace-nowrap">Home</a>
+                <a href="index.html" class="text-base font-medium text-slate-700 hover:text-indigo-700 nav-link-hover whitespace-nowrap px-4 py-2 rounded-md">Home</a>
 
                 <div class="relative dropdown">
-                    <button class="text-base font-medium text-slate-700 hover:text-indigo-700 flex items-center nav-link-hover whitespace-nowrap">
+                    <button class="text-base font-medium text-slate-700 hover:text-indigo-700 flex items-center nav-link-hover whitespace-nowrap px-4 py-2 rounded-md">
                         About Us <i class="fas fa-chevron-down ml-2 text-sm"></i>
                     </button>
                     <div class="dropdown-menu">
@@ -310,7 +311,7 @@
                 </div>
 
                 <div class="relative dropdown">
-                    <button class="text-base font-medium text-slate-700 hover:text-indigo-700 flex items-center nav-link-hover whitespace-nowrap">
+                    <button class="text-base font-medium text-slate-700 hover:text-indigo-700 flex items-center nav-link-hover whitespace-nowrap px-4 py-2 rounded-md">
                         Admission <i class="fas fa-chevron-down ml-2 text-sm"></i>
                     </button>
                     <div class="dropdown-menu">
@@ -319,10 +320,10 @@
                     </div>
                 </div>
 
-                <a href="#academics" class="text-base font-medium text-slate-700 hover:text-indigo-700 nav-link-hover whitespace-nowrap">Academics</a>
-                <a href="resources.html" class="text-base font-medium text-slate-700 hover:text-indigo-700 nav-link-hover whitespace-nowrap">Resources</a>
-                <a href="#events" class="text-base font-medium text-slate-700 hover:text-indigo-700 nav-link-hover whitespace-nowrap">Events</a>
-                <a href="#contact-section" class="text-base font-medium text-slate-700 hover:text-indigo-700 nav-link-hover whitespace-nowrap">Contact</a>
+                <a href="#academics" class="text-base font-medium text-slate-700 hover:text-indigo-700 nav-link-hover whitespace-nowrap px-4 py-2 rounded-md">Academics</a>
+                <a href="resources.html" class="text-base font-medium text-slate-700 hover:text-indigo-700 nav-link-hover whitespace-nowrap px-4 py-2 rounded-md">Resources</a>
+                <a href="#events" class="text-base font-medium text-slate-700 hover:text-indigo-700 nav-link-hover whitespace-nowrap px-4 py-2 rounded-md">Events</a>
+                <a href="#contact-section" class="text-base font-medium text-slate-700 hover:text-indigo-700 nav-link-hover whitespace-nowrap px-4 py-2 rounded-md">Contact</a>
                 <button class="bg-indigo-700 text-white px-6 py-2 rounded-full shadow-lg hover:bg-indigo-800 transition duration-300 ease-in-out transform hover:scale-105">
                     Login
                 </button>
